@@ -1,0 +1,53 @@
+---
+output:   
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+title: |
+  \Large
+  
+  Lista 1 - Econometria 1
+author: "Pedro Henrique Rocha Mendes ^[RA: 11201811516]"
+documentclass: scrartcl
+fontfamily: times
+fontsize: 12pt
+geometry:
+- top=2.5cm
+- bottom=2.5cm
+- left=2.5cm
+- right=2.5cm
+bibliography: references.bib
+reference-section-title: Referências
+csl: abnt.csl
+nocite: null
+lang: pt-BR
+header-includes:
+- \usepackage{setspace}
+- \usepackage{ragged2e}
+- \usepackage{indentfirst}
+- \usepackage{abstract}
+- \usepackage{microtype}
+- \usepackage{chngcntr}
+- \usepackage[justification=centering]{caption}
+- \usepackage{float}
+- \usepackage{booktabs}
+- \usepackage{multirow}
+- \usepackage{placeins}
+- \renewcommand{\abstractname}{Resumo}
+- \setkomafont{disposition}{\bfseries}
+---
+
+<!-- Parágrafos e espaçamento --->
+
+```{=tex}
+\onehalfspacing
+\justifying
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.1cm}
+\FloatBarrier
+```
+<!-- Remover tudo menos os resultados dos chunks --->
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(error=FALSE, warning=FALSE, message=FALSE)
+```
