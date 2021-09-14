@@ -6,7 +6,8 @@ output:
 title: |
   \Large
   
-  Lista 1 - Econometria 1
+  Lista 1
+subtitle: "Econometria 1"
 author: "Pedro Henrique Rocha Mendes ^[RA: 11201811516]"
 documentclass: scrartcl
 fontfamily: times
@@ -16,7 +17,7 @@ geometry:
 - bottom=2.5cm
 - left=2.5cm
 - right=2.5cm
-bibliography: references.bib
+bibliography: null
 reference-section-title: Referências
 csl: abnt.csl
 nocite: null
@@ -51,3 +52,57 @@ header-includes:
 ```{r, echo=FALSE}
 knitr::opts_chunk$set(error=FALSE, warning=FALSE, message=FALSE)
 ```
+
+1)  O que diz a Lei das Expectativas Iteradas?
+
+2)  Demonstre os resultados a seguir, partindo, para isso, das definições dos valores populacionais das estatísticas variância ($V[X]$) e covariância ($cov(X,Y)$). E considerando que $\bar X = \frac{1}{N} \sum_{i=1}^{N} x_{i}$ e $\bar{Y}=\frac{1}{N} \sum_{i=1}^{N} y_{i}$:
+
+    -   a) $V[X]=E[X^2]-E[X]^2$
+
+    -   b) $cov(X,Y)=E[XY]-E[X]E[Y]$
+
+    -   c) $V[X+Y]=V[X]+V[Y]+cov(X,Y)$
+
+    -   d) $E[(X-\bar X)+(Y-\bar Y)|X,Y]=0$
+
+    -   e) $\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)=\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right) y_{i}$
+
+3)  A variável aleatória X tem a seguinte função densidade de probabilidade:
+
+    $$f(x)=\left\{\begin{array}{c}c(x-1) \text { se } 0 \leq x \leq 1 \\c(x+1) \text { se } 1<x \leq 2 \\cx \text { se } 2<x \leq 3 \\0 \text { caso contrário }\end{array}\right.$$
+
+    -   a) Qual o valor de c?
+
+    -   b) Qual a função distribuição cumulativa de X?
+
+    -   c) Calcule $E[X]$ e $Var[X]$.
+
+4)  É possível dividir uma amostra estatística em subamostras de igual tamanho, selecionadas aleatoriamente. Isso foi feito com os dados da POF 2008 do IBGE, gerando-se nove subamostras, cada uma com 1.217 observações. Dentro de cada subamostra, foi calculada a média para a variável "renda per capita". Posteriormente, calculou-se a variância das médias subamostrais, obtendo-se um valor de 22,17. Explique porque este valor se mostra consideravelmente inferior ao valor da variância da amostra, i.e., trata-se da variância calculada na amostra como um todo, sem divisão em subamostras, o qual corresponde a 35.621,24. Considere, para isso, a tabela abaixo.
+
+| Subamostra | Média  | Variância |
+|:----------:|:------:|:---------:|
+|     1      | 267.79 | 36,338.93 |
+|     2      | 270.28 | 34,318.42 |
+|     3      | 273.24 | 36,996.46 |
+|     4      | 281.04 | 36,909.41 |
+|     5      | 273.78 | 36,756.27 |
+|     6      | 270.82 | 34,368.63 |
+|     7      | 263.76 | 35,114.03 |
+|     8      | 269.96 | 35,175.32 |
+|     9      | 270.68 | 34,670.53 |
+
+: Tabela 4): Médias e variâncias para a renda per capita dentro das subamostras
+
+5.  Seja $X_1,X_2,…,X_N$ uma sequência de variáveis aleatórias (VAs) independentes e identicamente distribuídas (i. i. d.) com média e variância populacionais dadas, respectivamente, por $\mu$ e $\sigma^2$, i. e., $E[X_i]=\mu$ e $V[X_i]=\sigma^2$, $i=1,…,N$. Responda as perguntas abaixo:
+
+    -   a) Verifique se a propriedade de ausência de viés na estimação da média populacional é atendida pelo estimador $\bar{X}=\frac{1}{N-1} \sum_{i=1}^{1} X_{i}$.
+
+    -   b) Obtenha a variância populacional do estimador do item anterior e verifique se tal estimador é eficiente (i.e., apresenta menor variância populacional) relativamente a um segundo estimador para a média populacional correspondente à $\bar{X}=\frac{1}{N} \sum_{i=1}^{1} X_{i}$
+
+6.  O governo do Estado de São Paulo implementou um programa de qualificação para trabalhadores vítimas de desemprego tecnológico no setor rural. Um exemplo é o da introdução de máquinas colheitadeiras em substituição à colheita manual em plantios de cana-de-açúcar. Você foi contratado para determinar se os trabalhadores que passaram por este programa de qualificação tiveram sua remuneração aumentada significativamente. O indicador de impacto do programa, calculado para cada trabalhador, é a diferença de remuneração antes e depois do treinamento, sendo representado por $W_i, i=1,…,N$. Este se distribui normalmente com $W_i \sim N(\mu,\sigma^2)$, $i=1,…,N$. É tomada uma amostra de $N = 100$ trabalhadores e obtida a estimativa pontual para o valor populacional do impacto médio, $\mu$. O valor da estimativa pontual é de $\bar{W}=N^{-1} \sum_{i=1}^{N} W_{i}=100$, o desvio padrão estimado, $s=\sqrt{N^{-1} \sum_{i=1}^{N}(W_i-\bar{W})^{2}}=640$. Neste caso, o valor populacional do desvio padrão é desconhecido e, portanto, a estatística do teste é $T=\frac{\bar{W}-\mu_{0}}{s / \sqrt{N}} \sim t_{N-1}$, uma VA com distribuição t de Student com $N-1$ graus de liberdade. O símbolo $\mu_0$ representa o valor da média populacional de $W_i$ definido pela hipótese nula, zero, no caso, i. e., $μ_0=0$.
+
+    -   a) Obtenha os valores críticos para o teste de hipóteses bicaudal. Para isso você pode utilizar a tabela da distribuição t ao final dos livros-texto ou empregar a função `qt()` do R .
+
+    -   b) Obtenha o p-valor do teste (o que pode ser feito com base nas tabelas ao final dos livros-texto ou utilizando a função `pt()` do R).
+
+    -   c) Qual é o resultado do teste? Explique com detalhe como, com base nos resultados dos itens anteriores e na estimativa pontual, é possível concluir acerca da existência de um impacto relevante ou não do programa de qualificação.
