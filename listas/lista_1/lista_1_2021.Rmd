@@ -59,7 +59,7 @@ knitr::opts_chunk$set(error=FALSE, warning=FALSE, message=FALSE)
 
     b.  $cov(X,Y)=E[XY]-E[X]E[Y]$
 
-    c.  $V[X+Y]=V[X]+V[Y]+2cov(X,Y)$
+    c.  $Var[X+Y]=Var[X]+Var[Y]+2cov(X,Y)$
 
     d.  $E[(X-\bar X)+(Y-\bar Y)|X,Y]=0$
 
