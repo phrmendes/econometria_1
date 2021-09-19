@@ -39,5 +39,4 @@ vignettes/*.pdf
 .Renviron
 
 # Notas de aula
-
-aulas/
+aulas/*.pdf
