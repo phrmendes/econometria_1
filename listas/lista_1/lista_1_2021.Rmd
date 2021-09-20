@@ -93,7 +93,13 @@ knitr::opts_chunk$set(error=FALSE, warning=FALSE, message=FALSE)
         \end{aligned}$$
 
     e.  $\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)=\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right) y_{i}$\
-        $$ \begin{aligned}\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)&=\sum_{i=1}^{N}(x_iy_i-x_i\bar y-y_i\bar x+\bar x\bar y) \\&=\sum_{i=1}^{N}[y_i(x_i-\bar x)-x_i\bar y+\bar x\bar y] \\&=\sum_{i=1}^{N}y_i(x_i-\bar x)-\sum_{i=1}^{N}x_i\bar y+\sum_{i=1}^{N}\bar x\bar y \\&=\sum_{i=1}^{N}y_i(x_i-\bar x)-\bar y\underbrace{\sum_{i=1}^{N}x_i}_{N\bar x}+N\bar x\bar y \\&=\sum_{i=1}^{N}y_i(x_i-\bar x)\cancel{-N\bar x\bar y}\cancel{+N\bar x\bar y} \\&=\sum_{i=1}^{N}y_i(x_i-\bar x)\end{aligned}$$
+        $$ \begin{aligned}
+        \sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)&=\sum_{i=1}^{N}(x_iy_i-x_i\bar y-y_i\bar x+\bar x\bar y) \\
+        &=\sum_{i=1}^{N}[y_i(x_i-\bar x)-x_i\bar y+\bar x\bar y] \\
+        &=\sum_{i=1}^{N}y_i(x_i-\bar x)-\sum_{i=1}^{N}x_i\bar y+\sum_{i=1}^{N}\bar x\bar y \\
+        &=\sum_{i=1}^{N}y_i(x_i-\bar x)-\bar y\underbrace{\sum_{i=1}^{N}x_i}_{N\bar x}+N\bar x\bar y \\
+        &=\sum_{i=1}^{N}y_i(x_i-\bar x)\cancel{-N\bar x\bar y}\cancel{+N\bar x\bar y} \\
+        &=\sum_{i=1}^{N}y_i(x_i-\bar x)\end{aligned}$$
 
 3)  A variável aleatória X tem a seguinte função densidade de probabilidade:
 
