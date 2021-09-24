@@ -211,9 +211,9 @@ a.  Verifique se a propriedade de ausência de viés na estimação da média po
 $$\begin{aligned} E(\tilde X)-\mu=&\ 0 \\E(\tilde X)=&\ \mu \\
   E\left(\frac{1}{N-1}\sum^{N}_{i=1} X_i\right)=&\ \mu \\
   \frac{1}{N-1}E\left(\sum^{N}_{i=1} X_i\right)=&\ \mu \\
-  \frac{1}{N-1}E(X_1+\dots+X_N)=&\ \mu \\
-  \frac{1}{N-1}E(X_1)+\dots+E(X_N)=&\ \mu \\
-  \frac{1}{N-1}\mu+...+\mu=&\ \mu \\
+  \frac{1}{N-1}[E(X_1+\dots+X_N)]=&\ \mu \\
+  \frac{1}{N-1}[E(X_1)+\dots+E(X_N)]=&\ \mu \\
+  \frac{1}{N-1}(\mu+...+\mu)=&\ \mu \\
   \frac{N}{N-1}\mu=&\ \mu \\
   \end{aligned}$$
 
@@ -232,8 +232,8 @@ b.  Obtenha a variância populacional do estimador do item anterior e verifique 
     $$\begin{aligned} Var(\bar X)&=Var\left(\frac{1}{N} \sum_{i=1}^{N} X_{i}\right)\\
     &=\left(\frac{1}{N}\right)^2 Var\left(\sum_{i=1}^{N} X_{i}\right) \\
     &=\left(\frac{1}{N}\right)^2 Var\left(X_1+\dots+X_N\right) \\
-    &=\left(\frac{1}{N}\right)^2 Var(X_1)+\dots+Var(X_N) \\
-    &=\left(\frac{1}{N}\right)^2 \sigma^2+\dots+\sigma^2 \\
+    &=\left(\frac{1}{N}\right)^2 [Var(X_1)+\dots+Var(X_N)] \\
+    &=\left(\frac{1}{N}\right)^2 (\sigma^2+\dots+\sigma^2) \\
     &=\left(\frac{1}{N}\right)^2 N\sigma^2 \\
     &=(N^{-1})^2 N \sigma^2 \\
     &=\frac{\sigma^2}{N}\ (ii)
