@@ -126,7 +126,7 @@ e.  $\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)=\sum_{i=
 3)  A variável aleatória X tem a seguinte função densidade de probabilidade:
 
 $$f(x)=\left\{\begin{array}{c}
-  c(x-1) \text { se } 0 < x \leq 1 \\
+  c(1-x) \text { se } 0 < x \leq 1 \\
   c(x+1) \text { se } 1 < x \leq 2 \\
   cx \text { se } 2 < x \leq 3 \\
   0 \text { caso contrário}
@@ -134,9 +134,9 @@ $$f(x)=\left\{\begin{array}{c}
 
 a.  Qual o valor de c?\
     $$\begin{matrix}
-    \int_{-\infty}^0 0dx+\int_0^1 c(x-1)dx+\int_1^2 c(x+1)dx + \int_2^3 cxdx+\int_3^\infty 0dx=1 \\
-    5c-\frac{c}{2}=1 \\
-    c=\frac{2}{9}
+    \int_{-\infty}^0 0dx+\int_0^1 c(1-x)dx+\int_1^2 c(x+1)dx + \int_2^3 cxdx+\int_3^\infty 0dx=1 \\
+    3c-\frac{5c}{2}=1 \\
+    c=\frac{2}{11}
     \end{matrix}$$
 
 b.  Qual a função distribuição cumulativa de X?\
@@ -144,39 +144,39 @@ b.  Qual a função distribuição cumulativa de X?\
 
     -   $\int_{-\infty}^x0dt=0$
 
-    -   $\int_0^x \frac{2}{9}(t-1)dt=\frac{x^2-2x}{9}$
+    -   $\int_0^x \frac{2}{11}(1-t)dt=\frac{2x-x^2}{11}$
 
-    -   $\int_1^x \frac{2}{9}(t+1)dt=\frac{x^2+2x-3}{9}$
+    -   $\int_1^x \frac{2}{11}(t+1)dt=\frac{x^2+2x-3}{11}$
 
-    -   $\int_2^x \frac{2}{9}tdt=\frac{x^2-1}{9}$
+    -   $\int_2^x \frac{2}{11}tdt=\frac{2}{11}\left(\frac{x^2}{2}-2\right)$
 
     -   $\int_3^x0dt=0$
 
     $$
     F(x)=\begin{cases} 
     0,\text{ se } x < 0 \\
-    \frac{x^2-2x}{9},\text{ se } 0 < x \le 1 \\
-    \frac{x^2+2x-3}{9},\text{ se } 1 < x \le 2 \\
-    \frac{x^2-4}{9},\text{ se } 2 < x \le 3 \\
+    \frac{2x-x^2}{11},\text{ se } 0 < x \le 1 \\
+    \frac{x^2+2x-3}{11},\text{ se } 1 < x \le 2 \\
+    \frac{2}{11}\left(\frac{x^2}{2}-2\right),\text{ se } 2 < x \le 3 \\
     1,\text{ se }x>3 \\
     \end{cases}$$
 
 c.  Calcule $E(X)$ e $Var(X)$.\
     $$\begin{aligned}
     E(X)&=\int_{D_x}xf(x)dx \\
-    &=\int_{-\infty}^0 0xdx+\int_0^1 \frac{2}{9}x(x-1)dx+\int_1^2 \frac{2}{9}x(x+1)dx +\\
-    &\int_2^3 \frac{2}{9}x^2dx+\int_3^\infty 0xdx \\
-    &=0-\frac{1}{27}+\frac{23}{27}+\frac{38}{27}+0 \\
-    &=\frac{20}{9}
+    &=\int_{-\infty}^0 0xdx+\int_0^1 \frac{2}{11}x(1-x)dx+\int_1^2 \frac{2}{11}x(x+1)dx +\\
+    &\int_2^3 \frac{2}{11}x^2dx+\int_3^\infty 0xdx \\
+    &=0-\frac{1}{33}+\frac{23}{33}+\frac{38}{33}+0 \\
+    &=\frac{62}{33}
     \end{aligned}$$
 
     $$\begin{aligned}Var(X)&=\int_{D_x}(x-E(x))^2f(x)dx=E(X^2)-E(X)^2 \\
-    E(X^2)&=\int_{-\infty}^0 0x^2dx+\int_0^1 \frac{2}{9}x^2(x-1)dx+\int_1^2 \frac{2}{9}x^2(x+1)dx+ \\
-    &\int_2^3 \frac{2}{9}x^3dx+\int_3^\infty 0x^2dx \\
-    &=0-\frac{1}{54}+\frac{73}{54}+\frac{65}{18}+0 \\
-    &=\frac{89}{18} \\
-    Var(X)&=\frac{89}{18}-\left(\frac{20}{9}\right)^2 \\
-    &=\frac{1}{162}
+    E(X^2)&=\int_{-\infty}^0 0x^2dx+\int_0^1 \frac{2}{11}x^2(1-x)dx+\int_1^2 \frac{2}{11}x^2(x+1)dx+ \\
+    &\int_2^3 \frac{2}{11}x^3dx+\int_3^\infty 0x^2dx \\
+    &=0-\frac{1}{66}+\frac{73}{66}+\frac{65}{22}+0 \\
+    &=\frac{269}{66} \\
+    Var(X)&=\frac{269}{66}-\left(\frac{62}{33}\right)^2 \\
+    &=\frac{1189}{2178} \approx 0{,}546
     \end{aligned}$$
 
 <!-- -->
