@@ -77,19 +77,18 @@ b.  O que significa exatamente o valor numérico da estimativa pontual do coefic
 
 c.  O analista também estimou a especificação alternativa na tabela abaixo, em que as duas variáveis foram incorporadas à regressão simples em forma logarítmica. Qual é a interpretação correta da estimativa pontual do valor numérico coeficiente neste caso? Não deixe de considerar o objetivo da análise e tenha atenção à unidade de medida.
 
-+-----------------------+-----------------------+------------------------------------------------------------------+
-| Parâmetro             | Estimativa pontual    | Unidade de medida                                                |
-+:=====================:+:=====================:+:================================================================:+
-| Intercepto            | 1,73                  | Log (R\$/hora) ou porcentagem                                    |
-+-----------------------+-----------------------+------------------------------------------------------------------+
-| Coeficiente           | 0,25                  | Log (R\$/hora) / Log (anos de estudo) ou porcentagem/porcentagem |
-+-----------------------+-----------------------+------------------------------------------------------------------+
++-------------+--------------------+------------------------------------------------------------------+
+| Parâmetro   | Estimativa pontual | Unidade de medida                                                |
++:===========:+:==================:+:================================================================:+
+| Intercepto  | 1,73               | Log (R\$/hora) ou porcentagem                                    |
++-------------+--------------------+------------------------------------------------------------------+
+| Coeficiente | 0,25               | Log (R\$/hora) / Log (anos de estudo) ou porcentagem/porcentagem |
++-------------+--------------------+------------------------------------------------------------------+
 
 4)  Para esta questão você utilizará a planilha "dados_lista_2.xlsx". Nela se encontram dados para duas variáveis, $Y \equiv$ medida padronizada para o superávit de altura-para-idade para crianças com menos do que cinco anos (`z_nutri`) e $X \equiv$ renda domiciliar (`renda_percapita`) -- a variável `id_dom` é o código que identifica univocamente os domicílios. Utilizando o Excel ou o software gratuito R (este último é objeto dos vídeos lab.1/lab.2/lab.3), realize as tarefas a seguir:
 
-```{=html}
 <!-- -->
-```
+
 a.  Calcule a estimativa pontual para o coeficiente da regressão simples $Y=\beta_{0}+\beta_{1} X+u$. Para isso, aplique a fórmula do estimador em questão aos dados, sendo ela:
 
 $$
@@ -99,27 +98,59 @@ $$
 Uma versão alternativa da fórmula acima é a seguinte:
 
 $$
-\hat{\beta}_{1}=\frac{\sum_{i=1}^{N} \tilde{y}_{i} \tilde{x}_{i}}{\sum_{i=1}^{N}\left(\tilde{x}_{i}\right)^{2}}
+\hat{\beta}_{1}=\frac{\sum_{i=1}^{N} \tilde{y}_{i} \tilde{x}_{i}}{\sum_{i=1}^{N}({\tilde x}_{i})^{2}}
 $$
 
-Em que $\tilde{y}_{i}=y_{i}-\bar{y}$ e $\tilde{x}_{i}=x_{i}-\bar{x}$.
+Em que $\tilde{y}_{i}=y_{i}-\bar{y}$ e $\tilde{x}_{i}=x_{i}-\bar{x}$.\
+
+\footnotesize
+
+```{r}
+# install.packages("tidyverse")
+library("tidyverse")
+
+df <- readxl::read_xlsx(path = "listas/lista_2/dados_lista_2.xlsx") |> 
+  dplyr::rename(renda_pc = `renda_percapita (X)`,
+                z_nutri = `z_nutri (Y)`)
+beta1 <- df |> 
+  dplyr::mutate(d_xy = (renda_pc - mean(renda_pc))*(z_nutri - mean(z_nutri)),
+                dxquad = (renda_pc - mean(renda_pc))^2) |> 
+  dplyr::summarise(beta1 = sum(d_xy)/sum(dxquad)) |>
+  round(6) |>
+  dplyr::pull(beta1)
+```
+
+\normalsize
+
+$\beta_1=$ `r beta1`
 
 b.  Julgue, de maneira justificada, se a estimativa pontual obtida no item anterior faz sentido e interprete-a. Considere que Y é medida em desvios padrão e X em R\$ [^1].
 
 c.  Calcule a estimativa pontual para o intercepto da regressão simples $Y=\beta_{0}+\beta_{1} X+u$. Para isso, aplique a fórmula do estimador em questão aos dados, sendo ela: $\hat{\beta}_{0}=\bar{y}-\hat{\beta}_{1} \bar{x}$.
 
-d.  Julgue, de maneira justificada, se a estimativa pontual obtida no item anterior faz sentido e interprete-a.
-
 [^1]: Nota: a variável dependente é uma medida de nutrição e não de desnutrição, pois se trata da seguinte diferença: altura observada - altura de referência para a idade.
 
-```{=html}
-<!-- -->
+\footnotesize
+
+```{r}
+beta0 <- df |> 
+  dplyr::summarise(beta0 = mean(z_nutri)-beta1*mean(renda_pc)) |>
+  round(2) |> 
+  dplyr::pull(beta0)
 ```
+
+\normalsize
+
+$Y=\beta_0+\beta_1X+u=$ `r beta0` + `r beta1` X.
+
+d.  Julgue, de maneira justificada, se a estimativa pontual obtida no item anterior faz sentido e interprete-a.
+
+<!-- -->
+
 5)  Com base na planilha `dados_lista_2.xlsx` e considerando a mesma regressão da questão anterior:
 
-```{=html}
 <!-- -->
-```
+
 a.  Calcule a fórmula para o coeficiente de determinação, conforme segue:
 
 $$
@@ -128,16 +159,24 @@ $$
 
 Em que $\hat{u}_{i}$ é o resíduo.
 
+```{r}
+r2 <- df |> 
+  summarize(r2 = 1-sum((z_nutri - (beta0+beta1*renda_pc))^2)/
+              sum((z_nutri - mean(z_nutri))^2)) |>
+  round(2) |> 
+  pull(r2)
+```
+
+$R^2=$ `r r2`
+
 b.  Interprete o valor numérico do coeficiente de determinação.
 
-```{=html}
 <!-- -->
-```
+
 6)  Um aluno da disciplina de econometria I armazenou os dados utilizados para estimar uma regressão simples em uma pasta temporária no disco duro de seu computador.
 
-```{=html}
 <!-- -->
-```
+
 a.  O aluno procurou calcular de maneira semi-manual a soma dos quadrados dos resíduos. Para isso ele fez as nove operações abaixo e, antes de realizar a última operação, o Windows automaticamente reiniciou o computador para instalar uma atualização. Ao reiniciar o software estatístico, os dados não estavam mais disponíveis. Complete o cálculo para o aluno, informando (i) o resíduo da décima observação, (ii) o quadrado do resíduo referente à décima observação e (iii) a soma dos quadrados dos resíduos, utilizando uma das propriedades algébricas da regressão linear simples.
 
 | Observação | Nível educacional (X) |  Resíduo (A)   | Resíduo ao quadrado (B = A^2^) |
@@ -155,7 +194,6 @@ a.  O aluno procurou calcular de maneira semi-manual a soma dos quadrados dos re
 
 b.  Agora ajude o estudante a calcular a covariância amostral entre a variável dependente e o resíduo, dada por $\frac{1}{N} \sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)(\hat{u}_i-\bar{u})$. Utilize, para isso, uma segunda propriedade algébrica de regressão linear simples. Confirme o resultado obtido algebricamente fazendo o cálculo numérico com base na tabela acima.
 
-```{=html}
 <!-- -->
-```
+
 7)  Derive o estimador de mínimos quadrados ordinários do seguinte modelo sem intercepto $Y_i=\beta_{1} X_i+u_i\ \scriptsize(1)$. Agora verifique que, se o modelo populacional possui um intercepto $\beta_{0}$ diferente de zero, assumindo forma $Y_{i}=\beta_{0}+\beta_{1} X_{i}+u_{i}$, então o estimador de $\beta_{1}$ da equação (1) é viesado.
