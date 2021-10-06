@@ -60,30 +60,73 @@ $$
 {Nota\_ENEM}_i=\beta_{0}+\beta_{1}\ {mensalidade}_{i}+u_{i}
 $$
 
-1)  Selecione um fator (variável aleatória) que você acredita explicar o desempenho do ENEM, mas que, estando omitido da equação, é captado pelo termo de perturbação, $u_{i}$. Explique com detalhe porque este fator influencia a variável dependente.
+1)  Selecione um fator (variável aleatória) que você acredita explicar o desempenho do ENEM, mas que, estando omitido da equação, é captado pelo termo de perturbação, $u_{i}$. Explique com detalhe porque este fator influencia a variável dependente.\
+    O número de alunos matriculados em cursos pré-vestibulares é importante, pois uma escola de ensino médio com uma mensalidade menor pode ter aprovados com notas mais altas no ENEM por fatores fora do escopo escolar. Assim, esse seria um controle importante de se fazer no estudo.
 
-2)  Verifique se a propriedade de ausência de viés do estimador do coeficiente de uma regressão linear simples se mantém caso a hipótese de expectativa condicional zero, i.e., de que $E\left(u_i|X\right)=0, i=1, \dots, N$, for substituída pela hipótese de que $E\left(u_i|X\right)=\alpha_{0}+\alpha_{1} X_{i}, i=1, \dots, N, \alpha_{0} \neq 0, \alpha_{1} \neq 0$. Em sua resposta, apresente os passos lógicos necessários para estabelecer o resultado de ausência de viés sob as hipóteses convencionais, apenas tomando o cuidado de utilizar a hipótese aqui requerida. Para fins de fixação do conteúdo que seguirá nas próximas aulas, acrescenta-se que a hipótese $E\left(u_i|X\right)=0$ é também referida como "exogeneidade".
+2)  Verifique se a propriedade de ausência de viés do estimador do coeficiente de uma regressão linear simples se mantém caso a hipótese de expectativa condicional zero, i.e., de que $E\left(u_i|X\right)=0, i=1, \dots, N$, for substituída pela hipótese de que $E\left(u_i|X\right)=\alpha_{0}+\alpha_{1} x_{i},\ i=1, \dots, N, \alpha_{0} \neq 0, \alpha_{1} \neq 0$. Em sua resposta, apresente os passos lógicos necessários para estabelecer o resultado de ausência de viés sob as hipóteses convencionais, apenas tomando o cuidado de utilizar a hipótese aqui requerida. Para fins de fixação do conteúdo que seguirá nas próximas aulas, acrescenta-se que a hipótese $E\left(u_i|X\right)=0$ é também referida como "exogeneidade".\
+
+    - Ausência de viés: $B(\hat\beta_1|X)=E(\hat\beta_1|X)-\beta_1=0$.
+    - $\hat{\beta}_{1}=\beta_{1}+\frac{\sum_{i=1}^{N} \tilde{u}_{i}\left(x_{i}-\bar{x}\right)}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}}\text{, onde } \tilde{u}_{i}=u_i-\bar u$ ^[Nota de aula 3, p. 7]
+
+$$
+\begin{aligned}
+B(\hat\beta_1|X)&=E\left[\beta_{1}+\frac{\sum_{i=1}^{N} \tilde{u}_{i}\left(x_{i}-\bar{x}\right)}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}} \Bigg| X \right]-\beta_1 \\
+&=\cancel{E(\beta_{1}|X)-\beta_1}+E\left[\frac{\sum_{i=1}^{N} \tilde{u}_{i}\left(x_{i}-\bar{x}\right)}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}}\Bigg| X\right] \\
+&=\frac{E\left[\sum_{i=1}^{N} \tilde{u}_{i}\left(x_{i}-\bar{x}\right)\big|X\right]}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}} \\
+&=\frac{\sum_{i=1}^{N} \overbrace{E(\tilde{u}_{i}|X)}^{(i)}\left(x_{i}-\bar{x}\right)}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}}
+\end{aligned}
+$$
+Desenvolvendo (i):
+
+$$
+\begin{aligned}
+(i)\ E(\tilde{u}_{i}\big|X)&=E(u_i-\bar u|X) = E(u_i|X)-E(\bar u|X)\\
+&=\alpha_0+\alpha_1x_i-E\left(N^{-1}\sum^N_{i=1}u_i \Bigg|X\right)\\
+&=\alpha_0+\alpha_1x_i-N^{-1}\left[\sum^N_{i=1}E(u_i|X)\right] \\
+&=\alpha_0+\alpha_1x_i-N^{-1}\left[\sum^N_{i=1}\alpha_0+\alpha_1x_i\right] \\
+&=\cancel\alpha_0+\alpha_1x_i-\cancel\alpha_0-N^{-1}\alpha_1\sum^N_{i=1}x_i \\
+&=\alpha_1x_i-N^{-1}\alpha_1\sum^N_{i=1}x_i=\alpha_1\left(x_i-N^{-1}\sum^N_{i=1}x_i\right) \\
+&=\alpha_1(x_i-\bar x)
+\end{aligned}
+$$
+Logo:
+
+$$
+\begin{aligned}
+B(\hat\beta_1|X)&=\frac{\sum_{i=1}^{N} \alpha_1(x_i-\bar x)\left(x_{i}-\bar{x}\right)}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}} \\
+&=\frac{\sum_{i=1}^{N} \alpha_1(x_i-\bar x)^2}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}} \\
+&=\frac{\alpha_1\sum_{i=1}^{N}(x_i-\bar x)^2}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}}=\alpha_1
+\end{aligned}
+$$
+A propriedade de ausência de viés do estimador do coeficiente não se mantém caso a hipótese de expectativa condicional zero seja substituída pela hipótese da questão.
 
 3)  Um analista trainee do setor bancário estimou, como parte de uma exploração descritiva dos dados da PNAD anual 2015, a regressão simples reportada na tabela abaixo. Teve-se como objetivo investigar a relação entre nível educacional e remuneração horária. Essas duas variáveis estavam disponíveis nos dados na forma de características individuais de pessoas empregadas em 2015.
 
-|  Parâmetro  | Estimativa pontual |   Unidade de medida    |
-|:-----------:|:------------------:|:----------------------:|
-| Intercepto  |        3,67        |        R\$/hora        |
-| Coeficiente |        0,69        | R\$/hora/ano de estudo |
++---------------+--------------------+--------------------------+
+| Parâmetro     | Estimativa pontual | Unidade de medida        |
++:=============:+:==================:+:========================:+
+| Intercepto    | 3,67               | R\$/hora                 |
++---------------+--------------------+--------------------------+
+| Coeficiente   | 0,69               | (R\$/hora)/ano de estudo |
++---------------+--------------------+--------------------------+
 
-a.  O que significa exatamente o valor numérico da estimativa pontual do intercepto? Informe a leitura correta de tal número, tendo em vista o objetivo da análise.
+a.  O que significa exatamente o valor numérico da estimativa pontual do intercepto? Informe a leitura correta de tal número, tendo em vista o objetivo da análise.\
+    $\beta_0$ pode ser interpretado como a remuneração média para um trabalhador sem nenhum ano de estudo.
 
-b.  O que significa exatamente o valor numérico da estimativa pontual do coeficiente? Informe a leitura correta de tal resultado, tendo em vista o objetivo da análise.
+b.  O que significa exatamente o valor numérico da estimativa pontual do coeficiente? Informe a leitura correta de tal resultado, tendo em vista o objetivo da análise.\
+    $\beta_1$ pode ser interpretado como, para cada um ano de estudo, a remuneração aumenta em 0,69 R\$/hora.
 
 c.  O analista também estimou a especificação alternativa na tabela abaixo, em que as duas variáveis foram incorporadas à regressão simples em forma logarítmica. Qual é a interpretação correta da estimativa pontual do valor numérico coeficiente neste caso? Não deixe de considerar o objetivo da análise e tenha atenção à unidade de medida.
 
-+-------------+--------------------+------------------------------------------------------------------+
-| Parâmetro   | Estimativa pontual | Unidade de medida                                                |
-+:===========:+:==================:+:================================================================:+
-| Intercepto  | 1,73               | Log (R\$/hora) ou porcentagem                                    |
-+-------------+--------------------+------------------------------------------------------------------+
-| Coeficiente | 0,25               | Log (R\$/hora) / Log (anos de estudo) ou porcentagem/porcentagem |
-+-------------+--------------------+------------------------------------------------------------------+
++-------------+--------------------+-----------------------------------+
+| Parâmetro   | Estimativa pontual | Unidade de medida                 |
++:===========:+:==================:+:=================================:+
+| Intercepto  | 1,73               | Log(R\$/hora)                     |
++-------------+--------------------+-----------------------------------+
+| Coeficiente | 0,25               | Log(R\$/hora)/Log(anos de estudo) |
++-------------+--------------------+-----------------------------------+
+
+Nesse caso, $\beta_1$ mostra que um aumento de 1% em anos de estudo leva a um aumento, em média, de 25% na remuneração. Já o $\beta_0$ não tem uma interpretação clara.
 
 4)  Para esta questão você utilizará a planilha "dados_lista_2.xlsx". Nela se encontram dados para duas variáveis, $Y \equiv$ medida padronizada para o superávit de altura-para-idade para crianças com menos do que cinco anos (`z_nutri`) e $X \equiv$ renda domiciliar (`renda_percapita`) -- a variável `id_dom` é o código que identifica univocamente os domicílios. Utilizando o Excel ou o software gratuito R (este último é objeto dos vídeos lab.1/lab.2/lab.3), realize as tarefas a seguir:
 
@@ -98,7 +141,7 @@ $$
 Uma versão alternativa da fórmula acima é a seguinte:
 
 $$
-\hat{\beta}_{1}=\frac{\sum_{i=1}^{N} \tilde{y}_{i} \tilde{x}_{i}}{\sum_{i=1}^{N}({\tilde x}_{i})^{2}}
+\hat{\beta}_{1}=\frac{\sum_{i=1}^{N} \tilde{y}_{i} \tilde{x}_{i}}{\sum_{i=1}^{N}{\tilde x}_{i}^{2}}
 $$
 
 Em que $\tilde{y}_{i}=y_{i}-\bar{y}$ e $\tilde{x}_{i}=x_{i}-\bar{x}$.\
@@ -112,11 +155,12 @@ library("tidyverse")
 df <- readxl::read_xlsx(path = "listas/lista_2/dados_lista_2.xlsx") |> 
   dplyr::rename(renda_pc = `renda_percapita (X)`,
                 z_nutri = `z_nutri (Y)`)
-beta1 <- df |> 
+
+beta1 <- df |>
   dplyr::mutate(d_xy = (renda_pc - mean(renda_pc))*(z_nutri - mean(z_nutri)),
                 dxquad = (renda_pc - mean(renda_pc))^2) |> 
   dplyr::summarise(beta1 = sum(d_xy)/sum(dxquad)) |>
-  round(6) |>
+  round(5) |>
   dplyr::pull(beta1)
 ```
 
@@ -124,7 +168,8 @@ beta1 <- df |>
 
 $\beta_1=$ `r beta1`
 
-b.  Julgue, de maneira justificada, se a estimativa pontual obtida no item anterior faz sentido e interprete-a. Considere que Y é medida em desvios padrão e X em R\$ [^1].
+b.  Julgue, de maneira justificada, se a estimativa pontual obtida no item anterior faz sentido e interprete-a. Considere que Y é medida em desvios padrão e X em R\$ [^1].\
+    A estimativa de $\beta_1$ mostra que, em média, uma variação de uma unidade na renda *per capita* leva a uma variação de `r beta1` unidades no superávit de altura-para-idade para crianças com menos do que cinco anos. É possível afirmar com base em $\beta_1$ que quase não existe relação entre as duas variáveis analisadas, ou seja, a renda *per capita* não influencia na nutrição, uma conclusão coerente pois espera-se que a renda *per capita* tenha uma correlação negativa com a desnutrição.
 
 c.  Calcule a estimativa pontual para o intercepto da regressão simples $Y=\beta_{0}+\beta_{1} X+u$. Para isso, aplique a fórmula do estimador em questão aos dados, sendo ela: $\hat{\beta}_{0}=\bar{y}-\hat{\beta}_{1} \bar{x}$.
 
@@ -143,7 +188,8 @@ beta0 <- df |>
 
 $Y=\beta_0+\beta_1X+u=$ `r beta0` + `r beta1` X.
 
-d.  Julgue, de maneira justificada, se a estimativa pontual obtida no item anterior faz sentido e interprete-a.
+d.  Julgue, de maneira justificada, se a estimativa pontual obtida no item anterior faz sentido e interprete-a.\
+    A estimativa de $\beta_0$ faz sentido para a análise pois mostra que, para uma renda igual a 0, o superávit nutricional é próximo de 0 também.
 
 <!-- -->
 
@@ -154,22 +200,27 @@ d.  Julgue, de maneira justificada, se a estimativa pontual obtida no item anter
 a.  Calcule a fórmula para o coeficiente de determinação, conforme segue:
 
 $$
-R^{2}=1-\frac{S Q R}{S Q T}=1-\frac{\sum_{i=1}^{N}\left(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1} x_{i}\right)^{2}}{S Q T}=1-\frac{\sum_{i=1}^{N}\left(\hat{u}_{i}\right)^{2}}{\sum_{i=1}^{N}\left(\tilde{y}_{i}\right)^{2}}
+R^{2}=1-\frac{S Q R}{S Q T}=1-\frac{\sum_{i=1}^{N}\left(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1} x_{i}\right)^{2}}{S Q T}=1-\frac{\sum_{i=1}^{N}\hat{u}_{i}^{2}}{\sum_{i=1}^{N}\tilde{y}_{i}^{2}}
 $$
 
 Em que $\hat{u}_{i}$ é o resíduo.
 
+\footnotesize
+
 ```{r}
 r2 <- df |> 
-  summarize(r2 = 1-sum((z_nutri - (beta0+beta1*renda_pc))^2)/
+  dplyr::summarize(r2 = 1-sum((z_nutri - (beta0+beta1*renda_pc))^2)/
               sum((z_nutri - mean(z_nutri))^2)) |>
   round(2) |> 
-  pull(r2)
+  dplyr::pull(r2)
 ```
+
+\normalsize
 
 $R^2=$ `r r2`
 
-b.  Interprete o valor numérico do coeficiente de determinação.
+b.  Interprete o valor numérico do coeficiente de determinação.\
+    O $R^2$ de 0,01 quer dizer que o modelo praticamente não explica nada da variância da variável dependente, ou seja, o modelo não é relevante para entender o comportamento de Y.
 
 <!-- -->
 
@@ -196,4 +247,23 @@ b.  Agora ajude o estudante a calcular a covariância amostral entre a variável
 
 <!-- -->
 
-7)  Derive o estimador de mínimos quadrados ordinários do seguinte modelo sem intercepto $Y_i=\beta_{1} X_i+u_i\ \scriptsize(1)$. Agora verifique que, se o modelo populacional possui um intercepto $\beta_{0}$ diferente de zero, assumindo forma $Y_{i}=\beta_{0}+\beta_{1} X_{i}+u_{i}$, então o estimador de $\beta_{1}$ da equação (1) é viesado.
+7)  Derive o estimador de mínimos quadrados ordinários do seguinte modelo sem intercepto $Y_i=\beta_{1} X_i+u_i\ \scriptsize(1)$. Agora verifique que, se o modelo populacional possui um intercepto $\beta_{0}$ diferente de zero, assumindo forma $Y_{i}=\beta_{0}+\beta_{1} X_{i}+u_{i}$, então o estimador de $\beta_{1}$ da equação (1) é viesado.\
+
+$$
+\begin{aligned}
+\hat u_i=y_i-\hat y_i=y_i-\hat \beta_1x_i \\
+\sum^N_{i=1}\hat u_i^2=\sum^N_{i=1}(y_i-\hat\beta_1x_i)^2 \\
+\min_{\hat\beta_1}\sum^N_{i=1}(y_i-\hat\beta_1x_i)^2 \\
+CPO: \frac{d}{d\hat\beta_1}\left[\sum^N_{i=1}(y_i-\hat\beta_1x_i)^2\right]=0 \\
+-2\left(\sum^N_{i=1}y_i-\hat\beta_1x_i\right)=0 \\
+\sum^N_{i=1}y_i-\hat\beta_1x_i=0 \\
+\sum^N_{i=1}y_i-\hat\beta_1\sum^N_{i=1}x_i=0 \\
+\end{aligned}
+$$
+$$
+\begin{aligned}
+N^{-1}\left(\sum^N_{i=1}y_i-\hat\beta_1\sum^N_{i=1}x_i\right)=0 \\
+\bar y-\hat\beta_1\bar x=0\\
+\hat |> \beta_1=\frac{\bar y}{\bar x}
+\end{aligned}
+$$
