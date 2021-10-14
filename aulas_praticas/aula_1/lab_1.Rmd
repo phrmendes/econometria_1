@@ -1,0 +1,60 @@
+---
+title: "lab_1"
+output: html_notebook
+bibliography: references.bib
+csl: abnt.csl
+---
+
+# Primeira aula de laboratório, script 1[^1]
+
+[^1]: Preparado por Thiago Fonseca Morello (CECS-UFABC).
+
+O objetivo deste roteiro de aula é apresentar comandos básicos do R, comandos necessários para estimação de uma regressão linear múltipla e introduzir a interpretação das estimativas pontuais.
+
+## Regressões que serão estimadas
+
+1 - Infecções por COVID-19, gênero e características socioeconômicas, âmbito internacional [@abras2021].
+
+<center>
+
+infec_per_capita = $\beta_0$ + $\beta_1$dirigente_mulher + $\beta_2$fertilidade + $\beta_3$poluição + $\beta_4$lockdown + $\beta_5$ continente + u
+
+</center>
+
+2 - Mortalidade devido a COVID-19 e características socioeconômicas, âmbito internacional [@abras2021]
+
+<center>
+
+obitos_per_capita = $\beta_0$ + $\beta_1$dirigente_mulher + $\beta_2$fertilidade + $\beta_3$poluição + $\beta_4$lockdown + $\beta_5$ Continente + $\beta_6$infec_per_capita + u
+
+</center>
+
+3 - Equação de Mincer [@giuberti2005; @meara2020]
+
+<center>
+
+salário_hora_real = $\beta_0$ + $\beta_1$educação + $\beta_2$experiência + $\beta_3$setor + $\beta_4$ocupação + $\beta_5$gênero + $\beta_6$etnia + $\beta_7$região + $\beta_8$área_urbana + u~t~
+
+</center>
+
+## Dados
+
+```{r}
+library(tidyverse)
+
+load("aulas_praticas/aula_1/lab_1_dados.Rdata")
+
+# convertendo para tibbles
+
+db_cov <- db_cov |> as_tibble(db_cov)
+
+db_min <- db_min |> as_tibble(db_cov)
+
+db_cov
+
+db_min
+```
+
+Preparação dos dados para equações 1 e 2
+
+# Referências
