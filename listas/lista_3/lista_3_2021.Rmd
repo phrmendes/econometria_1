@@ -21,6 +21,7 @@ reference-section-title: Referências
 csl: abnt.csl
 nocite: null
 lang: pt-BR
+always_allow_html: true
 header-includes:
 - \usepackage{setspace}
 - \usepackage{ragged2e}
@@ -56,14 +57,51 @@ knitr::opts_chunk$set(error=FALSE, warning=FALSE, message=FALSE)
 
 (Texto para as questões 1 a 3) Os governos dos estados brasileiros estão interessados em implementar ações com o intuito de melhorar a taxa de aprovação (ou de não-repetência) dos alunos de escolas estaduais. Resultados de estudos econométricos previamente realizados apontam que a qualidade da escola pública em que foi cursado o ensino fundamental é uma das principais causas do desempenho do aluno no ensino médio. Seja assumido que é possível obter, a partir dos dados disponíveis, uma medida razoavelmente precisa para a qualidade das escolas públicas, denotada por "quali_pub". Também será assumido que os governos estaduais são capazes de alterar a variável em questão. Com base nisso, seja, por simplicidade, considerada uma política pública estadual que procura aumentar a taxa de aprovação explorando, para isso, a via de aumento da qualidade das escolas públicas de ensino fundamental. Você foi contratado para estimar o impacto provável desta política como subsídio à decisão que definirá se ela vai ou não ser implementada. Os dados disponíveis compreendem três variáveis, (i) o desempenho, no ensino médio, de alunos que cursaram o ensino fundamental em escolas públicas, taxa_aprov, (ii) quali_pub, (iii) nível educacional dos pais dos alunos, educ_pais. A partir destes dados é possível estimar duas Funções de Regressão Populacional (FRPs) distintas.
 
--   **FRP 1:** Taxa_aprov~i~ = $\alpha_{0}+\alpha_{1}$ quali_pub~i~ + e~i~
--   **FRP 2:** Taxa_aprov~i~ = $\beta_{0}+\beta_{1}$ quali_pub~i~ + $\beta_{2}$ educ_pais~i~ + u~i~
+-   **FRP 1:** taxa_aprov~i~ = $\alpha_{0}+\alpha_{1}$ quali_pub~i~ + e~i~
+-   **FRP 2:** taxa_aprov~i~ = $\beta_{0}+\beta_{1}$ quali_pub~i~ + $\beta_{2}$ educ_pais~i~ + u~i~
 
 Ao comparar as duas FRPs, deve-se levar em conta a existência de correlação entre quali_pub e educ_pais, justificada pela conjectura de que a capacidade de selecionar a melhor escola para os filhos é diretamente proporcional ao nível educacional. Além disso, há evidência de que o desempenho no ensino médio é positivamente correlacionado com a educação dos pais.
 
 ## 1) {.unnumbered}
 
 *No enunciado acima, há três relações que conectam as três variáveis. Represente essas relações a partir de um diagrama de flechas tal como o que consta na nota de aula 4. Para isso, considere duas convenções, quais sejam: (a) a causalidade deve ser indicada com uma flecha unidirecional,* $\rightarrow$*, em cujo início está a variável-causa e, em, cujo término, a variável-consequência e; (b) a correlação deve ser indicada com uma flecha bidirecional ,"*$\leftrightarrow$*".*
+
+```{r echo = F, results = F}
+# install.packages("DiagrammeR")
+
+library("DiagrammeR")
+
+DiagrammeR::grViz("
+  digraph boxes_and_circles {
+    
+    rankdir=LR;
+  
+    graph [overlap = true, fontsize = 10]
+  
+    node [shape = box, fontsize = 10]
+    a[label = <taxa_aprov<SUB>i</SUB>>]
+  
+    node [shape = circle,
+          fixedsize = true,
+          width = 0.9,
+          fontsize = 10]
+    b[label = <quali_pub<SUB>i</SUB>>]; c[label = <educ_pais<SUB>i</SUB>>]
+  
+    b -> a
+    c -> a
+    b -> c
+    c -> b
+  }
+")
+```
+
+\Centering
+
+![](diagrama.png){width="400"}
+
+\justifying
+
+\setlength{\parindent}{0cm}
 
 ## 2) {.unnumbered}
 
@@ -98,7 +136,7 @@ $$
 
 ## 6) {.unnumbered}
 
-*Quais dos seguintes itens podem fazer que os estimadores de MQO sejam viesados? Explique sua escolha.*
+*Quais dos seguintes itens podem fazer que os estimadores de MQO sejam enviesados? Explique sua escolha.*
 
 -   *a. Heterocedasticidade*
 -   *b. Omitir uma variável importante*
