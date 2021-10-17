@@ -3,6 +3,7 @@ title: "lab_1"
 output: html_notebook
 bibliography: references.bib
 csl: abnt.csl
+df_print: paged
 ---
 
 # Primeira aula de laboratório, script 1[^1]
@@ -25,7 +26,7 @@ infec_per_capita = $\beta_0$ + $\beta_1$dirigente_mulher + $\beta_2$fertilidade 
 
 <center>
 
-obitos_per_capita = $\beta_0$ + $\beta_1$dirigente_mulher + $\beta_2$fertilidade + $\beta_3$poluição + $\beta_4$lockdown + $\beta_5$ Continente + $\beta_6$infec_per_capita + u
+obitos_per_capita = $\beta_0$ + $\beta_1$dirigente_mulher + $\beta_2$fertilidade + $\beta_3$poluição + $\beta_4$lockdown + $\beta_5$continente + $\beta_6$infec_per_capita + u
 
 </center>
 
@@ -40,21 +41,145 @@ salário_hora_real = $\beta_0$ + $\beta_1$educação + $\beta_2$experiência + $
 ## Dados
 
 ```{r}
+# install.packages("tidyverse")
 library(tidyverse)
 
 load("aulas_praticas/aula_1/lab_1_dados.Rdata")
 
 # convertendo para tibbles
 
-db_cov <- db_cov |> as_tibble(db_cov)
+db_cov <- db_cov |> dplyr::as_tibble(db_cov)
 
-db_min <- db_min |> as_tibble(db_cov)
+db_min <- db_min |> dplyr::as_tibble(db_cov)
 
 db_cov
 
 db_min
 ```
 
-Preparação dos dados para equações 1 e 2
+## Preparação dos dados para equações 1 e 2
+
+Dados faltantes:
+
+```{r}
+db_cov |> 
+  dplyr::filter(is.na(fertility_)) |> 
+  dplyr::tally()
+```
+
+Fertilidade não observado para 19 países.
+
+Limpando dados faltantes:
+
+```{r}
+db_covs <- db_cov |>
+  dplyr::select(casos_por_milhao, obitos_por_milhao, fem_head, fertility_, airpoll_exposure_, d_lockdown, Continent, country) |>
+  tidyr::drop_na()
+```
+
+Resumo estatístico das variáveis selecionadas:
+
+```{r}
+summary(db_covs)
+```
+
+Gráfico de dispersão de mortalidade vs infecções:
+
+```{r}
+db_covs |> ggplot() +
+  geom_point(aes(
+    x = casos_por_milhao,
+    y = obitos_por_milhao,
+  )) +
+  labs(
+    x = "Infecções",
+    y = "Óbitos"
+  )
+```
+
+Qual é a direção da relação entre as duas variáveis?
+
+Coeficientes de correlação com teste de significância: mortalidade vs infecções:
+
+```{r}
+# install.packages("broom") 
+library(broom) # converte as funções estatísticas do R em tidy data
+
+db_covs |> dplyr::do(
+  cor.test(.$casos_por_milhao, .$obitos_por_milhao) |> 
+    broom::tidy()
+  ) # do() executa qualquer função (fora do tidyverse) envolvendo dataframes em um pipe.
+```
+
+A correlação é estatisticamente significativa ou não? Há contradição com o gráfico de dispersão? *R: É significativa e coerente com o gráfico.*
+
+## Estatísticas-resumo por continente
+
+Número médio de casos per capita por continente: qual continente apresentou maior prevalência de COVID-19?
+
+```{r}
+db_covs |> 
+  dplyr::group_by(Continent) |> 
+  dplyr::summarise(m_obitos_por_milhao = mean(obitos_por_milhao)) |>
+  dplyr::arrange(m_obitos_por_milhao) |> 
+  knitr::kable(col.names = c("Continente","Óbitos por milhão"))
+```
+
+Taxa média de letalidade: qual continente apresentou maior taxa de letalidade? A taxa de letalidade é uma medida da gravidade do impacto na saúde causado pelo COVID-19 ou do grau de risco de vida imposto pela aquisição do vírus.
+
+```{r}
+db_covs <- db_covs |>
+  dplyr::mutate(letalidade = obitos_por_milhao/casos_por_milhao) # criando coluna com dados de letalidade
+  
+db_covs |>   
+  dplyr::group_by(Continent) |> 
+  dplyr::summarise(m_letalidade = mean(100*letalidade)) |>
+  dplyr::arrange(m_letalidade) |> 
+  knitr::kable(col.names = c("Continente", "Taxa de letalidade (%)"),
+               digits = 2)
+```
+
+É o que esperávamos? Qual é a razão da diferençaa do ranque comparando às outras classificações? *R: Provavelmente diferenças populacionais entre os continentes.*
+
+Os percentis da distribuição empírica de uma variável permitem identificar valores discrepantes da tendência central (média), i.e., muito pequenos ou muito grandes.
+
+```{r}
+db_covs |>
+  dplyr::summarise(letalidade = obitos_por_milhao/casos_por_milhao) |>
+  dplyr::do(
+    quantile(.$letalidade, 1:20/20) |> 
+    broom::tidy()
+  ) |>
+  knitr::kable(col.names = c("Percentil", "Letalidade")) # Os valores da coluna "Letalidade" representam a distribuição da letalidade pelos percentis.
+```
+
+Detectando outliers (países que estão nos percentis 5% e 95%):
+
+```{r}
+db_covs |> 
+  dplyr::filter(letalidade == 0) |> 
+  dplyr::do(
+   summary(.$Continent) |> 
+     broom::tidy()
+  ) |> 
+  knitr::kable(col.names = c("Continente", "Frequência"),
+               caption = "Número de países abaixo do percentil 5%")
+
+db_covs |> 
+  dplyr::filter(letalidade >= 0.087045428) |> 
+  dplyr::do(
+   summary(.$Continent) |> 
+     broom::tidy()
+  ) |> 
+    knitr::kable(col.names = c("Continente", "Frequência"),
+               caption = "Número de países acima do percentil 95%")
+
+```
+
+É o que esperávamos? Qual a característica de geografia física mais recorrente nesse grupo de paises? *R: São ilhas.*
+
+Quais são os países com letalidade muito alta? *R: Os continentais.*
+
+É o que esperávamos? O que isso nos diz sobre o ranque continental?
 
 # Referências
