@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.14)  17 OCT 2021 13:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.14)  17 OCT 2021 16:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -446,24 +446,28 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 )
 \Gin@req@height=\dimen180
 \Gin@req@width=\dimen181
-) (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
+)
+\cslhangindent=\skip77
+\csllabelwidth=\skip78
+\cslentryspacingunit=\skip79
+(/home/pedrom/.TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 ) (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/ragged2e/ragged2e.sty
 Package: ragged2e 2021/02/05 v3.0 ragged2e Package
-\CenteringLeftskip=\skip77
-\RaggedLeftLeftskip=\skip78
-\RaggedRightLeftskip=\skip79
-\CenteringRightskip=\skip80
-\RaggedLeftRightskip=\skip81
-\RaggedRightRightskip=\skip82
-\CenteringParfillskip=\skip83
-\RaggedLeftParfillskip=\skip84
-\RaggedRightParfillskip=\skip85
-\JustifyingParfillskip=\skip86
-\CenteringParindent=\skip87
-\RaggedLeftParindent=\skip88
-\RaggedRightParindent=\skip89
-\JustifyingParindent=\skip90
+\CenteringLeftskip=\skip80
+\RaggedLeftLeftskip=\skip81
+\RaggedRightLeftskip=\skip82
+\CenteringRightskip=\skip83
+\RaggedLeftRightskip=\skip84
+\RaggedRightRightskip=\skip85
+\CenteringParfillskip=\skip86
+\RaggedLeftParfillskip=\skip87
+\RaggedRightParfillskip=\skip88
+\JustifyingParfillskip=\skip89
+\CenteringParindent=\skip90
+\RaggedLeftParindent=\skip91
+\RaggedRightParindent=\skip92
+\JustifyingParindent=\skip93
 ) (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/tools/indentfirst.sty
 Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
 ) (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/chngcntr/chngcntr.sty
@@ -501,9 +505,9 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@floatcapt=\box63
 ) (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip91
+\multirow@colwidth=\skip94
 \multirow@cntb=\count301
-\multirow@dima=\skip92
+\multirow@dima=\skip95
 \bigstrutjot=\dimen189
 ) (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
@@ -540,35 +544,35 @@ File: l3backend-pdftex.def 2021-10-12 L3 backend support: PDF output (pdfTeX)
 ) (./lista_3_2021.aux)
 \openout1 = `lista_3_2021.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-Package scrbase Info: activating brazilian \contentsname on input line 107.
-Package scrbase Info: activating brazilian \listfigurename on input line 107.
-Package scrbase Info: activating brazilian \listtablename on input line 107.
-LaTeX Info: Redefining \microtypecontext on input line 107.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 131.
+LaTeX Font Info:    ... okay on input line 131.
+Package scrbase Info: activating brazilian \contentsname on input line 131.
+Package scrbase Info: activating brazilian \listfigurename on input line 131.
+Package scrbase Info: activating brazilian \listtablename on input line 131.
+LaTeX Info: Redefining \microtypecontext on input line 131.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 107.
+LaTeX Info: Redefining \showhyphens on input line 131.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -589,7 +593,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 107.
+Package hyperref Info: Link coloring OFF on input line 131.
 (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
@@ -600,9 +604,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count305
 )
-LaTeX Info: Redefining \ref on input line 107.
-LaTeX Info: Redefining \pageref on input line 107.
-LaTeX Info: Redefining \nameref on input line 107.
+LaTeX Info: Redefining \ref on input line 131.
+LaTeX Info: Redefining \pageref on input line 131.
+LaTeX Info: Redefining \nameref on input line 131.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -644,14 +648,14 @@ Package caption Info: End \AtBeginDocument code.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 109
+LaTeX Font Info:    Trying to load font information for U+msa on input line 133
 .
 (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 109
+LaTeX Font Info:    Trying to load font information for U+msb on input line 133
 .
 (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -659,44 +663,46 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
-09.
+33.
 (/home/pedrom/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [1
 
 
 {/home/pedrom/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<lista_3_2021_files/figure-latex/unnamed-chunk-2-1.pdf, id=19, 1003.75pt x 582.
-175pt>
-File: lista_3_2021_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type 
-pdf)
-<use lista_3_2021_files/figure-latex/unnamed-chunk-2-1.pdf>
-Package pdftex.def Info: lista_3_2021_files/figure-latex/unnamed-chunk-2-1.pdf 
- used on input line 173.
-(pdftex.def)             Requested size: 364.1985pt x 211.23512pt.
-[2 <./lista_3_2021_files/figure-latex/unnamed-chunk-2-1.pdf>] [3] (./lista_3_20
-21.aux) ) 
+<diagrama.png, id=19, 435.87843pt x 303.38344pt>
+File: diagrama.png Graphic file (type png)
+<use diagrama.png>
+Package pdftex.def Info: diagrama.png  used on input line 197.
+(pdftex.def)             Requested size: 318.66748pt x 221.80136pt.
+[2 <./diagrama.png>] [3] [4] (./lista_3_2021.aux) ) 
 Here is how much of TeX's memory you used:
- 17896 strings out of 480559
- 301838 string characters out of 5903214
- 791394 words of memory out of 5000000
- 35072 multiletter control sequences out of 15000+600000
- 449762 words of font info for 169 fonts, out of 8000000 for 9000
+ 17978 strings out of 480559
+ 302264 string characters out of 5903214
+ 791479 words of memory out of 5000000
+ 35090 multiletter control sequences out of 15000+600000
+ 457927 words of font info for 206 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  108i,12n,108p,10620b,354s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/home/pedrom/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</home/p
-edrom/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></home/pedr
-om/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></home/pedrom/.
-TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home/pedrom/.Tiny
-TeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/pedrom/.TinyTeX/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/pedrom/.TinyTeX/texm
-f-dist/fonts/type1/urw/times/utmb8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts
-/type1/urw/times/utmr8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/urw/t
-imes/utmri8a.pfb>
-Output written on lista_3_2021.pdf (3 pages, 107665 bytes).
+pdfTeX warning (dest): name{
+Hfootnote.2} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
+, replaced by a fixed one
+
+{/home/pedrom/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</home/pedrom/.Ti
+nyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></home/pedrom/.TinyT
+eX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></home/pedrom/.TinyTeX/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home/pedrom/.TinyTeX/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/pedrom/.TinyTeX/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/pedrom/.TinyTeX/texmf-dist/fo
+nts/type1/urw/times/utmb8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/ur
+w/times/utmr8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr
+i8a.pfb>
+Output written on lista_3_2021.pdf (4 pages, 122749 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
- 88 compressed objects within 1 object stream
- 19 named destinations out of 1000 (max. 500000)
- 49214 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 125 PDF objects out of 1000 (max. 8388607)
+ 100 compressed objects within 1 object stream
+ 29 named destinations out of 1000 (max. 500000)
+ 57414 words of extra memory for PDF output out of 61914 (max. 10000000)
 

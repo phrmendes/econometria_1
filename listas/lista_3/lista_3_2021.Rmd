@@ -25,6 +25,7 @@ lang: pt-BR
 header-includes:
 - \usepackage{setspace}
 - \usepackage{ragged2e}
+- \usepackage{amsmath}
 - \usepackage{indentfirst}
 - \usepackage{microtype}
 - \usepackage{chngcntr}
@@ -66,46 +67,49 @@ Ao comparar as duas FRPs, deve-se levar em conta a existência de correlação e
 
 *No enunciado acima, há três relações que conectam as três variáveis. Represente essas relações a partir de um diagrama de flechas tal como o que consta na nota de aula 4. Para isso, considere duas convenções, quais sejam: (a) a causalidade deve ser indicada com uma flecha unidirecional,* $\rightarrow$*, em cujo início está a variável-causa e, em, cujo término, a variável-consequência e; (b) a correlação deve ser indicada com uma flecha bidirecional ,"*$\leftrightarrow$*".*
 
-```{r echo = F, out.width = "80%"}
-# install.packages("DiagrammeR")
-
-library("DiagrammeR")
-
-DiagrammeR::grViz("
-  digraph boxes_and_circles {
-    
-    rankdir=LR;
-  
-    graph [overlap = true, fontsize = 9]
-  
-    node [shape = box, fontsize = 9]
-    a[label = <taxa_aprov<SUB>i</SUB>>]
-  
-    node [shape = circle,
-          fixedsize = true,
-          width = 0.9,
-          fontsize = 10]
-    b[label = <quali_pub<SUB>i</SUB>>]; c[label = <educ_pais<SUB>i</SUB>>]
-  
-    b -> a
-    c -> a
-    b -> c
-    c -> b
-  }
-")
+```{r, echo = FALSE, fig.align = 'center', out.width = '70%'}
+knitr::include_graphics("diagrama.png")
 ```
 
 ## 2) {.unnumbered}
 
 *Explique porque o coeficiente* $\beta_{1}$ *é uma medida mais adequada do que o coeficiente* $\alpha_{1}$ *para o impacto da política pública. Tome por base (i) o diagrama elaborado na questão anterior e (ii) a interpretação ceteris paribus da regressão múltipla.*
 
+Segundo Wooldridge[@wooldridge2015], sabendo que quali_pub~i~ é correlacionada com educ_pais~i~, em uma mesma amostra, a relação entre os estimadores de $\alpha_1$ e $\beta_1$ (respectivamente, $\hat \alpha_1$ e $\hat \beta_1$) é
+
+$$
+\hat \alpha_1=\hat \beta_1+\hat\beta_2\hat\delta_1 \tag{1}
+$$
+
+onde $\hat\delta_1$ é o coeficiente de inclinação da regressão simples de educ_pais~i~ sobre quali_pub~i~. Considerando $\hat\delta_1$ depende apenas das variáveis independentes da amostra, podendo ser tratado como fixo, a esperança de $\hat \alpha_1$ é
+
+$$
+\begin{aligned}
+E(\hat \alpha_1)&=E(\hat \beta_1+\hat\beta_2\hat\delta_1) \\
+&=E(\hat \beta_1)+E(\hat\beta_2)\hat\delta_1 \\
+&=\beta_1+\beta_2\hat\delta_1
+\end{aligned} \tag{2}
+$$
+
+Já o viés de $\hat \alpha_1$, definido como $E(\hat \alpha_1)-\alpha_1$, ao substituir $E(\hat \alpha_1)$ pela equação (2)
+
+$$
+\begin{aligned}
+\text{Viés}(\hat \alpha_1)&=\beta_1+\beta_2\hat\delta_1-\alpha_1 \\
+\end{aligned} \tag{3}
+$$
+
+Para que não houvesse viés entre $\hat \alpha_1$ e $\hat \beta_1$, $\alpha_1$ deve ser igual a $\beta_1$. Porém, $\alpha_1=\beta_1+\beta_2\hat\delta_1$, o que faz com que seu viés seja $\beta_2\hat\delta_1$, justamente o coeficiente omitido na FRP 1. Logo, o coeficiente $\beta_1$ é mais adequado que o coeficiente $\alpha_1$ por representar melhor o efeito *ceteris paribus* de uma variação de quali_pub~i~ em taxa_aprov~i~, pois isola melhor, sem a influência da variável omitida, tal efeito. Caso não haja correlação entre quali_pub~i~ e educ_pais~i~, ambas as FRPs poderão ser utilizadas para estimar o efeito *ceteris paribus* da variação de quali_pub~i~ em taxa_aprov~i~.
+
 ## 3) {.unnumbered}
 
 *O que ocorreria caso os resultados da estimação da FRP 1 fossem tomados por base para decidir quanto à implementação da política?*
 
+Caso $\beta_2$ tenha valores relevantes, possivelmente a taxa de aprovação não terá o efeito estimado pela implementação da política pública ou, no mínimo, será menor do que o esperado.
+
 ## 4) {.unnumbered}
 
-*Uma medida para a discriminação de gênero no mercado de trabalho é dada pela estimativa pontual para o parâmetro* $\delta$ *na FRP a seguir, em que W~i~ é o salário recebido pelo i-ésimo indivíduo, "educ" capta o nível educacional e X contém variáveis explicativas socioeconômicas adicionais. Os indivíduos que declararam possuir sexo masculino são indicados com d_mas = 1, e indivíduos que declararam possuir sexo feminino como d_mas = 0.*
+*Uma medida para a discriminação de gênero no mercado de trabalho é dada pela estimativa pontual para o parâmetro* $\delta$ *na FRP a seguir, em que W~i~ é o salário recebido pelo i-ésimo indivíduo, "educ~i~" capta o nível educacional e X contém variáveis explicativas socioeconômicas adicionais. Os indivíduos que declararam possuir sexo masculino são indicados com d_mas~i~ = 1, e indivíduos que declararam possuir sexo feminino como d_mas~i~ = 0.*
 
 $$
 \log (W_i)=\beta_{0}+\beta_{1} \text{educ}_i+\beta_{3} X_i+\delta \text{d\_mas}_i
@@ -113,9 +117,11 @@ $$
 
 *Argumente porque a estimativa pontual de* $\delta$ *é uma medida para a porção do diferencial salarial associada à discriminação de gênero. Embase sua resposta no conceito do coeficiente de uma variável binária.*
 
+Uma variável binária, ao captar se um atributo é ou não possuído, indica nesse caso se existe disparidade salarial entre gêneros. Caso a variável d_mas~i~ seja relevante, ou seja, mostre a existência de um diferencial salarial, se observará na regressão uma diferença de nível entre as retas que representam o salário recebido por indivíduos do sexo masculino e feminino, mostrando que, *ceteris paribus*, existe uma diferença salarial entre os dois gêneros.
+
 ## 5) {.unnumbered}
 
-*Um pesquisador estimou uma FRP em que a variável dependente é o tempo de internação hospitalar, devida a doenças respiratórias, de idosos com pelo menos 65 anos. Foram considerados 763 municípios da Amazônia Legal brasileira. A FPR estimada correspondeu à: dias_leito =* $\beta_{0}+\beta_{1}$*idade_média~i~ +* $\beta_{2}$*DCNT~i~ +* $\beta_{3}$*PIB~i~ + u~i~, a qual será referida, doravante, como "equação original". A primeira explicativa é a idade média da população municipal, DNCT* $\equiv$ *mortalidade devido a doenças crônicas não-transmissíveis, uma medida do nível de saúde da população e PIB* $\equiv$ *produto interno bruto municipal, uma medida para a capacidade de contratar serviços de saúde e comprar medicação. Uma vez obtidos os resultados, o pesquisador decidiu fazer um teste, ampliando a FRP com a inclusão do Índice de Desenvolvimento Humano municipal (IDH). Os resultados seguem na tabela abaixo. Explique porque, mesmo sendo a soma dos quadrados dos resíduos (SQR) inferior na equação ampliada, esta apresentou o mesmo R^2^ ajustado.*
+*Um pesquisador estimou uma FRP em que a variável dependente é o tempo de internação hospitalar, devido a doenças respiratórias, de idosos com pelo menos 65 anos. Foram considerados 763 municípios da Amazônia Legal brasileira. A FPR estimada correspondeu à: dias_leito =* $\beta_{0}$ + $\beta_{1}$*idade_média~i~ +* $\beta_{2}$*DCNT~i~ +* $\beta_{3}$*PIB~i~ + u~i~, a qual será referida, doravante, como "equação original". A primeira explicativa é a idade média da população municipal, DNCT* $\equiv$ *mortalidade devido a doenças crônicas não-transmissíveis, uma medida do nível de saúde da população e PIB* $\equiv$ *produto interno bruto municipal, uma medida para a capacidade de contratar serviços de saúde e comprar medicação. Uma vez obtidos os resultados, o pesquisador decidiu fazer um teste, ampliando a FRP com a inclusão do Índice de Desenvolvimento Humano municipal (IDH). Os resultados seguem na tabela abaixo. Explique porque, mesmo sendo a soma dos quadrados dos resíduos (SQR) inferior na equação ampliada, esta apresentou o mesmo R^2^ ajustado.*
 
 | Estatística / FRP         |   Sem IDH    |   Com IDH    |
 |:--------------------------|:------------:|:------------:|
@@ -126,9 +132,13 @@ $$
 | Graus de liberdade da SQT |     762      |     762      |
 | R^2^ ajustado             |    0,8851    |    0,8851    |
 
+Embora a soma de quadrados do resíduo tenha diminuído, mostrando uma menor diferença entre os valores obtidos na regressão e a média da variável independente, a soma de quadrados do erro, que representa a diferença entre os valores obtidos na regressão e os valores da variável dependente aumentou, levando a um R^2^ constante. Isso mostra que a variável IDH não é relevante para compreender o tempo de internação hospitalar, devido a doenças respiratórias, de idosos com pelo menos 65 anos.
+
 ## 6) {.unnumbered}
 
 *Quais dos seguintes itens podem fazer que os estimadores de MQO sejam enviesados? Explique sua escolha.*
 
 -   *a. Heterocedasticidade*
 -   *b. Omitir uma variável importante*
+
+Em uma regressão linear múltipla, a heterocedasticidade viola uma das hipóteses-base da obtenção da regressão, que é o erro possuir a mesma variância dada a quaisquer valores das variáveis explicativas[@wooldridge2015]. Já omitir uma variável importante, como demonstrado na questão dois, pode enviesar um estimador de MQO, já que impossibilita a obtenção do efeito *ceteris paribus* a partir do coeficiente estimado.
