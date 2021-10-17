@@ -59,12 +59,15 @@ db_min
 
 ## Preparação dos dados para equações 1 e 2
 
+É comum, em dados socieconômicos que algumas variáveis apresentem, para algumas unidades, valores não-observados. Em sondagens com aplicação de questionário à pessoas ou empresas, é o que se tem quando a informação não é concedida, i.e., o entrevistado se recusa a responder ou a questão não se aplica (p.ex., idade dos filhos não se aplica a família sem filhos). Em dados de países, como é o caso da base db_cov, trata-se de informação não gerada pelo país (p.ex., países em situação de guerra não possuem serviços estatísticos funcionando, e, portanto, não calculam PIB e outras estatísticas).
+
 Dados faltantes:
 
 ```{r}
 db_cov |> 
   dplyr::filter(is.na(fertility_)) |> 
-  dplyr::tally()
+  dplyr::tally() |> 
+  dplyr::pull()
 ```
 
 Fertilidade não observado para 19 países.
@@ -85,8 +88,9 @@ summary(db_covs)
 
 Gráfico de dispersão de mortalidade vs infecções:
 
-```{r}
-db_covs |> ggplot() +
+```{r, fig.align='center'}
+db_covs |> 
+  ggplot() +
   geom_point(aes(
     x = casos_por_milhao,
     y = obitos_por_milhao,
@@ -113,7 +117,7 @@ db_covs |> dplyr::do(
 
 A correlação é estatisticamente significativa ou não? Há contradição com o gráfico de dispersão? *R: É significativa e coerente com o gráfico.*
 
-## Estatísticas-resumo por continente
+### Estatísticas-resumo por continente
 
 Número médio de casos per capita por continente: qual continente apresentou maior prevalência de COVID-19?
 
@@ -127,7 +131,7 @@ db_covs |>
 
 Taxa média de letalidade: qual continente apresentou maior taxa de letalidade? A taxa de letalidade é uma medida da gravidade do impacto na saúde causado pelo COVID-19 ou do grau de risco de vida imposto pela aquisição do vírus.
 
-```{r}
+```{r, warning=FALSE}
 db_covs <- db_covs |>
   dplyr::mutate(letalidade = obitos_por_milhao/casos_por_milhao) # criando coluna com dados de letalidade
   
@@ -139,7 +143,7 @@ db_covs |>
                digits = 2)
 ```
 
-É o que esperávamos? Qual é a razão da diferençaa do ranque comparando às outras classificações? *R: Provavelmente diferenças populacionais entre os continentes.*
+É o que esperávamos? Qual é a razão da diferençara do ranque comparando às outras classificações? *R: Provavelmente diferenças populacionais entre os continentes.*
 
 Os percentis da distribuição empírica de uma variável permitem identificar valores discrepantes da tendência central (média), i.e., muito pequenos ou muito grandes.
 
@@ -181,5 +185,31 @@ db_covs |>
 Quais são os países com letalidade muito alta? *R: Os continentais.*
 
 É o que esperávamos? O que isso nos diz sobre o ranque continental?
+
+## Preparação dos dados para equação 3
+
+```{r}
+db_min <- db_min |> 
+  dplyr::select(sal_hor,anos_educ, exper_idade_trab, exper_idade_trab_sq, d_etnia_bca_ama, d_etnia_pre_par, d_hom, d_ativ_agro, d_ativ_indus, d_ativ_const, d_ativ_social, d_ativ_serv, d_ativ_apub, d_ocup_adm, d_ocup_agro, d_ocup_com, d_ocup_serv, d_ocup_dirigente, d_ocup_cie_art, d_ocup_tec_med, d_ocup_rep_manut, d_ocup_armada, d_reg_2, d_reg_3, d_reg_4, d_reg_5, d_urbano, ano)
+```
+
+Salário-hora vs educação:
+
+```{r}
+db_min |>
+  dplyr::select(anos_educ,sal_hor,ano) |> 
+  dplyr::filter(ano == 2015)
+
+
+  ggplot +
+  geom_point(aes(
+    x = anos_educ,
+    y = sal_hor,
+  )) +
+  labs(
+    x = "Educação",
+    y = "Salário-Hora"
+  )
+```
 
 # Referências
