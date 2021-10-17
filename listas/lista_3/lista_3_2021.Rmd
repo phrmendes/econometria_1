@@ -21,7 +21,7 @@ reference-section-title: Referências
 csl: abnt.csl
 nocite: null
 lang: pt-BR
-always_allow_html: true
+# always_allow_html: true
 header-includes:
 - \usepackage{setspace}
 - \usepackage{ragged2e}
@@ -66,7 +66,7 @@ Ao comparar as duas FRPs, deve-se levar em conta a existência de correlação e
 
 *No enunciado acima, há três relações que conectam as três variáveis. Represente essas relações a partir de um diagrama de flechas tal como o que consta na nota de aula 4. Para isso, considere duas convenções, quais sejam: (a) a causalidade deve ser indicada com uma flecha unidirecional,* $\rightarrow$*, em cujo início está a variável-causa e, em, cujo término, a variável-consequência e; (b) a correlação deve ser indicada com uma flecha bidirecional ,"*$\leftrightarrow$*".*
 
-```{r echo = F, results = F}
+```{r echo = F, out.width = "80%"}
 # install.packages("DiagrammeR")
 
 library("DiagrammeR")
@@ -76,9 +76,9 @@ DiagrammeR::grViz("
     
     rankdir=LR;
   
-    graph [overlap = true, fontsize = 10]
+    graph [overlap = true, fontsize = 9]
   
-    node [shape = box, fontsize = 10]
+    node [shape = box, fontsize = 9]
     a[label = <taxa_aprov<SUB>i</SUB>>]
   
     node [shape = circle,
@@ -94,14 +94,6 @@ DiagrammeR::grViz("
   }
 ")
 ```
-
-\Centering
-
-![](diagrama.png){width="400"}
-
-\justifying
-
-\setlength{\parindent}{0cm}
 
 ## 2) {.unnumbered}
 

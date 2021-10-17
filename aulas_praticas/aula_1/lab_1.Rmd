@@ -176,7 +176,7 @@ db_covs |>
 
 ```
 
-É o que esperávamos? Qual a característica de geografia física mais recorrente nesse grupo de paises? *R: São ilhas.*
+É o que esperávamos? Qual a característica de geografia física mais recorrente nesse grupo de países? *R: São ilhas.*
 
 Quais são os países com letalidade muito alta? *R: Os continentais.*
 
