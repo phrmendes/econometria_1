@@ -198,10 +198,8 @@ Salário-hora vs educação:
 ```{r}
 db_min |>
   dplyr::select(anos_educ,sal_hor,ano) |> 
-  dplyr::filter(ano == 2015)
-
-
-  ggplot +
+  dplyr::filter(ano == 2015) |> 
+  ggplot() +
   geom_point(aes(
     x = anos_educ,
     y = sal_hor,
