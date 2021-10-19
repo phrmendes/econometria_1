@@ -196,9 +196,11 @@ db_min <- db_min |>
 Salário-hora vs educação:
 
 ```{r}
-db_min |>
+sal_hor_educ <- db_min |>
   dplyr::select(anos_educ,sal_hor,ano) |> 
-  dplyr::filter(ano == 2015) |> 
+  dplyr::filter(ano == 2015) 
+
+sal_hor_educ |> 
   ggplot() +
   geom_point(aes(
     x = anos_educ,
@@ -209,5 +211,144 @@ db_min |>
     y = "Salário-Hora"
   )
 ```
+
+Esse gráfico de dispersão é peculiar por conta do caráter discreto da variável no eixo horizontal. Para tornar mais notória a presença (ou não) de uma relação funcional entre as duas variáveis é útil incluir o gráfico da função empírica de expectativa condicional.
+
+```{r}
+sal_hor_byeduc <- db_min |>
+  dplyr::group_by(anos_educ) |> 
+  dplyr::summarise(sal_hor = mean(sal_hor))
+
+sal_hor_byeduc
+```
+
+Qual é a relação revelada pela FEC empírica? *R: Correlação positiva entre anos de estudo e aumento médio do salário.*
+
+Agora, acrescentando a FEC empírica no gráfico de dispersão, tem-se:
+
+```{r}
+sal_hor_educ |> 
+  ggplot() +
+  geom_point(aes(
+    x = anos_educ,
+    y = sal_hor
+    )
+  ) +
+  geom_line(
+    data = sal_hor_byeduc,
+    aes(
+    x = anos_educ,
+    y = sal_hor,
+  ),
+  color = "red") +
+  labs(
+    x = "Educação",
+    y = "Salário-Hora"
+  )
+```
+
+Coeficientes de correlação com teste de significância:
+
+```{r}
+db_min |> dplyr::do(
+  cor.test(.$anos_educ, .$sal_hor) |> 
+    broom::tidy()
+  )
+```
+
+Está de acordo com o gráfico? *R: Sim, o teste é significante e a correlação, embora não seja forte, é relevante.*
+
+## Regressões
+
+### Regressão 1
+
+Variável dependente:
+
+-   Infecções per capita (por um milhão de habitantes) - casos_por_milhao
+
+Variáveis explicativas:
+
+-   Instituições:
+
+    -   País é presidido ou dirigido por mulher - fem_head
+
+-   Demografia:
+
+    -   Taxa de fertilidade: fertility\_ (uma proxy para a capacidade de renovação da população e, pois, juventude da população)
+
+-   Outras causas de doenças:
+
+    -   Exposição à poluição atmosférica - airpoll_exposure\_
+
+-   Políticas anti-COVID:
+
+    -   Lockdown foi implementado - d_lockdown
+
+    -   Continente - Continent\_
+
+Criando *dummies*:
+
+```{r}
+# install.packages("fastDummies")
+library("fastDummies")
+
+db_covs <- db_covs |> 
+  fastDummies::dummy_columns(select_columns = "Continent",
+                             remove_first_dummy = T, # criando n-1 dummies
+                             remove_selected_columns = T) # removendo a coluna que gerou as dummies
+
+db_covs # a dummie para a África foi tomada por base
+```
+
+Regressão:
+
+```{r}
+summary(db_covs)
+
+# install.packages("estimatr")
+library("estimatr")
+
+mqo_1 <- estimatr::lm_robust(casos_por_milhao ~ fem_head + fertility_ + airpoll_exposure_ + d_lockdown + Continent_Asia + Continent_Europe + Continent_NorthAmer + Continent_Oceania + Continent_SouthAmer,
+                    data = db_covs)
+
+summary(mqo_1)
+```
+
+<center>
+
+infec_per_capita = 3777,95 - 1162,8\*Dirigente mulher - 1097,84\*Fertilidade + 73,4\*Poluição - 1264,61\*Lockdown + 593,63\*Ásia + 1020,64\*Europa + 29,6\*América do Norte - 23,81\*Oceania + 2865,72\*América do Sul
+
+</center>
+
+O que se pode concluir? *R: Controlando para outras variáveis, ter uma líder mulher é associado a uma redução nas infecções per capita (por um milhão de habitantes). O resultado é significante.*
+
+Quais variáveis possuem relação positiva com o número de infecções? *R: Poluição e as dummies Ásia, Europa, América do Norte e América do Sul.*
+
+Quais variáveis possuem relação negativa com o número de infecções? *R: Dirigente mulher, Fertilidade, Lockdown e a dummie Oceania.*
+
+Qual é a proporção da variação da variável dependente explicada? *R: 18,64%*
+
+### Regressão 2
+
+```{r}
+mqo_2 <- estimatr::lm_robust(obitos_por_milhao ~ fem_head + fertility_ + airpoll_exposure_ + d_lockdown + Continent_Asia + Continent_Europe + Continent_NorthAmer + Continent_Oceania + Continent_SouthAmer + casos_por_milhao,
+                             data = db_covs)
+
+summary(mqo_2)
+```
+
+O que se pode concluir?
+
+Quais variáveis possuem relação positiva com o número de óbitos?
+
+Quais variáveis possuem relação negativa com o número de óbitos?
+
+Qual é a proporção da variação da variável dependente explicada?
+
+```{r}
+cbind(óbitos=coef(mqo_2),infecções=c(coef(mqo_1),NA))
+```
+
+### Regressão 3
 
 # Referências

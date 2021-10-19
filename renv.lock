@@ -16,6 +16,13 @@
       "Repository": "CRAN",
       "Hash": "030aaec5bc6553f35347cbb1e70b1a17"
     },
+    "Formula": {
+      "Package": "Formula",
+      "Version": "1.2-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "cc8c8c4d61346cde1ca60030ff9c241f"
+    },
     "MASS": {
       "Package": "MASS",
       "Version": "7.3-54",
@@ -50,6 +57,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "dab19adae4440ae55aa8a9d238b246bb"
+    },
+    "RcppEigen": {
+      "Package": "RcppEigen",
+      "Version": "0.3.3.9.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ddfa72a87fdf4c80466a20818be91d00"
     },
     "askpass": {
       "Package": "askpass",
@@ -205,6 +219,13 @@
       "Repository": "CRAN",
       "Hash": "bb0eec2fe32e88d9e2836c2f73ea2077"
     },
+    "estimatr": {
+      "Package": "estimatr",
+      "Version": "0.30.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e3f0784c7d9b8ce9b9f65f044a68819f"
+    },
     "evaluate": {
       "Package": "evaluate",
       "Version": "0.14",
@@ -225,6 +246,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "c98eb5133d9cb9e1622b8691487f11bb"
+    },
+    "fastDummies": {
+      "Package": "fastDummies",
+      "Version": "1.6.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "15fcf98f57d734f967370f36f4533219"
     },
     "fastmap": {
       "Package": "fastmap",
