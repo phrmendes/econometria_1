@@ -93,13 +93,14 @@ Ao comparar as duas FRPs, deve-se levar em conta a existência de correlação e
 <!-- ") -->
 <!-- ``` -->
 
-No curto prazo:
+No curto prazo, a qualidade da educação pública não influencia a educação dos pais, porém a educação dos pais influencia a qualidade da educação pública e a taxa de aprovação.
+
 
 ```{r, echo = FALSE, fig.align = 'center', out.width = '70%'}
 knitr::include_graphics("diagrama2.png")
 ```
 
-No longo prazo:
+No longo prazo, a qualidade do ensino público influencia diretamente na educação dos pais, que por sua vez se relaciona também com a qualidade do ensino público corrente.
 
 ```{r, echo = FALSE, fig.align = 'center', out.width = '70%'}
 knitr::include_graphics("diagrama.png")
