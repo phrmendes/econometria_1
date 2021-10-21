@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.14)  20 OCT 2021 22:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.14)  20 OCT 2021 22:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -682,11 +682,11 @@ Package pdftex.def Info: diagrama.png  used on input line 207.
 (pdftex.def)             Requested size: 318.66748pt x 221.80136pt.
 [2 <./diagrama2.png> <./diagrama.png>] [3] [4] [5] (./lista_3_2021.aux) ) 
 Here is how much of TeX's memory you used:
- 18001 strings out of 480559
- 302568 string characters out of 5903214
+ 17992 strings out of 480559
+ 302487 string characters out of 5903214
  792489 words of memory out of 5000000
  35100 multiletter control sequences out of 15000+600000
- 458732 words of font info for 214 fonts, out of 8000000 for 9000
+ 458247 words of font info for 208 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  108i,12n,108p,10635b,404s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX
@@ -705,7 +705,7 @@ exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home/pedrom/.TinyTeX/texmf
 nts/type1/urw/times/utmb8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/ur
 w/times/utmr8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on lista_3_2021.pdf (5 pages, 143162 bytes).
+Output written on lista_3_2021.pdf (5 pages, 143155 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  103 compressed objects within 2 object streams

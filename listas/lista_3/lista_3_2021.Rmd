@@ -176,4 +176,4 @@ Embora a soma de quadrados do resíduo tenha diminuído, mostrando uma menor dif
 -   *a. Heterocedasticidade*
 -   *b. Omitir uma variável importante*
 
-Em uma regressão linear múltipla, a heterocedasticidade viola uma das hipóteses-base da obtenção da regressão, que é o erro possuir a mesma variância dada a quaisquer valores das variáveis explicativas[@wooldridge2015]. Já omitir uma variável importante, como demonstrado na questão dois, pode enviesar um estimador de MQO, já que impossibilita a obtenção do efeito *ceteris paribus* a partir do coeficiente estimado.
+Em uma regressão linear múltipla, a heterocedasticidade viola uma das hipóteses-base da obtenção da regressão, que é o erro possuir a mesma variância dado qualquer valor das variáveis explicativas[@wooldridge2015]. Já omitir uma variável importante, como demonstrado na questão dois, pode enviesar um estimador de MQO, já que impossibilita a obtenção do efeito *ceteris paribus* a partir do coeficiente estimado.
