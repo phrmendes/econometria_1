@@ -67,6 +67,40 @@ Ao comparar as duas FRPs, deve-se levar em conta a existência de correlação e
 
 *No enunciado acima, há três relações que conectam as três variáveis. Represente essas relações a partir de um diagrama de flechas tal como o que consta na nota de aula 4. Para isso, considere duas convenções, quais sejam: (a) a causalidade deve ser indicada com uma flecha unidirecional,* $\rightarrow$*, em cujo início está a variável-causa e, em, cujo término, a variável-consequência e; (b) a correlação deve ser indicada com uma flecha bidirecional ,"*$\leftrightarrow$*".*
 
+<!-- ```{r, echo = FALSE, fig.align = 'center', out.width = '70%'} -->
+<!-- # install.packages("DiagrammeR") -->
+<!-- library("DiagrammeR") -->
+<!-- DiagrammeR::grViz(" -->
+<!--   digraph boxes_and_circles { -->
+
+<!--     rankdir=LR; -->
+
+<!--     graph [overlap = true, fontsize = 9] -->
+
+<!--     node [shape = box, fontsize = 9] -->
+<!--     a[label = <taxa_aprov<SUB>i</SUB>>] -->
+
+<!--     node [shape = circle, -->
+<!--           fixedsize = true, -->
+<!--           width = 0.9, -->
+<!--           fontsize = 10] -->
+<!--     b[label = <quali_pub<SUB>i</SUB>>]; c[label = <educ_pais<SUB>i</SUB>>] -->
+
+<!--     b -> a -->
+<!--     c -> a -->
+<!--     c -> b -->
+<!--   } -->
+<!-- ") -->
+<!-- ``` -->
+
+No curto prazo:
+
+```{r, echo = FALSE, fig.align = 'center', out.width = '70%'}
+knitr::include_graphics("diagrama2.png")
+```
+
+No longo prazo:
+
 ```{r, echo = FALSE, fig.align = 'center', out.width = '70%'}
 knitr::include_graphics("diagrama.png")
 ```
