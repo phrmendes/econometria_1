@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.14)  20 OCT 2021 22:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.14)  22 OCT 2021 00:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -670,28 +670,23 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 
 
 {/home/pedrom/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<diagrama2.png, id=19, 518.6878pt x 253.69781pt>
-File: diagrama2.png Graphic file (type png)
-<use diagrama2.png>
-Package pdftex.def Info: diagrama2.png  used on input line 201.
-(pdftex.def)             Requested size: 318.6864pt x 155.87419pt.
-<diagrama.png, id=21, 435.87843pt x 303.38344pt>
+<diagrama.png, id=18, 450.9347pt x 359.84438pt>
 File: diagrama.png Graphic file (type png)
 <use diagrama.png>
-Package pdftex.def Info: diagrama.png  used on input line 207.
-(pdftex.def)             Requested size: 318.66748pt x 221.80136pt.
-[2 <./diagrama2.png> <./diagrama.png>] [3] [4] [5] (./lista_3_2021.aux) ) 
+Package pdftex.def Info: diagrama.png  used on input line 196.
+(pdftex.def)             Requested size: 409.73883pt x 326.97021pt.
+[2 <./diagrama.png>] [3] [4] [5] (./lista_3_2021.aux) ) 
 Here is how much of TeX's memory you used:
- 17992 strings out of 480559
- 302487 string characters out of 5903214
+ 17979 strings out of 480559
+ 302279 string characters out of 5903214
  792489 words of memory out of 5000000
- 35100 multiletter control sequences out of 15000+600000
- 458247 words of font info for 208 fonts, out of 8000000 for 9000
+ 35090 multiletter control sequences out of 15000+600000
+ 458117 words of font info for 206 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 108i,12n,108p,10635b,404s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX
- warning (dest): name{Hfootnote.2} has been referenced but does not exist, repl
-aced by a fixed one
+ 108i,12n,108p,10635b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): n
+ame{Hfootnote.2} has been referenced but does not exist, replaced by a fixed on
+e
 
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
@@ -705,10 +700,10 @@ exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home/pedrom/.TinyTeX/texmf
 nts/type1/urw/times/utmb8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/ur
 w/times/utmr8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on lista_3_2021.pdf (5 pages, 143155 bytes).
+Output written on lista_3_2021.pdf (5 pages, 125886 bytes).
 PDF statistics:
- 132 PDF objects out of 1000 (max. 8388607)
+ 130 PDF objects out of 1000 (max. 8388607)
  103 compressed objects within 2 object streams
  30 named destinations out of 1000 (max. 500000)
- 57419 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 57414 words of extra memory for PDF output out of 61914 (max. 10000000)
 
