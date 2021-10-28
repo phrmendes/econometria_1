@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.21)  28 OCT 2021 13:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.21)  28 OCT 2021 14:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -888,9 +888,9 @@ p/pdftex.map}] [2]
 File: images/2a_1.png Graphic file (type png)
 <use images/2a_1.png>
 Package pdftex.def Info: images/2a_1.png  used on input line 324.
-(pdftex.def)             Requested size: 301.12207pt x 118.62384pt.
+(pdftex.def)             Requested size: 263.4804pt x 103.7953pt.
 
-Underfull \hbox (badness 3302) in paragraph at lines 324--325
+Underfull \hbox (badness 6364) in paragraph at lines 324--325
  [][] 
  []
 
@@ -898,9 +898,9 @@ Underfull \hbox (badness 3302) in paragraph at lines 324--325
 File: images/2a_2.png Graphic file (type png)
 <use images/2a_2.png>
 Package pdftex.def Info: images/2a_2.png  used on input line 326.
-(pdftex.def)             Requested size: 338.76547pt x 282.02141pt.
+(pdftex.def)             Requested size: 263.48808pt x 219.35316pt.
 
-Underfull \hbox (badness 1424) in paragraph at lines 326--327
+Underfull \hbox (badness 6364) in paragraph at lines 326--327
  [][] 
  []
 
@@ -908,9 +908,9 @@ Underfull \hbox (badness 1424) in paragraph at lines 326--327
 File: images/2a_3.png Graphic file (type png)
 <use images/2a_3.png>
 Package pdftex.def Info: images/2a_3.png  used on input line 328.
-(pdftex.def)             Requested size: 338.75728pt x 252.75697pt.
+(pdftex.def)             Requested size: 263.47911pt x 196.58968pt.
 
-Underfull \hbox (badness 1424) in paragraph at lines 328--329
+Underfull \hbox (badness 6364) in paragraph at lines 328--329
  [][] 
  []
 
@@ -928,72 +928,103 @@ Underfull \hbox (badness 6364) in paragraph at lines 330--331
 <images/2b_1.png, id=54, 759.58781pt x 292.09125pt>
 File: images/2b_1.png Graphic file (type png)
 <use images/2b_1.png>
-Package pdftex.def Info: images/2b_1.png  used on input line 355.
-(pdftex.def)             Requested size: 301.12918pt x 115.79594pt.
+Package pdftex.def Info: images/2b_1.png  used on input line 357.
+(pdftex.def)             Requested size: 263.48369pt x 101.31978pt.
 
-Underfull \hbox (badness 3302) in paragraph at lines 355--356
+Underfull \hbox (badness 6364) in paragraph at lines 357--358
  [][] 
  []
 
-[4 <./images/2a_3.png (PNG copy)> <./images/2a_4.png>]
-<images/2b_2.png, id=62, 756.57657pt x 381.67593pt>
+<images/2b_2.png, id=55, 756.57657pt x 381.67593pt>
 File: images/2b_2.png Graphic file (type png)
 <use images/2b_2.png>
-Package pdftex.def Info: images/2b_2.png  used on input line 357.
-(pdftex.def)             Requested size: 301.1245pt x 151.91055pt.
+Package pdftex.def Info: images/2b_2.png  used on input line 359.
+(pdftex.def)             Requested size: 263.47815pt x 132.91882pt.
 
-Underfull \hbox (badness 3302) in paragraph at lines 357--358
+Underfull \hbox (badness 6364) in paragraph at lines 359--360
  [][] 
  []
 
-<images/2b_3.png, id=63, 464.4853pt x 251.43938pt>
+[4 <./images/2a_3.png (PNG copy)> <./images/2a_4.png> <./images/2b_1.png>]
+<images/2b_3.png, id=64, 464.4853pt x 251.43938pt>
 File: images/2b_3.png Graphic file (type png)
 <use images/2b_3.png>
-Package pdftex.def Info: images/2b_3.png  used on input line 359.
+Package pdftex.def Info: images/2b_3.png  used on input line 361.
 (pdftex.def)             Requested size: 188.20766pt x 101.88226pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 359--360
+Underfull \hbox (badness 10000) in paragraph at lines 361--362
  [][] 
  []
 
 
-Overfull \hbox (43.69086pt too wide) detected at line 378
+Overfull \hbox (43.69086pt too wide) detected at line 374
 [][]
  []
 
-[5 <./images/2b_1.png> <./images/2b_2.png> <./images/2b_3.png>] [6] [7] [8] [9]
-(./lista_1_2021.aux) ) 
+<images/2c_1.png, id=65, 545.78906pt x 176.91093pt>
+File: images/2c_1.png Graphic file (type png)
+<use images/2c_1.png>
+Package pdftex.def Info: images/2c_1.png  used on input line 387.
+(pdftex.def)             Requested size: 301.12598pt x 97.60634pt.
+
+Underfull \hbox (badness 3302) in paragraph at lines 387--388
+ [][] 
+ []
+
+<images/2c_2.png, id=66, 473.51906pt x 398.23781pt>
+File: images/2c_2.png Graphic file (type png)
+<use images/2c_2.png>
+Package pdftex.def Info: images/2c_2.png  used on input line 389.
+(pdftex.def)             Requested size: 301.13644pt x 253.26102pt.
+
+Underfull \hbox (badness 3302) in paragraph at lines 389--390
+ [][] 
+ []
+
+[5 <./images/2b_2.png> <./images/2b_3.png> <./images/2c_1.png>]
+<images/2c_3.png, id=76, 646.66594pt x 152.06813pt>
+File: images/2c_3.png Graphic file (type png)
+<use images/2c_3.png>
+Package pdftex.def Info: images/2c_3.png  used on input line 391.
+(pdftex.def)             Requested size: 301.12085pt x 70.81071pt.
+
+Underfull \hbox (badness 3302) in paragraph at lines 391--392
+ [][] 
+ []
+
+[6 <./images/2c_2.png> <./images/2c_3.png>] [7] [8] [9] (./lista_1_2021.aux) ) 
 Here is how much of TeX's memory you used:
- 18561 strings out of 480539
- 317268 string characters out of 5900548
+ 18582 strings out of 480539
+ 317655 string characters out of 5900548
  805047 words of memory out of 5000000
- 35673 multiletter control sequences out of 15000+600000
+ 35691 multiletter control sequences out of 15000+600000
  452753 words of font info for 187 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 108i,12n,108p,10620b,497s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist
-/fonts/enc/dvips/base/8r.enc}<c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/pedro.mendes/AppDat
-a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/User
-s/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi6.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi8.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/Users/pedro.mendes/AppD
-ata/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/User
-s/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr8.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/Users/pedro.mendes/AppD
-ata/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><
-c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courie
-r/ucrr8a.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
-pe1/urw/times/utmb8a.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-d
-ist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/pedro.mendes/AppData/Roaming/Tin
-yTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on lista_1_2021.pdf (9 pages, 570941 bytes).
+ 108i,12n,108p,10620b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
+{
+c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8
+r.enc}<c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmex10.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/Users/pedro.mendes/AppData/
+Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/Users/p
+edro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi8.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr12.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/Users/pedro.mendes/AppData/
+Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/Users/pe
+dro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+sy10.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy8.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/tex
+mf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/Users/pedro.mendes/A
+ppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/Users/
+pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pf
+b><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/tim
+es/utmr8a.pfb><c:/Users/pedro.mendes/AppData/Roaming/TinyTeX/texmf-dist/fonts/t
+ype1/urw/times/utmri8a.pfb>
+Output written on lista_1_2021.pdf (9 pages, 658249 bytes).
 PDF statistics:
- 251 PDF objects out of 1000 (max. 8388607)
+ 257 PDF objects out of 1000 (max. 8388607)
  199 compressed objects within 2 object streams
  57 named destinations out of 1000 (max. 500000)
- 49348 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 49363 words of extra memory for PDF output out of 51595 (max. 10000000)
 
