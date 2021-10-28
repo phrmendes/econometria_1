@@ -144,6 +144,7 @@ $$
 ![](images/2a_4.png){width="350"}
 
 \justifying
+\setlength{\parindent}{0cm}
 
 Portanto, $E(\hat\beta_1|X)=\beta_1$, o que justifica a passagem.
 
@@ -207,7 +208,16 @@ $$
 
 -   [ ] *(B) Hipótese de homocedasticidade, apenas*
 
--   [ ] *(C) Hipótese de homocedasticidade e ausência de autocorrelação*
+-   [x] *(C) Hipótese de homocedasticidade e ausência de autocorrelação*
+
+\Centering
+
+![](images/2d_1.png){width="400"}
+
+![](images/2d_2.png){width="400"}
+
+\justifying
+\setlength{\parindent}{0cm}
 
 ## 3) {.unnumbered}
 
