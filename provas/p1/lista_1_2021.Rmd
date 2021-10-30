@@ -143,9 +143,10 @@ $$
 
 ![](images/2a_4.png){width="350"}
 
+```{=tex}
 \justifying
 \setlength{\parindent}{0cm}
-
+```
 Portanto, $E(\hat\beta_1|X)=\beta_1$, o que justifica a passagem.
 
 ### 2) b. {.unnumbered}
@@ -216,9 +217,10 @@ $$
 
 ![](images/2d_2.png){width="400"}
 
+```{=tex}
 \justifying
 \setlength{\parindent}{0cm}
-
+```
 ## 3) {.unnumbered}
 
 *Um pesquisador considera dois procedimentos para prever o padrão de variação da variável remuneração ao longo de uma amostra de trabalhadores:*
@@ -240,12 +242,64 @@ $$
 
 *Demonstre que o erro quadrático médio cometido pela regressão nunca é maior do que aquele cometido pela média. Ou seja, a primeira pode ter desempenho no mínimo equivalente à segunda, mas nunca inferior. Dica: a regressão atingiria o menor grau de desempenho possível no caso em que a correlação entre educação e remuneração na população e na amostra fosse nula. Tomando por base as fórmulas dos estimadores de MQO para os parâmetros, reconsidere a fórmula no interior do erro quadrático médio para a regressão como base para responder a este item.*
 
+\Centering
+
+![](images/3a_1.png){width="400"}
+
+![](images/3a_2.png){width="400"}
+
+![](images/3a_3.png){width="400"}
+
+![](images/3a_4.png){width="400"}
+
+```{=tex}
+\justifying
+\setlength{\parindent}{0cm}
+```
+Caso 1: $EQM_{FRP}=EQM_{média} \leftrightarrow \hat\beta_1\hat \sigma_{xy}=0$
+
+Porém,
+
+$$
+\hat{\beta}_{1}=\frac{\sum_{i=1}^{N}\left(y_{i}-\bar{y}\right)\left(x_{i}-\bar{x}\right)}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}} = \frac{\hat\sigma_{xy}}{\hat\sigma^2_{x}}
+$$
+
+Logo,
+
+$$
+EQM_{FRP}=EQM_{média} \leftrightarrow \hat \sigma_{xy}=0
+$$
+
+Caso 2: $EQM_{FRP} < EQM_{média} \leftrightarrow \hat\beta_1\hat \sigma_{xy}> 0$, pois
+
+$$
+\begin{aligned}
+EQM_{FRP}-EQM_\text{média}&=\cancel{\hat\sigma^2-\hat \sigma^2}-2\hat\beta_1\hat\sigma_{xy} \\
+&=-2\hat\beta_1\hat\sigma_{xy} \\
+\end{aligned}
+$$
+
+Assim, $\hat\beta_1\hat\sigma_{xy}>0 \to EQM_{FRP}<EQM_\text{média}$.
+
+Caso 3: $EQM_{FRP} > EQM_{média} \leftrightarrow \hat\beta_1\hat \sigma_{xy}< 0$
+
+No entanto,
+
+$$
+\hat{\beta}_{1} = \frac{\hat\sigma_{xy}}{\hat\sigma^2_{x}}
+$$
+$$
+\hat\beta_1\hat \sigma_{xy}=\frac{\hat\sigma_{xy}}{\hat\sigma^2_{x}} \cdot \hat \sigma_{xy} = \frac{\hat\sigma_{xy}^2}{\hat\sigma^2_{x}}>0
+$$
+
+Portanto, $\hat\beta_1\hat \sigma_{xy}<0$ não é possível, o que implica que EQM~FRP~ $\le$ EQM~média~ $\forall (x_i,y_i)$.
+
 ### 3) b. {.unnumbered}
 
 *Considere a fórmula do coeficiente de determinação da regressão simples abaixo. Continuando o raciocínio utilizado na resposta ao item anterior, demonstre que a relação entre coeficiente de determinação e coeficiente de correlação entre educação (x) e remuneração (y) é positiva.*
 
 $$
-r^{2}=1-\frac{E Q M_{F R P}}{E Q M_{\text {média }}}=1-\frac{\sum_{i=1}^{N}\left(y_{i}-\hat{\beta_{0}}-\hat{\beta_{1}} x_{i}\right)^{2}}{\sum_{i=1}^{N}\left(y_{i}-\bar{y}\right)^{2}}
+R^{2}=1-\frac{E Q M_{F R P}}{E Q M_{\text {média }}}=1-\frac{\sum_{i=1}^{N}\left(y_{i}-\hat{\beta_{0}}-\hat{\beta_{1}} x_{i}\right)^{2}}{\sum_{i=1}^{N}\left(y_{i}-\bar{y}\right)^{2}}
 $$
 
 ### 3) c. {.unnumbered}
@@ -260,7 +314,7 @@ $$
 
 ## 4) {.unnumbered}
 
-*Foi estimada, como parte de uma monografia do Bacharelado em Ciências Econômicas da UFABC, a regressão abaixo em que o déficit de altura para a idade de crianças de cinco anos, residentes em domicílios brasileiros, é explicado em função de características do domicílio e da criança. A variável dependente está medida em centímetros. OBS: nenhuma das variáveis está em forma logarítmica.*
+*Foi estimada, como parte de uma monografia do Bacharelado em Ciências Econômicas da UFABC, a regressão abaixo em que o déficit de altura para a idade de crianças de cinco anos, residentes em domicílios brasileiros, é explicado em função de características do domicílio e da criança. A variável dependente está medida em centímetros. (Obs.: nenhuma das variáveis está em forma logarítmica.)*
 
 |                  Parâmetro                   | Estimativa pontual |
 |:--------------------------------------------:|:------------------:|
@@ -276,6 +330,8 @@ $$
 |             Região Centro-Oeste              |     -0.241068      |
 |                Região Sudeste                |     -0.449075      |
 
+: Coeficientes da regressão
+
 *Obs.: foram omitidas as estimativas pontuais para as seguintes variáveis: status do domicílio em relação à conexão à rede de suprimento de eletricidade, à rede de esgoto e acesso a serviços de saúde.*
 
 ### 4) a. {.unnumbered}
@@ -284,7 +340,21 @@ $$
 
 1.  *Apresente a definição formal do coeficiente em questão tomando por base a diferença entre as expectativas condicionais da variável dependente referentes a cada um dos dois grupos sociais em questão, ceteris paribus nas demais variáveis independentes.*
 
-2.  *Com base no passo anterior, escreva, textualmente, a interpretação da magnitude numérica da estimativa pontual.*
+    -   $E(Y|X, \text{d\_feminino} = 0) = \beta_0+\beta_1X$ representando observações do sexo masculino
+
+    -   $E(Y|X, \text{d\_feminino} = 1) = \beta_0+\beta_1X+\beta_2\delta$ representando observações do sexo feminino ($\delta$)
+
+\Centering
+
+![](images/4_1.png){width="300"}
+
+```{=tex}
+\justifying
+\setlength{\parindent}{0cm}
+```
+2.  *Com base no passo anterior, escreva, textualmente, a interpretação da magnitude numérica da estimativa pontual.\
+    \
+    *O coeficiente de aproximadamente 0,89 para o sexo indica que, em média, indivíduos do sexo feminino possui 0,89 centímetros a mais de déficit de altura para a idade de crianças de cinco anos, residentes em domicílios brasileiros.
 
 ### 4) b. {.unnumbered}
 
@@ -292,8 +362,34 @@ $$
 
 1.  *Apresente a definição formal do coeficiente em questão tomando por base a diferença entre as expectativas condicionais da variável dependente referentes aos grupos regionais em questão, ceteris paribus nas demais variáveis independentes.*
 
-2.  *Com base no passo anterior, escreva, textualmente, a interpretação da magnitude numérica da estimativa pontual.*
+    \scriptsize
+
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    |        | $\delta_1$ | $\delta_2$ | $\delta_3$ | $\delta_4$ | $E(Y|X)$                                           | Equação                             |
+    +:======:+:==========:+:==========:+:==========:+:==========:+====================================================+=====================================+
+    | S      | 0          | 0          | 0          | 0          | $E(Y|X, \delta_1=\dots=\delta_4=0)$                | $=\beta_0+\beta_1X$                 |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    | N      | 1          | 0          | 0          | 0          | $E(Y|X, \delta_1=1, \delta_2=\delta_3=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_2\delta_1$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    | NE     | 0          | 1          | 0          | 0          | $E(Y|X, \delta_2=1, \delta_1=\delta_3=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_3\delta_2$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    | CO     | 0          | 0          | 1          | 0          | $E(Y|X, \delta_3=1, \delta_1=\delta_2=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_4\delta_3$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    | SE     | 0          | 0          | 0          | 1          | $E(Y|X, \delta_4=1, \delta_1=\delta_2=\delta_3=0)$ | $=\beta_0+\beta_1X+\beta_5\delta_4$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+
+    : Matriz de dummies
+
+    \normalsize
+
+2.  *Com base no passo anterior, escreva, textualmente, a interpretação da magnitude numérica da estimativa pontual.\
+    \
+    *O coeficiente de aproximadamente 1,4 para a região Norte indica que, em média, residentes da região norte possuem 1,4 centímetros a mais de déficit de altura para a idade de crianças de cinco anos, residentes em domicílios brasileiros, em comparação com a região de referência (Sul).
 
 ### 4) c. {.unnumbered}
 
-*Agora, tomando o coeficiente da renda domiciliar per capita, uma variável medida em Reais (R\$), explique o significado da estimativa pontual correspondente. Continue a tomar por base uma comparação entre dois grupos sociais equivalentes em todas as demais variáveis.*
+*Agora, tomando o coeficiente da renda domiciliar per capita, uma variável medida em Reais (R\$), explique o significado da estimativa pontual correspondente. Continue a tomar por base uma comparação entre dois grupos sociais equivalentes em todas as demais variáveis.*\
+\
+O coeficiente para variáveis contínuas representa o efeito de uma variação na variável independente na variável dependente, ou seja, $\Delta y_i=\beta_i\Delta x_i$.\
+*\
+*O coeficiente da variável "renda domiciliar *per capita"* indica que, *ceteris paribus*, um aumento na renda leva a uma diminuição do déficit de altura para a idade de crianças de cinco anos em -0,0026.
