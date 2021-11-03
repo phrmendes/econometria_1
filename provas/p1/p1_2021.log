@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.27)  30 OCT 2021 17:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.27)  3 NOV 2021 00:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -816,11 +816,11 @@ Underfull \hbox (badness 3302) in paragraph at lines 420--421
  []
 
 [7 <./images/2d_1.png (PNG copy)> <./images/2d_2.png (PNG copy)>]
-<images/3a_1.png, id=94, 628.59843pt x 456.95718pt>
+<images/3a_1.png, id=94, 752.8125pt x 549.55313pt>
 File: images/3a_1.png Graphic file (type png)
 <use images/3a_1.png>
 Package pdftex.def Info: images/3a_1.png  used on input line 476.
-(pdftex.def)             Requested size: 301.11954pt x 218.89767pt.
+(pdftex.def)             Requested size: 301.13115pt x 219.82574pt.
 
 Underfull \hbox (badness 3302) in paragraph at lines 476--477
  [][] 
@@ -830,73 +830,81 @@ Underfull \hbox (badness 3302) in paragraph at lines 476--477
 File: images/3a_2.png Graphic file (type png)
 <use images/3a_2.png>
 Package pdftex.def Info: images/3a_2.png  used on input line 478.
-(pdftex.def)             Requested size: 301.1203pt x 104.55107pt.
-
-Underfull \hbox (badness 3302) in paragraph at lines 478--479
- [][] 
- []
-
-<images/3a_3.png, id=96, 698.61pt x 268.00125pt>
+(pdftex.def)             Requested size: 376.40038pt x 130.68884pt.
+<images/3a_3.png, id=96, 712.16063pt x 269.50688pt>
 File: images/3a_3.png Graphic file (type png)
 <use images/3a_3.png>
 Package pdftex.def Info: images/3a_3.png  used on input line 480.
-(pdftex.def)             Requested size: 301.12132pt x 115.51636pt.
-
-Underfull \hbox (badness 3302) in paragraph at lines 480--481
- [][] 
- []
-
-<images/3a_4.png, id=97, 688.07062pt x 270.25969pt>
+(pdftex.def)             Requested size: 376.40013pt x 142.44318pt.
+<images/3a_4.png, id=97, 1066.7353pt x 375.65344pt>
 File: images/3a_4.png Graphic file (type png)
 <use images/3a_4.png>
 Package pdftex.def Info: images/3a_4.png  used on input line 482.
-(pdftex.def)             Requested size: 301.12465pt x 118.27542pt.
+(pdftex.def)             Requested size: 376.40675pt x 132.55255pt.
+[8 <./images/3a_1.png (PNG copy)> <./images/3a_2.png (PNG copy)> <./images/3a_3
+.png (PNG copy)>]
+<images/3b_1.png, id=103, 1058.45438pt x 360.59718pt>
+File: images/3b_1.png Graphic file (type png)
+<use images/3b_1.png>
+Package pdftex.def Info: images/3b_1.png  used on input line 541.
+(pdftex.def)             Requested size: 376.40804pt x 128.23573pt.
+[9 <./images/3a_4.png (PNG copy)>]
+<images/3b_2.png, id=110, 939.51pt x 353.82187pt>
+File: images/3b_2.png Graphic file (type png)
+<use images/3b_2.png>
+Package pdftex.def Info: images/3b_2.png  used on input line 543.
+(pdftex.def)             Requested size: 376.39944pt x 141.75299pt.
+<images/3b_3.png, id=111, 923.70094pt x 306.39468pt>
+File: images/3b_3.png Graphic file (type png)
+<use images/3b_3.png>
+Package pdftex.def Info: images/3b_3.png  used on input line 545.
+(pdftex.def)             Requested size: 376.40834pt x 124.8559pt.
+<images/3b_4.png, id=112, 502.12593pt x 255.20343pt>
+File: images/3b_4.png Graphic file (type png)
+<use images/3b_4.png>
+Package pdftex.def Info: images/3b_4.png  used on input line 547.
+(pdftex.def)             Requested size: 240.90279pt x 122.43784pt.
 
-Underfull \hbox (badness 3302) in paragraph at lines 482--483
+Underfull \hbox (badness 10000) in paragraph at lines 547--548
  [][] 
  []
 
-[8 <./images/3a_1.png (PNG copy)> <./images/3a_2.png (PNG copy)> <./images/3a_3
-.png (PNG copy)>] [9 <./images/3a_4.png (PNG copy)>] [10]
-<images/4_1.png, id=119, 447.92343pt x 439.6425pt>
+[10 <./images/3b_1.png (PNG copy)> <./images/3b_2.png (PNG copy)> <./images/3b_
+3.png (PNG copy)> <./images/3b_4.png (PNG copy)>] [11]
+<images/4_1.png, id=126, 447.92343pt x 439.6425pt>
 File: images/4_1.png Graphic file (type png)
 <use images/4_1.png>
-Package pdftex.def Info: images/4_1.png  used on input line 637.
+Package pdftex.def Info: images/4_1.png  used on input line 658.
 (pdftex.def)             Requested size: 225.84071pt x 221.66551pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 637--638
+Underfull \hbox (badness 10000) in paragraph at lines 658--659
  [][] 
  []
 
-[11 <./images/4_1.png (PNG copy)>]
-Overfull \hbox (7.66064pt too wide) in alignment at lines 680--698
+[12 <./images/4_1.png (PNG copy)>]
+Overfull \hbox (7.66064pt too wide) in alignment at lines 701--719
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (7.66064pt too wide) in alignment at lines 698--715
+Overfull \hbox (7.66064pt too wide) in alignment at lines 719--736
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (7.66064pt too wide) in alignment at lines 715--731
+Overfull \hbox (7.66064pt too wide) in alignment at lines 736--752
  [] [] [] [] [] [] [] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 752--761
-
- []
-
-[12] (./p1_2021.aux) ) 
+[13] (./p1_2021.aux) ) 
 Here is how much of TeX's memory you used:
- 18645 strings out of 480539
- 312662 string characters out of 5902571
- 811028 words of memory out of 5000000
- 35740 multiletter control sequences out of 15000+600000
- 452598 words of font info for 189 fonts, out of 8000000 for 9000
+ 18684 strings out of 480539
+ 313269 string characters out of 5902571
+ 810028 words of memory out of 5000000
+ 35764 multiletter control sequences out of 15000+600000
+ 453051 words of font info for 196 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 108i,17n,108p,10630b,590s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 108i,12n,108p,10630b,590s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/home/pedrom/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r
 .enc}</home/pedrom/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pf
 b></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
@@ -907,16 +915,15 @@ drom/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home/pedrom
 yTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/pedrom/.TinyTeX/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/pedrom/.TinyTeX/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/pedrom/.TinyTeX/texmf-d
-ist/fonts/type1/public/amsfonts/latxfont/line10.pfb></home/pedrom/.TinyTeX/texm
-f-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></home/pedrom/.TinyTeX/te
-xmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></home/pedrom/.TinyTeX/texmf-dist/f
-onts/type1/urw/times/utmb8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/u
-rw/times/utmr8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/urw/times/utm
-ri8a.pfb>
-Output written on p1_2021.pdf (12 pages, 1076310 bytes).
+ist/fonts/type1/public/amsfonts/symbols/msam10.pfb></home/pedrom/.TinyTeX/texmf
+-dist/fonts/type1/urw/courier/ucrr8a.pfb></home/pedrom/.TinyTeX/texmf-dist/font
+s/type1/urw/times/utmb8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/urw/
+times/utmr8a.pfb></home/pedrom/.TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on p1_2021.pdf (13 pages, 1490026 bytes).
 PDF statistics:
- 281 PDF objects out of 1000 (max. 8388607)
- 213 compressed objects within 3 object streams
- 61 named destinations out of 1000 (max. 500000)
- 49398 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 285 PDF objects out of 1000 (max. 8388607)
+ 214 compressed objects within 3 object streams
+ 62 named destinations out of 1000 (max. 500000)
+ 49418 words of extra memory for PDF output out of 51595 (max. 10000000)
 

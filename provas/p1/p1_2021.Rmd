@@ -246,52 +246,42 @@ $$
 
 ![](images/3a_1.png){width="400"}
 
-![](images/3a_2.png){width="400"}
+![](images/3a_2.png){width="500"}
 
-![](images/3a_3.png){width="400"}
+![](images/3a_3.png){width="500"}
 
-![](images/3a_4.png){width="400"}
+![](images/3a_4.png){width="500"}
 
 ```{=tex}
 \justifying
 \setlength{\parindent}{0cm}
 ```
-Caso 1: $EQM_\text{FRP}=EQM_\text{média} \leftrightarrow \hat\beta_1\hat \sigma_{xy}=0$
-
-Porém,
+**Caso 1:** EQM~FRP~ = EQM~média~ $\leftrightarrow x_i-\bar x=0$, pois,
 
 $$
-\hat{\beta}_{1}=\frac{\sum_{i=1}^{N}\left(y_{i}-\bar{y}\right)\left(x_{i}-\bar{x}\right)}{\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}} = \frac{\hat\sigma_{xy}}{\hat\sigma^2_{x}}
+\hat\beta^2_1\hat\sigma_x^2=\hat\beta^2\frac{\sum_{i=1}^{N}(x_i-\bar x)^2}{N}=\hat\beta^2\frac{0}{N}=0
 $$
 
-Logo,
-
 $$
-EQM_{FRP}=EQM_\text{média} \leftrightarrow \hat \sigma_{xy}=0
+2\hat\beta_1\hat\sigma_{xy}=2\hat\beta_1\frac{\sum_{i=1}^{N}(x_i-\bar x)(y_i-\bar y)}{N}=2\hat\beta_1\frac{\sum_{i=1}^{N}0(y_i-\bar y)}{N}=0
 $$
 
-Caso 2: $EQM_\text{FRP} < EQM_\text{média} \leftrightarrow \hat\beta_1\hat \sigma_{xy}> 0$, pois
+**Caso 2:** EQM~FRP~ \< EQM~média~ $\leftrightarrow 2\hat\beta_1\hat\sigma_{xy}-\hat\beta_1^2\hat\sigma_x^2>0$, ou seja,
 
 $$
 \begin{aligned}
-EQM_{FRP}-EQM_\text{média}&=\cancel{\hat\sigma^2-\hat \sigma^2}-2\hat\beta_1\hat\sigma_{xy} \\
-&=-2\hat\beta_1\hat\sigma_{xy} \\
+2\hat\beta_1\hat\sigma_{xy}&>\hat\beta_1^2\hat\sigma_x^2 \\
+2\frac{\hat\sigma_{xy}}{\hat\sigma^2_{x}}\hat\sigma_{xy}&>\left(\frac{\hat\sigma_{xy}}{\hat\sigma^2_{x}}\right)^2\hat\sigma^2_{x} \\
+2\frac{\hat\sigma_{xy}^2}{\hat\sigma^2_{x}}&>\frac{\hat\sigma_{xy}^2}{\hat\sigma^4_{x}}\hat\sigma^2_{x} \\
+2\frac{\hat\sigma_{xy}^2}{\hat\sigma^2_{x}}&>\frac{\hat\sigma_{xy}^2}{\hat\sigma^2_{x}}
 \end{aligned}
 $$
 
-Assim, $\hat\beta_1\hat\sigma_{xy}>0 \to EQM_\text{FRP}<EQM_\text{média}$.
+Assim, EQM~FRP~ \< EQM~média~ $\forall (x_i,y_i)$.
 
-Caso 3: $EQM_\text{FRP} > EQM_\text{média} \leftrightarrow \hat\beta_1\hat \sigma_{xy}< 0$
+**Caso 3:** EQM~FRP~ \> EQM~média~ $\leftrightarrow \hat\beta_1^2\hat\sigma_x^2-2\hat\beta_1\hat\sigma_{xy}>0$. No entanto, como provado no caso 2, $\hat\beta_1^2\hat\sigma_x^2>2\hat\beta_1\hat\sigma_{xy}$ não é um resultado possível.
 
-No entanto,
-
-$$
-\hat{\beta}_{1} = \frac{\hat\sigma_{xy}}{\hat\sigma^2_{x}}
-$$ $$
-\hat\beta_1\hat \sigma_{xy}=\frac{\hat\sigma_{xy}}{\hat\sigma^2_{x}} \cdot \hat \sigma_{xy} = \frac{\hat\sigma_{xy}^2}{\hat\sigma^2_{x}}>0
-$$
-
-Portanto, $\hat\beta_1\hat \sigma_{xy}$ nunca assume valores menores que 0, o que implica que EQM~FRP~ $\le$ EQM~média~ $\forall (x_i,y_i)$.
+Logo, EQM~FRP~ $\le$ EQM~média~ $\forall (x_i,y_i)$.
 
 ### 3) b. {.unnumbered}
 
@@ -299,7 +289,24 @@ Portanto, $\hat\beta_1\hat \sigma_{xy}$ nunca assume valores menores que 0, o qu
 
 $$
 R^{2}=1-\frac{E Q M_{F R P}}{E Q M_{\text {média }}}=1-\frac{\sum_{i=1}^{N}\left(y_{i}-\hat{\beta_{0}}-\hat{\beta_{1}} x_{i}\right)^{2}}{\sum_{i=1}^{N}\left(y_{i}-\bar{y}\right)^{2}}
-$$ ![](images/3b_1.png){width="300"}
+$$
+
+\Centering
+
+![](images/3b_1.png){width="500"}
+
+![](images/3b_2.png){width="500"}
+
+![](images/3b_3.png){width="500"}
+
+![](images/3b_4.png){width="320"}
+
+```{=tex}
+\justifying
+\setlength{\parindent}{0cm}
+```
+
+Assim, caso cov(x~i~, y~i~) > 0, a relação entre o coeficiente de correlação e o de determinação será positiva.
 
 ### 3) c. {.unnumbered}
 
@@ -310,6 +317,8 @@ R^{2}=1-\frac{E Q M_{F R P}}{E Q M_{\text {média }}}=1-\frac{\sum_{i=1}^{N}\lef
 $$
 
 *Em que* $\hat{E}\left(y\ |\ x=x_{i}\right)$ = $y_{i}-\hat{\beta_{0}}-\hat{\beta_{1}} x_{i}$ *é a função de regressão amostral, tratando-se, pois, da contrapartida amostral da expectativa condicional. Com base nisso explique por que, havendo correlação considerável entre educação (x) e remuneração (y), a regressão simples em questão tende a apresentar um melhor desempenho preditivo do que a média incondicional. Sua resposta deve estar embasada na diferença conceitual entre média condicional, tal como se encontra no numerador da expressão, e média incondicional, esta contida no denominador. Leve em conta, adicionalmente, que a média condicional é calculada a partir de dois passos, o primeiro consistindo na seleção de um grupo amostral em função de um determinado nível educacional. Já o segundo compreende o cálculo da média exclusivamente para o grupo selecionado -- tal cálculo é repetido para todos os grupos amostrais.*
+
+A regressão simples apresenta melhor desempenho preditivo pois não assume, havendo correlação entre variável dependente e variável independente, que os valores se distribuirão ao redor da média amostral. Utilizando a função de regressão amostral, ao se calcular a média condicional da variável dependente para cada valor da variável independente, leva-se em consideração a influência da variância da variável independente que, caso seja significativa, aproximará melhor os dados em uma reta de regressão, aumentando seu poder explicativo e preditivo.
 
 ## 4) {.unnumbered}
 
@@ -363,17 +372,25 @@ $$
 
     \scriptsize
 
-    |     | $\delta_1$ | $\delta_2$ | $\delta_3$ | $\delta_4$ | $E(Y|X)$                                           | Equação                             |
-    |:---:|:----------:|:----------:|:----------:|:----------:|----------------------------------------------------|-------------------------------------|
-    |  S  |     0      |     0      |     0      |     0      | $E(Y|X, \delta_1=\dots=\delta_4=0)$                | $=\beta_0+\beta_1X$                 |
-    |  N  |     1      |     0      |     0      |     0      | $E(Y|X, \delta_1=1, \delta_2=\delta_3=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_2\delta_1$ |
-    | NE  |     0      |     1      |     0      |     0      | $E(Y|X, \delta_2=1, \delta_1=\delta_3=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_3\delta_2$ |
-    | CO  |     0      |     0      |     1      |     0      | $E(Y|X, \delta_3=1, \delta_1=\delta_2=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_4\delta_3$ |
-    | SE  |     0      |     0      |     0      |     1      | $E(Y|X, \delta_4=1, \delta_1=\delta_2=\delta_3=0)$ | $=\beta_0+\beta_1X+\beta_5\delta_4$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    |        | $\delta_1$ | $\delta_2$ | $\delta_3$ | $\delta_4$ | $E(Y|X)$                                           | Equação                             |
+    +:======:+:==========:+:==========:+:==========:+:==========:+====================================================+=====================================+
+    | S      | 0          | 0          | 0          | 0          | $E(Y|X, \delta_1=\dots=\delta_4=0)$                | $=\beta_0+\beta_1X$                 |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    | N      | 1          | 0          | 0          | 0          | $E(Y|X, \delta_1=1, \delta_2=\delta_3=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_2\delta_1$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    | NE     | 0          | 1          | 0          | 0          | $E(Y|X, \delta_2=1, \delta_1=\delta_3=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_3\delta_2$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    | CO     | 0          | 0          | 1          | 0          | $E(Y|X, \delta_3=1, \delta_1=\delta_2=\delta_4=0)$ | $=\beta_0+\beta_1X+\beta_4\delta_3$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
+    | SE     | 0          | 0          | 0          | 1          | $E(Y|X, \delta_4=1, \delta_1=\delta_2=\delta_3=0)$ | $=\beta_0+\beta_1X+\beta_5\delta_4$ |
+    +--------+------------+------------+------------+------------+----------------------------------------------------+-------------------------------------+
 
     : Matriz de dummies
 
     \normalsize
+
+    Onde X representa as demais variáveis da regressão.
 
 2.  *Com base no passo anterior, escreva, textualmente, a interpretação da magnitude numérica da estimativa pontual.\
     \
@@ -381,8 +398,8 @@ $$
 
 ### 4) c. {.unnumbered}
 
-*Agora, tomando o coeficiente da renda domiciliar per capita, uma variável medida em Reais (R\$), explique o significado da estimativa pontual correspondente. Continue a tomar por base uma comparação entre dois grupos sociais equivalentes em todas as demais variáveis.*\
-\
-O coeficiente para variáveis contínuas representa o efeito de uma variação na variável independente na variável dependente, ou seja, $\Delta y_i=\beta_i\Delta x_i$.\
-*\
-*O coeficiente da variável "renda domiciliar *per capita"* indica que, *ceteris paribus*, um aumento na renda leva a uma diminuição do déficit de altura para a idade de crianças de cinco anos em -0,0026.
+*Agora, tomando o coeficiente da renda domiciliar per capita, uma variável medida em Reais (R\$), explique o significado da estimativa pontual correspondente. Continue a tomar por base uma comparação entre dois grupos sociais equivalentes em todas as demais variáveis.*
+
+O coeficiente para variáveis contínuas representa o efeito de uma variação na variável independente na variável dependente, ou seja, $\Delta y_i=\beta_i\Delta x_i$.
+
+O coeficiente da variável "renda domiciliar *per capita"* indica que, *ceteris paribus*, um aumento na renda leva a uma diminuição do déficit de altura para a idade de crianças de cinco anos em -0,0026.
