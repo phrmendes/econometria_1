@@ -421,6 +421,7 @@ summary(mqo_4)
 ```{r}
 cbind('2004'=coef(mqo_3),'2015'=coef(mqo_4))
 ```
+
 O que se pode concluir?
 
 Quais variáveis possuem relação positiva com o salário horário?
@@ -435,8 +436,7 @@ Como interpretar o coeficiente da etnia preta e parda?
 
 Como interpretar o coeficiente do gênero masculino?
 
-Para quais variáveis o coeficiente estimado difere entre 2004 e 2015?
-O retorno da educação aumentou?
+Para quais variáveis o coeficiente estimado difere entre 2004 e 2015? O retorno da educação aumentou?
 
 O retorno da experiência aumentou?
 
