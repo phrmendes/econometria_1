@@ -50,7 +50,7 @@ load("aulas_praticas/aula_1/lab_1_dados.Rdata")
 
 db_cov <- db_cov |> dplyr::as_tibble(db_cov)
 
-db_min <- db_min |> dplyr::as_tibble(db_cov)
+db_min <- db_min |> dplyr::as_tibble(db_min)
 
 db_cov
 
