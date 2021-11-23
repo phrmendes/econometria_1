@@ -32,8 +32,6 @@ load("aulas_praticas/aula_3/dados.Rdata")
 
 # convertendo para tibbles
 
-db_cov <- db_cov |> dplyr::as_tibble(db_cov)
-
 db_min <- db_min |> dplyr::as_tibble(db_min)
 ```
 
@@ -161,7 +159,9 @@ SQR_IR <- sum(mqo_1$residuals^2)
 
 # diferença entre o número de parâmetros entre os dois modelos (número de explicativas alvo - s)
 
-s <- length(coef(mqo_1))-length(coef(mqo_R))
+s <- length(coef(mqo_1)) - length(coef(mqo_R))
+
+gl_den <- nrow(db_min_2004) - length(coef(mqo_1))
 
 f1 <- ((SQR_R - SQR_IR) / s) / (SQR_IR / gl_den)
 
@@ -263,9 +263,9 @@ Resultou F = 644,95 e p-valor = 2.2 x 10\^-16, praticamente 0. Fica portanto con
 
 A depender do objetivo da análise, pode ser relevante realizar testes envolvendo funções lineares dos parâmetros. Tais funções são geralmente fornecidas pela teoria. Por exemplo, ao estimar a função de demanda de um produto, os coeficientes captando as elasticidades em relação ao preço do próprio produto, em relação ao preço do produto substituto e em relação à renda têm de somar zero. Essa é a propriedade de homogeneidade de uma função de demanda (ver Nicholson, Microeconomic Theory, ninth edition). Mas é também possível formular testes a partir de perguntas de pesquisa relevantes. Por exemplo, se observamos os resultados da regressão minceriana de 2015, temos que:
 
--   Homens recebem salário horário R\$1,388 maior;
--   Pretos e pardos recebem salário R\$0,735 menor e
--   Residentes da região NE salário R\$0,906 menor.
+-   Homens recebem salário horário R$ 1,388 maior;
+-   Pretos e pardos recebem salário R$ 0,735 menor e
+-   Residentes da região NE salário R$ 0,906 menor.
 
 Será que as duas últimas características mais do que compensam a primeira em termos estatísticos? Essa pergunta não é trivial, mesmo sendo que a resposta, com base nas estimativas pontuais, é claramente afirmativa.
 
@@ -307,7 +307,7 @@ mqo_2 <- estimatr::lm_robust(sal_hor ~ anos_educ + exper_idade_trab + exper_idad
 
 # identificando as posições dos parâmetros
 
-cbind(1:26,coef(mqo_2)) # as posições são: 5, 6, 22
+cbind(1:26, coef(mqo_2)) # as posições são: 5, 6, 22
 
 # gerando a matriz R
 
@@ -440,5 +440,158 @@ $$
 Sendo f(.) e g(.) funções logarítmicas ou identidade [f(x) = x], a depender de qual dos três casos acima é considerado. Para calcular tal derivada, recordar que y é função de x.
 
 ### Álgebra Matricial
+
+#### Operações matriciais
+
+O modelo lm gera as estimativas pontuais a partir da operação matricial que
+resulta da solução do problema de mínimos quadrados ordinários. 
+
+Tal operação matricial, conforme nota de aula 4, é a seguinte:
+
+$$
+\beta_{MQO} = [(X^\intercal X)^{-1}](X^\intercal Y)
+$$
+Onde:
+
+- $\beta_{MQO} =$ o vetor N $\times$ 1 de estimadores para todos os parâmetros da FRP (intercepto e coeficientes)
+- X = matriz N $\times$ (K+1) de variáveis explicativas com uma primeira coluna contendo apenas números unitários, para com isso incorporar o intercepto à estimação
+- Y = vetor N $\times$ 1 de valores da variável dependente.
+
+É possível obter diretamente o vetor de estimativas pontuais realizando a
+operação matricial anterior no R.
+
+```{r}
+# definindo a matriz X
+
+mat_x <- subset(db_min_2015, select=c(anos_educ, exper_idade_trab, exper_idade_trab_sq, d_etnia_pre_par, d_hom, d_ativ_agro, d_ativ_indus, d_ativ_const, d_ativ_social, d_ativ_serv, d_ativ_apub, d_ocup_adm, d_ocup_agro, d_ocup_com, d_ocup_serv, d_ocup_dirigente, d_ocup_cie_art, d_ocup_tec_med, d_ocup_rep_manut, d_ocup_armada, d_reg_2, d_reg_3, d_reg_4, d_reg_5, d_urbano))
+
+#' agora é preciso adicionar o vetor com valores unitários
+#' gerando um vetor 1xN de 1's
+
+vec_1 <- matrix(1, nrow = nrow(db_min_2015), ncol = 1)
+
+# acoplando horizontalmente mat_x e vec_1
+
+mat_x <- cbind(vec_1, mat_x)
+
+# verificando dimensão da matriz X
+
+dim(mat_x)
+
+# é necessário transformar mat_x em um objeto matricial para poder fazer as operações matriciais
+
+mat_x <- as.matrix(mat_x)
+
+# definindo o vetor Y
+
+vec_y <- as.matrix(db_min_2015$sal_hor, nrow = nrow(db_min_2015), ncol = 1)
+
+# verificando dimensão do vetor Y
+
+dim(vec_y)
+```
+
+Calculando $\beta_{MQO}$:
+
+Operação 1 - $X^\intercal X$
+
+```{r}
+#' %*% -> produto matricial
+#' t(.) transposição
+
+op_1 <- t(mat_x) %*% mat_x
+```
+
+Operação 2 ($X^\intercal X$)^-1^
+
+```{r}
+#' a função "solve" inverte matrizes no R. Essa é sem dúvida a operação que mais exige do computador.
+
+op_2 <- solve(op_1)
+
+op_2
+```
+
+Operação 3 - $X^\intercal Y$
+
+```{r}
+op_3 <- t(mat_x) %*% vec_y
+```
+
+Importante notar a transposição da matriz X, sem a qual a multiplicação seria impossível. Basta observar as dimensões de `mat_x` e `vec_y` abaixo:
+
+```{r}
+dim(mat_x)
+dim(vec_y)
+
+dim(t(mat_x))
+dim(vec_y)
+```
+
+O número de colunas de `mat_x` transposta é equivalente ao número de linhas de `vec_y`, como é necessário.
+
+Operação 4 - $[(X^\intercal X)^{-1}](X^\intercal Y)$
+
+```{r}
+op_4 <- op_2 %*% op_3
+
+op_4
+```
+
+- `vec_1`: $\beta_0$
+- Demais variáveis: $\beta_1,\dots,\beta_k$
+
+```{r}
+# comparando com os coeficientes da regressão
+
+cbind(op_4, coef(mqo_2))
+```
+
+```{r}
+# fazendo as quatro operações de uma só 
+
+solve(t(mat_x) %*% mat_x) %*% (t(mat_x) %*% vec_y)
+```
+
+Obtendo a matrix de variância-covariância e as estimativas pontuais para os erros-padrão dos estimadores: 
+
+Sob as hipóteses do modelo clássico de regressão linear, a matriz de variância-covariância tem forma simples.
+
+Trata-se de: $VCOV = \sigma^2(X^\intercal X)^{-1}$
+
+Sendo $\sigma^2$ a estimativa pontual para a variância do termo de perturbação.
+
+Esta corresponde à soma dos quadrados dos resíduos dividida pelo respectivo
+número de graus de liberdade (N-K-1).
+
+Operação 1 - $\sigma^2 = SQR/(N-K-1)$
+
+```{r}
+var <- mqo_2$res_var
+```
+
+Operação 2 - $(X^\intercal X)^{-1}$
+
+```{r}
+op_2 <- solve(t(mat_x) %*% mat_x)
+```
+
+Operação 3 - $\sigma^2(X^\intercal X)^{-1}$
+
+```{r}
+# notar que, nesse caso, como sigma^2 é um escalar, deve-se utilizar o produto escalar "*"
+
+op_3 <- op_1 * op_2
+
+dim(op_3)
+```
+
+
+
+
+
+
+
+
 
 # Referências
