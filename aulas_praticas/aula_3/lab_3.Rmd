@@ -263,9 +263,9 @@ Resultou F = 644,95 e p-valor = 2.2 x 10\^-16, praticamente 0. Fica portanto con
 
 A depender do objetivo da análise, pode ser relevante realizar testes envolvendo funções lineares dos parâmetros. Tais funções são geralmente fornecidas pela teoria. Por exemplo, ao estimar a função de demanda de um produto, os coeficientes captando as elasticidades em relação ao preço do próprio produto, em relação ao preço do produto substituto e em relação à renda têm de somar zero. Essa é a propriedade de homogeneidade de uma função de demanda (ver Nicholson, Microeconomic Theory, ninth edition). Mas é também possível formular testes a partir de perguntas de pesquisa relevantes. Por exemplo, se observamos os resultados da regressão minceriana de 2015, temos que:
 
--   Homens recebem salário horário R$ 1,388 maior;
--   Pretos e pardos recebem salário R$ 0,735 menor e
--   Residentes da região NE salário R$ 0,906 menor.
+-   Homens recebem salário horário R\$ 1,388 maior;
+-   Pretos e pardos recebem salário R\$ 0,735 menor e
+-   Residentes da região NE salário R\$ 0,906 menor.
 
 Será que as duas últimas características mais do que compensam a primeira em termos estatísticos? Essa pergunta não é trivial, mesmo sendo que a resposta, com base nas estimativas pontuais, é claramente afirmativa.
 
@@ -402,8 +402,7 @@ E, pois,
 
 $$
 dy/y = \beta\cdot dx
-$$
-Tomando dx = 1, tem-se dy/y = $\beta$.
+$$ Tomando dx = 1, tem-se dy/y = $\beta$.
 
 #### Caso 3: variável dependente em forma original e variável independente em forma logarítmica
 
@@ -415,7 +414,7 @@ formula <- sal_hor ~ log(1 + anos_educ) + exper_idade_trab + exper_idade_trab_sq
 coef(lm(formula = formula, data = db_min_2015))[2]
 ```
 
-Tem-se que, pois, um aumento de 1% do nível educacional resulta em um aumento do salário horário de 1.689/100 = 0.0169 $\approx$ 2 centavos/hora. Ou, alternativamente, um aumento de 100% do nível educacional, uma duplicação de tal nível, resulta em um aumento da remuneração horária em R$1.689.
+Tem-se que, pois, um aumento de 1% do nível educacional resulta em um aumento do salário horário de 1.689/100 = 0.0169 $\approx$ 2 centavos/hora. Ou, alternativamente, um aumento de 100% do nível educacional, uma duplicação de tal nível, resulta em um aumento da remuneração horária em R\$1.689.
 
 A base de tal interpretação está em que, neste caso:
 
@@ -423,11 +422,11 @@ $$
 \beta = \frac{dy}{dx}\cdot x
 $$
 
-E, pois, 
+E, pois,
 
 $$
 dy = \beta \cdot \frac{dx}{x}
-$$ 
+$$
 
 Tomando $\frac{dx}{x}$ = 1/100, tem-se dy = $\beta \cdot 1/100$.
 
@@ -437,28 +436,25 @@ $$
 f(y) = \beta_0 + \beta_1 g(x) + \beta_X + u
 $$
 
-Sendo f(.) e g(.) funções logarítmicas ou identidade [f(x) = x], a depender de qual dos três casos acima é considerado. Para calcular tal derivada, recordar que y é função de x.
+Sendo f(.) e g(.) funções logarítmicas ou identidade \[f(x) = x\], a depender de qual dos três casos acima é considerado. Para calcular tal derivada, recordar que y é função de x.
 
 ### Álgebra Matricial
 
 #### Operações matriciais
 
-O modelo lm gera as estimativas pontuais a partir da operação matricial que
-resulta da solução do problema de mínimos quadrados ordinários. 
+O modelo lm gera as estimativas pontuais a partir da operação matricial que resulta da solução do problema de mínimos quadrados ordinários.
 
 Tal operação matricial, conforme nota de aula 4, é a seguinte:
 
 $$
 \beta_{MQO} = [(X^\intercal X)^{-1}](X^\intercal Y)
-$$
-Onde:
+$$ Onde:
 
-- $\beta_{MQO} =$ o vetor N $\times$ 1 de estimadores para todos os parâmetros da FRP (intercepto e coeficientes)
-- X = matriz N $\times$ (K+1) de variáveis explicativas com uma primeira coluna contendo apenas números unitários, para com isso incorporar o intercepto à estimação
-- Y = vetor N $\times$ 1 de valores da variável dependente.
+-   $\beta_{MQO} =$ o vetor N $\times$ 1 de estimadores para todos os parâmetros da FRP (intercepto e coeficientes)
+-   X = matriz N $\times$ (K+1) de variáveis explicativas com uma primeira coluna contendo apenas números unitários, para com isso incorporar o intercepto à estimação
+-   Y = vetor N $\times$ 1 de valores da variável dependente.
 
-É possível obter diretamente o vetor de estimativas pontuais realizando a
-operação matricial anterior no R.
+É possível obter diretamente o vetor de estimativas pontuais realizando a operação matricial anterior no R.
 
 ```{r}
 # definindo a matriz X
@@ -538,8 +534,8 @@ op_4 <- op_2 %*% op_3
 op_4
 ```
 
-- `vec_1`: $\beta_0$
-- Demais variáveis: $\beta_1,\dots,\beta_k$
+-   `vec_1`: $\beta_0$
+-   Demais variáveis: $\beta_1,\dots,\beta_k$
 
 ```{r}
 # comparando com os coeficientes da regressão
@@ -553,7 +549,7 @@ cbind(op_4, coef(mqo_2))
 solve(t(mat_x) %*% mat_x) %*% (t(mat_x) %*% vec_y)
 ```
 
-Obtendo a matrix de variância-covariância e as estimativas pontuais para os erros-padrão dos estimadores: 
+Obtendo a matrix de variância-covariância e as estimativas pontuais para os erros-padrão dos estimadores:
 
 Sob as hipóteses do modelo clássico de regressão linear, a matriz de variância-covariância tem forma simples.
 
@@ -561,8 +557,7 @@ Trata-se de: $VCOV = \sigma^2(X^\intercal X)^{-1}$
 
 Sendo $\sigma^2$ a estimativa pontual para a variância do termo de perturbação.
 
-Esta corresponde à soma dos quadrados dos resíduos dividida pelo respectivo
-número de graus de liberdade (N-K-1).
+Esta corresponde à soma dos quadrados dos resíduos dividida pelo respectivo número de graus de liberdade (N-K-1).
 
 Operação 1 - $\sigma^2 = SQR/(N-K-1)$
 
@@ -585,13 +580,5 @@ op_3 <- op_1 * op_2
 
 dim(op_3)
 ```
-
-
-
-
-
-
-
-
 
 # Referências
