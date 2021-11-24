@@ -1,6 +1,8 @@
 ---
 title: "lab_3"
-output: html_notebook
+output:
+  html_notebook:
+    df_print: paged
 bibliography: references.bib
 csl: abnt.csl
 df_print: paged
@@ -330,7 +332,7 @@ Introduzindo na FRP, tem-se:
 
 Y = $\beta_{d\_hom} \times$ d_hom + $\beta_{d\_etnia\_pre\_par} \times$ d_etnia_pre_par + $\beta_{d\_reg2} \times$ d_reg_2 + $\beta_X$ + u
 
-Y = \[d - $\beta_{d\_etnia\_pre\_par}$ + $\beta_{d\_reg2}$\] $\times$ d_hom + $\beta_{d\_etnia\_pre\_par} \times$ d_etnia_pre_par + $\beta_{d\_reg2} \times$ d_reg_2 + $\beta_X$ + u
+Y = (d - $\beta_{d\_etnia\_pre\_par} + \beta_{d\_reg2}$)$\times$ d_hom + $\beta_{d\_etnia\_pre\_par} \times$ d_etnia_pre_par + $\beta_{d\_reg2} \times$ d_reg_2 + $\beta_X$ + u
 
 Y = d $\times$ d_hom + $\beta_{d\_etnia\_pre\_par} \times$ (d_etnia_pre_par - d_hom) + $\beta_{d\_reg2} \times$ (d_reg_2 - d_hom) + BX + u
 

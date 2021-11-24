@@ -115,26 +115,30 @@ modelo <- estimatr::lm_robust(eq,
 
 # testando significância conjunta - características nacionais
 
-h0 <- c("airpoll_exposure_ = 0", 
-        "casos_por_milhao = 0")
-
-car::linearHypothesis(modelo, 
-                      h0, 
-                      test ="Chisq")
-
-vcrit_1 <- round(qchisq(0.05, 2, lower.tail = F), 2) # valor crítico
-
-# testando significância conjunta - exposição à causas da doença
-
 h0 <- c("fem_head = 0", 
         "fertility_ = 0", 
         "d_lockdown = 0")
 
-car::linearHypothesis(modelo, 
+lm_test <- car::linearHypothesis(modelo, 
                       h0, 
                       test ="Chisq")
 
-vcrit_2 <- round(qchisq(0.05, 3, lower.tail = F), 2) # valor crítico
+stat_test_1 <- round(lm_test$Chisq[2], 2) # estatística de teste
+pvalor_1 <- round(lm_test$`Pr(>Chisq)`[2], 2) # p-valor
+vcrit_1 <- round(qchisq(0.05, 3, lower.tail = F), 2) # valor crítico
+
+# testando significância conjunta - exposição à causas da doença
+
+h0 <- c("airpoll_exposure_ = 0", 
+        "casos_por_milhao = 0")
+
+lm_test <- car::linearHypothesis(modelo, 
+                      h0, 
+                      test ="Chisq")
+
+stat_test_2 <- round(lm_test$Chisq[2], 2) # estatística de teste
+pvalor_2 <- round(lm_test$`Pr(>Chisq)`[2], 2) # p-valor
+vcrit_2 <- round(qchisq(0.05, 2, lower.tail = F), 2) # valor crítico
 
 # testando significância conjunta - continente
 
@@ -144,18 +148,20 @@ h0 <- c("d_asia = 0",
         "d_oceania = 0", 
         "d_s_america = 0")
 
-car::linearHypothesis(modelo, 
+lm_test <- car::linearHypothesis(modelo, 
                       h0, 
                       test ="Chisq")
 
+stat_test_3 <- round(lm_test$Chisq[2], 2) # estatística de teste
+pvalor_3 <- round(lm_test$`Pr(>Chisq)`[2], 2) # p-valor
 vcrit_3 <- round(qchisq(0.05, 5, lower.tail = F), 2) # valor crítico
 ```
 
 |          Categoria           |                                 Variáveis                                  | Valor da estatística do teste | Graus de liberdade | Valor crítico |   p-valor    | Rejeitar H~0~ (S/N)? |
 |:----------------------------:|:--------------------------------------------------------------------------:|:-----------------------------:|:------------------:|:-------------:|:------------:|:--------------------:|
-|  Características nacionais   | País é dirigido por mulher, taxa de fertilidade, lockdown foi implementado |             12,26             |         2          |  `r vcrit_1`  |   0,002177   |          S           |
-| Exposição à causas de doença |          Exposição à poluição atmosférica, infecções por COVID-19          |            5.1081             |         3          |  `r vcrit_2`  |    0,164     |          N           |
-|          Continente          |                            Dummies continentais                            |             30,24             |         5          |  `r vcrit_3`  | 1,3\*10^-05^ |          S           |
+|  Características nacionais   | País é dirigido por mulher, taxa de fertilidade, lockdown foi implementado |        `r stat_test_1`        |         3          |  `r vcrit_1`  | `r pvalor_1` |          N           |
+| Exposição à causas de doença |          Exposição à poluição atmosférica, infecções por COVID-19          |        `r stat_test_2`        |         2          |  `r vcrit_2`  | `r pvalor_2` |          S           |
+|          Continente          |                            Dummies continentais                            |        `r stat_test_3`        |         5          |  `r vcrit_3`  | `r pvalor_3` |          S           |
 
 \normalsize
 
@@ -372,6 +378,8 @@ table_b |>
 
 *Compare os resultados das duas estimações nos itens "a" e " b" no tocante ao coeficiente do consumo energético per capita. Caso tenha havido alteração da estimativa pontual ou do valor observado da estatística t, explique por que isso ocorreu. Em sua resposta explore a diferença entre regressão simples e múltipla.*
 
+\footnotesize
+
 ```{r}
 df1 <- table_a |> 
   dplyr::mutate(Variável = dplyr::case_when(
@@ -389,11 +397,15 @@ dplyr::bind_rows(df1, df2) |>
   knitr::kable()
 ```
 
+\normalsize
+
 A alteração na estimativa do coeficiente de uma variável se dá por conta do viés de variável omitida. Esse viés surge quando se omite uma variável explicativa x~k~ no modelo que é relevante na explicação da variação da variável dependente e é correlacionada com pelo menos uma das variáveis do modelo estimado, levando a conclusões equivocadas sobre a função de regressão populacional. Neste caso, a variável `epc` apresentou diminuição em seu coeficiente após a inclusão de variáveis de controle, possibilitando um melhor isolamento do efeito *ceteris paribus* e a mitigação do viés de variável omitida.
 
 ### 2) e.
 
 *Compare o R^2^ ordinário da regressão simples com o R^2^ ajustado da regressão múltipla e explique por que os dois diferem em magnitude.*
+
+\footnotesize
 
 ```{r}
 modelo_a <- estimatr::lm_robust(eq_a,
@@ -407,6 +419,8 @@ r2_a <- round(modelo_a$r.squared, 2)
 r2_b <- round(modelo_b$r.squared, 2)
 ```
 
+\normalsize
+
 -   R^2^ do modelo simples = `r r2_a`
 -   R^2^ do modelo de múltiplas variáveis = `r r2_b`
 
@@ -415,6 +429,8 @@ O R^2^ da regressão de múltiplas variáveis é maior por seu melhor ajuste e m
 ### 2) f.
 
 *Teste a hipótese de que nível de desenvolvimento explica fração irrelevante da emissão de gases de efeito estufa. Para isso aplique um teste de significância conjunta às explicativas `d_dev_ing` e `d_dev_tra`, utilizando o procedimento do teste de multiplicador de Lagrange da nota de aula 7. Em sua resposta informe:*
+
+\footnotesize
 
 ```{r}
 modelo <- estimatr::lm_robust(eq_b,
@@ -427,18 +443,31 @@ lm_test <- car::linearHypothesis(modelo,
                       h0, 
                       test ="Chisq")
 
-vcrit <- round(qchisq(0.05, 2, lower.tail = F), 2) # valor 
+stat_test <- round(lm_test$Chisq[2], 2) 
+vcrit <- round(qchisq(0.05, 2, lower.tail = F), 2)
+pvalor <- round(lm_test$`Pr(>Chisq)`[2], 2)
 ```
 
-1.  *Valor observado da estatística do teste:* `r round(lm_test$Chisq[2], 2)`
+\normalsize
+
+1.  *Valor observado da estatística do teste:* `r stat_test`
 2.  *Valor crítico ao nível de significância de 5%:* `r vcrit`
-3.  *P-valor:* `` r round(lm_test$`Pr(>Chisq)`[2], 2) ``
-4.  *Decisão apropriada entre rejeitar ou não a hipótese nula*
-5.  *Qual conclusão pode ser retirada do resultado do teste? Justifique.*
+3.  *P-valor:* `r pvalor`
+4.  *Decisão apropriada entre rejeitar ou não a hipótese nula:* Sim
+5.  *Qual conclusão pode ser retirada do resultado do teste? Justifique.\
+    *Ao se rejeitar H~0~, pode-se aceitar H~1~ e afirmar que variáveis de desenvolvimento são relevantes para explicar as emissões de gases do efeito estufa *per capita*.
 
 ## 3)
 
-*Ao estimar a equação de Mincer para o logaritmo natural da remuneração, foram obtidas estimativas pontuais de 0,071 e 0,026, respectivamente, para os coeficientes das explicativas captando nível educacional e experiência. Diversas outras explicativas foram incorporadas. As duas explicativas são medidas em anos e, portanto, trata-se de variáveis quantitativas discretas. Nenhuma delas foi incorporada ao modelo em forma logarítmica, mas sim em nível, i.e., sem qualquer transformação matemática de seus valores originais. Tendo em mente estes detalhes e também a definição do conceito do coeficiente de uma explicativa discreta, interprete economicamente, com a máxima clareza e precisão possíveis, os valores das estimativas pontuais, i.e., explique o significado econômico das estimativas pontuais considerando não apenas os sinais delas, mas também as magnitudes. Para isso, utilize a aproximação* $\log (1+w) \approx \mathrm{w}$.
+*Ao estimar a equação de Mincer para o logaritmo natural da remuneração, foram obtidas estimativas pontuais de 0,071 e 0,026, respectivamente, para os coeficientes das explicativas captando nível educacional e experiência. Diversas outras explicativas foram incorporadas. As duas explicativas são medidas em anos e, portanto, trata-se de variáveis quantitativas discretas. Nenhuma delas foi incorporada ao modelo em forma logarítmica, mas sim em nível, i.e., sem qualquer transformação matemática de seus valores originais. Tendo em mente estes detalhes e também a definição do conceito do coeficiente de uma explicativa discreta, interprete economicamente, com a máxima clareza e precisão possíveis, os valores das estimativas pontuais, i.e., explique o significado econômico das estimativas pontuais considerando não apenas os sinais delas, mas também as magnitudes. Para isso, utilize a aproximação* $\log (1+w) \approx w$.
+
+-   $\beta$~nivel_educacional~ = 0,071
+-   $\beta$~experiência~ = 0,026
+
+A interpretação dos parâmetros para nível educacional e experiência equivale a uma semielasticidade, ou seja:
+
+-   O aumento de um ano no nível educacional equivale a um aumento de 7,1% na remuneração.
+-   O aumento de um ano na experiência do trabalhador equivale a um aumento de 2,6% na remuneração.
 
 ## 4)
 
