@@ -48,6 +48,7 @@ header-includes:
 \setlength{\parskip}{0.1cm}
 \FloatBarrier
 ```
+
 <!-- Remover tudo menos os resultados dos chunks --->
 
 ```{r, echo=FALSE}

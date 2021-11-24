@@ -1,0 +1,254 @@
+---
+title: "lab_2"
+output: html_notebook
+bibliography: references.bib
+csl: abnt.csl
+df_print: paged
+---
+
+# Segunda aula de laboratório, script 2[^1]
+
+[^1]: Preparado por Thiago Fonseca Morello (CECS-UFABC).
+
+O objetivo deste roteiro de aula é apresentar exemplos de testes de significância individual, conjunta e global para regressão múltipla
+
+## Regressões que serão estimadas
+
+Equação de Mincer [@giuberti2005; @meara2020]
+
+<center>
+
+salário_hora_real = $\beta_0$ + $\beta_1$educação + $\beta_2$experiência + $\beta_3$setor + $\beta_4$ocupação + $\beta_5$gênero + $\beta_6$etnia + $\beta_7$região + $\beta_8$área_urbana + u~t~
+
+</center>
+
+## Dados
+
+```{r}
+# install.packages("tidyverse")
+library(tidyverse)
+
+load("aulas_praticas/aula_2/dados.Rdata")
+
+# convertendo para tibbles
+
+db_cov <- db_cov |> dplyr::as_tibble(db_cov)
+
+db_min <- db_min |> dplyr::as_tibble(db_min)
+```
+
+Variável dependente:
+
+-   Salário-hora
+
+Variáveis independentes:
+
+-   Educação e experiência:
+
+    -   Anos de estudo - anos_educ
+
+    -   Experiência - exper_idade_trab (idade em que começou a trabalhar)
+
+    -   Experiência ao quadrado - exper_idade_trab_sq
+
+-   Características pessoais:
+
+    -   Etnia preta ou parda - etnia_pre_par
+
+    -   Sexo masculino - d_hom
+
+-   Setor e ocupação:
+
+    -   Setor de atividade: agropecuária, indústria, construção, educação/saúde/social, outros serviços, administração pública - d_ativ\*
+
+    -   Ocupação: administração, agricultura, comércio, outros serviços, dirigente, ciência/tecnologia, técnico de nível médio, reparo/manutenção, forças armadas - d_ocup\*
+
+-   Regional
+
+    -   Grande região brasileiras - Nordeste (2), Sudeste (3), Sul (4), Centro Oeste (5) - d_reg_2 a d_reg_5
+
+    -   Área urbana - d_urbano
+
+### Sumário estatístico das variáveis
+
+```{r}
+summary(subset(db_min, select=c(anos_educ, exper_idade_trab, exper_idade_trab_sq, d_etnia_bca_ama, d_etnia_pre_par, d_hom, d_ativ_agro, d_ativ_indus, d_ativ_const, d_ativ_social, d_ativ_serv, d_ativ_apub, d_ocup_adm, d_ocup_agro, d_ocup_com, d_ocup_serv, d_ocup_dirigente, d_ocup_cie_art, d_ocup_tec_med, d_ocup_rep_manut, d_ocup_armada, d_reg_2, d_reg_3, d_reg_4, d_reg_5, d_urbano)))
+```
+
+### Modelo em 2004
+
+```{r}
+# install.packages("estimatr")
+library(estimatr)
+
+db_min_2004 <- db_min |> filter(ano == 2004)
+
+mqo <- estimatr::lm_robust(sal_hor ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano,
+                             data = db_min_2004)
+
+summary(mqo)
+```
+
+-   `Multiple R-squared`: R^2^ para uma regressão de n variáveis
+
+-   `Adjusted R-squared`: R^2^ ajustado
+
+-   `F-statistic`: estatística de teste de significância global
+
+### Teste de significância individual: educação
+
+$H_0: \beta_k=0\ vs\ H_1: \beta_k \ne 0$
+
+Estatística de teste individual: $\hat t = \beta_k/\text{erro padrão}$
+
+```{r}
+tmqo <- broom::tidy(mqo)
+
+tmqo |> dplyr::slice(2) |>
+  dplyr::select(term, estimate) |>
+  dplyr::rename(`2004` = estimate)
+
+View(vcov(mqo))
+```
+
+É correto que alguns elementos da matriz de variância-covariância sejam negativos? *R: Sim, pois a covariância pode ser negativa.*
+
+```{r}
+# install.packages("raster")
+library("raster")
+
+colfunc <- colorRampPalette(c("red", "blue"))
+
+plot(raster(vcov(mqo)),
+     col = colfunc(2),
+     breaks = c(min(vcov(mqo)),
+                0,
+                max(vcov(mqo))),
+     legend = F,
+     xlim = c(0, 1),
+     ylim = c(0, 1))
+```
+Qual estatística está na diagonal principal da matriz de variância-covariância? *R: A variância.*
+
+O primeiro padrão notório é que há apenas números positivos na diagonal principal. Por que isso? *R: Porque os valores na diagonal principal representam as variâncias, que não assumem valores negativos.*
+
+A implicação do primeiro padrão é que os números negativos estão fora da diagonal principal. É correto isso? O que temos fora da diagonal principal da matriz? *R: Sim, é correto. Fora da diagonal principal temos as covariâncias.*
+
+Notar a simetria em torno da diagonal principal (ou seja, a diagonal principal é como um espelho). Será que uma matriz de covariância-variância é sempre simétrica? *R: Sim, pois essa matriz tem os mesmos termos tanto nas linhas e como nas colunas.*
+
+O erro padrão referente ao k-ésimo coeficiente é o k+1-ésimo termo da diagonal principal da matriz de variância-covariância. Basta utilizar a função diag com índice k+1.
+
+Por ex., a variância do estimador para o coeficiente da primeira explicativa, educação, é:
+
+```{r}
+diag(vcov(mqo))[2]
+```
+
+Estatística t:
+
+```{r}
+# estatística de teste
+
+t <- coef(mqo)[2] / sqrt(diag(vcov(mqo))[2])
+
+t
+
+# n da regressão para 2004
+
+n <- nrow(subset(db_min,ano == 2004))
+
+# n parâmetros
+
+k <- length(coef(mqo))
+
+# graus de liberdade
+
+gl <- n-(k+1)
+
+# valores críticos
+
+c(qt(0.025, gl), qt(0.975, gl))
+```
+
+RC: $(-\infty;-1{,}96]\cup[1{,}96; -\infty)$
+
+```{r}
+# p-valor
+
+2*pt(-abs(t_obs),gl)
+```
+
+Ao se rejeitar H~0~, pode-se afirmar que `anos_educ` é uma variável diferente de 0 a uma significância de 5%.
+
+### Teste de significância global
+
+```{r}
+summary(mqo)
+
+# R^2
+
+r2 <- 0.3932
+
+# graus de liberdade (K)
+
+gl_num <- length(coef(mqo))-1
+
+# graus de liberdade [N-(K+1)]
+
+gl_den <- nrow(subset(db_min, ano == 2004)) - length(coef(mqo))
+
+# estatística de teste
+
+f <- (r2 / gl_num) / ((1 - r2) / gl_den)
+
+f
+
+# p-valor
+
+pf(f, gl_num, gl_den, lower.tail = F)
+```
+
+Ao se rejeitar H~0~, pode-se afirmar que o modelo é relevante para explicar o modelo a uma significância de 5%.
+
+### Teste de significância conjunta
+
+Estatística de teste: $\hat F = \frac{(SQR_R-SQR_{IR})/s}{SQR_{IR}/(N-K-1)}$
+
+```{r}
+# regressão restrita
+
+formula_R <- sal_hor ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano
+
+mqo_R <- lm(formula_R, 
+            data = subset(db_min, 
+                          ano == 2004))
+
+SQR_R <- sum(mqo_R$residuals^2)
+
+SQR_IR <- sum(mqo$residuals^2)
+
+# diferença entre o número de parâmetros entre os dois modelos (número de explicativas alvo - s)
+
+s <- length(coef(mqo))-length(coef(mqo_R))
+
+f1 <- ((SQR_R - SQR_IR) / s) / (SQR_IR / gl_den)
+
+f1
+
+# p-valor
+
+pf(f1, s, gl_den, lower.tail = F)
+```
+
+Ao se rejeitar H~0~, pode-se afirmar que as variáveis selecionadas no teste de significância conjunta são relevantes para o modelo.
+
+### Intervalos de confiança para coeficientes
+
+```{r}
+# IC a 95% de confiança
+
+c(t + qt(0.025, gl_den) * sqrt(diag(vcov(mqo))[2]), t - qt(0.025, gl_den) * sqrt(diag(vcov(mqo))[2]))
+```
+
+
+# Referências

@@ -50,7 +50,7 @@ load("aulas_praticas/aula_1/lab_1_dados.Rdata")
 
 db_cov <- db_cov |> dplyr::as_tibble(db_cov)
 
-db_min <- db_min |> dplyr::as_tibble(db_cov)
+db_min <- db_min |> dplyr::as_tibble(db_min)
 
 db_cov
 
@@ -147,7 +147,7 @@ db_covs |>
 
 Os percentis da distribuição empírica de uma variável permitem identificar valores discrepantes da tendência central (média), i.e., muito pequenos ou muito grandes.
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 db_covs |>
   dplyr::summarise(letalidade = obitos_por_milhao/casos_por_milhao) |>
   dplyr::do(
@@ -303,7 +303,7 @@ db_covs # a dummie para a África foi tomada por base
 
 Regressão:
 
-```{r}
+```{r echo=TRUE}
 summary(db_covs)
 
 # install.packages("estimatr")
@@ -321,7 +321,7 @@ infec_per_capita = 3777,95 - 1162,8\*Dirigente mulher - 1097,84\*Fertilidade + 7
 
 </center>
 
-O que se pode concluir? *R: Controlando para outras variáveis, ter uma líder mulher é associado a uma redução nas infecções per capita (por um milhão de habitantes). O resultado é significante.*
+O que se pode concluir? *R: Controlando para outras variáveis, ter uma líder mulher é associado a uma redução nas infecções per capita (por um milhão de habitantes). O resultado não é significante.*
 
 Quais variáveis possuem relação positiva com o número de infecções? *R: Poluição e as dummies Ásia, Europa, América do Norte e América do Sul.*
 
@@ -338,13 +338,13 @@ mqo_2 <- estimatr::lm_robust(obitos_por_milhao ~ fem_head + fertility_ + airpoll
 summary(mqo_2)
 ```
 
-O que se pode concluir?
+O que se pode concluir? *R: Para óbitos por milhão, as variáveis significantes são a exposição a poluição, os continentes europeu, norte-americano, sul-americano e os casos por milhão.*
 
-Quais variáveis possuem relação positiva com o número de óbitos?
+Quais variáveis possuem relação positiva com o número de óbitos? *R: Taxa de fertilidade, os continentes asiático, europeu, norte-americano, sulamericano e os casos por milhão.*
 
-Quais variáveis possuem relação negativa com o número de óbitos?
+Quais variáveis possuem relação negativa com o número de óbitos? *R: A liderança feminina, a exposição a poluição, o lockdown e o continente da Oceania.*
 
-Qual é a proporção da variação da variável dependente explicada?
+Qual é a proporção da variação da variável dependente explicada? *R: 18,64%*
 
 ```{r}
 cbind(óbitos=coef(mqo_2),infecções=c(coef(mqo_1),NA))
@@ -384,9 +384,9 @@ Variáveis independentes:
 
     -   Área urbana - d_urbano
 
-Há cinco regiões brasileiras: por que apenas quatro foram incluídas?
+Há cinco regiões brasileiras: por que apenas quatro foram incluídas? *R: Um estado foi usado de referência para as outras dummies.*
 
-Há a rigor dois grupos de etnia nas subamostras da PNAD consideradas, (1) brancos e amarelos e (2) pretos e pardos. Por que um deles não foi considerado?
+Há a rigor dois grupos de etnia nas subamostras da PNAD consideradas, (1) brancos e amarelos e (2) pretos e pardos. Por que um deles não foi considerado? *R: Um grupo foi usado de referência para as outras dummies.*
 
 Por que a variável experiência ao quadrado é incluída?
 
@@ -419,27 +419,82 @@ summary(mqo_4)
 #### Visualizando resultados
 
 ```{r}
-cbind('2004'=coef(mqo_3),'2015'=coef(mqo_4))
+mqo_3 <- broom::tidy(mqo_3)
+
+mqo_4 <- broom::tidy(mqo_4)
+
+mincer <- dplyr::bind_cols(mqo_3 |>
+                   dplyr::select(term, estimate) |> 
+                   dplyr::rename(`2004` = estimate),
+                 mqo_4 |> 
+                   dplyr::select(estimate)|> 
+                   dplyr::rename(`2015` = estimate))
+
+mincer
 ```
 
-O que se pode concluir?
+O que se pode concluir? *R: Não tiveram muitas modificações no efeito das variáveis explicativas escolhidas no salário entre 2004 e 2015.*
 
 Quais variáveis possuem relação positiva com o salário horário?
 
+```{r}
+mincer |> 
+  dplyr::filter(`2004` > 0) |> 
+  dplyr::select(term, `2004`)
+
+mincer |> 
+  dplyr::filter(`2015` > 0) |> 
+  dplyr::select(term, `2015`)
+```
+
 Quais variáveis possuem relação negativa com o salário horário?
 
-Como interpretar o coeficiente da educação?
+```{r}
+mincer |> 
+  dplyr::filter(`2004` < 0) |> 
+  dplyr::select(term, `2004`)
 
-Como interpretar o coeficiente da experiência (medida em anos)?
+mincer |> 
+  dplyr::filter(`2015` < 0) |> 
+  dplyr::select(term, `2015`)
+```
 
-Como interpretar o coeficiente da etnia preta e parda?
+Como interpretar o coeficiente da educação? *R: Um ano a mais de educação leva a um aumento, em média, de 0,37 reais no salário-hora.*
 
-Como interpretar o coeficiente do gênero masculino?
+Como interpretar o coeficiente da experiência (medida em anos)? *R: Um ano a mais de experiência leva a um aumento, em média, de 0,20 reais no salário-hora.*
+
+Como interpretar o coeficiente da etnia preta e parda? *R: Trabalhadores pretos e pardos possuem uma diferença, em média, de -0,63 reais de salário-hora.*
+
+Como interpretar o coeficiente do gênero masculino? *R: Homens ganham, em média, 1,1 reais de salário-hora a mais que mulheres.*
 
 Para quais variáveis o coeficiente estimado difere entre 2004 e 2015? O retorno da educação aumentou?
 
+```{r}
+retorno_educ <- mincer |> 
+  dplyr::slice(2) |> 
+  dplyr::summarise(var = (`2015`-`2004`)/abs(`2004`)*100) |> 
+  dplyr::pull() |> 
+  round(2)
+
+mincer |>
+  dplyr::mutate(var = (`2015`-`2004`)/abs(`2004`)) |> 
+  dplyr::filter(var > 0.15 | var < -0.15) # variáveis com pelo menos 15% de variação entre o período de 2004 e 2015
+```
+
+*R: O retorno da educação aumentou, em média,* `r retorno_educ`%.
+
 O retorno da experiência aumentou?
 
-Faz sentido afirmar que há diferenciação regional em salário horário?
+```{r}
+retorno_exp <- mincer |> 
+  dplyr::slice(3) |> 
+  dplyr::summarise(var = (`2015`-`2004`)/abs(`2004`)*100) |> 
+  dplyr::pull() |> 
+  round(2)
+```
+
+*R: O retorno da experiência aumentou, em média,* `r retorno_exp`%.
+
+Faz sentido afirmar que há diferenciação regional em salário horário? *R: Sim, pois todas as variáveis referentes às regiões brasileiras são significantes.*
 
 # Referências

@@ -1,0 +1,584 @@
+---
+title: "lab_3"
+output: html_notebook
+bibliography: references.bib
+csl: abnt.csl
+df_print: paged
+---
+
+# Segunda aula de laboratório, script 3[^1]
+
+[^1]: Preparado por Thiago Fonseca Morello (CECS-UFABC).
+
+O objetivo deste roteiro de aula é comparar os testes F e LM para o teste de restrição de exclusão, apresentar a interpretação de elasticidades e semi-elasticidades e apresentar operações matriciais.
+
+## Regressões que serão estimadas
+
+Equação de Mincer [@giuberti2005; @meara2020]
+
+<center>
+
+salário_hora_real = $\beta_0$ + $\beta_1$educação + $\beta_2$experiência + $\beta_3$setor + $\beta_4$ocupação + $\beta_5$gênero + $\beta_6$etnia + $\beta_7$região + $\beta_8$área_urbana + u~t~
+
+</center>
+
+## Dados
+
+```{r}
+# install.packages("tidyverse")
+library(tidyverse)
+
+load("aulas_praticas/aula_3/dados.Rdata")
+
+# convertendo para tibbles
+
+db_min <- db_min |> dplyr::as_tibble(db_min)
+```
+
+Variável dependente:
+
+-   Salário-hora
+
+Variáveis independentes:
+
+-   Educação e experiência:
+
+    -   Anos de estudo - anos_educ
+
+    -   Experiência - exper_idade_trab (idade em que começou a trabalhar)
+
+    -   Experiência ao quadrado - exper_idade_trab_sq
+
+-   Características pessoais:
+
+    -   Etnia preta ou parda - etnia_pre_par
+
+    -   Sexo masculino - d_hom
+
+-   Setor e ocupação:
+
+    -   Setor de atividade: agropecuária, indústria, construção, educação/saúde/social, outros serviços, administração pública - d_ativ\*
+
+    -   Ocupação: administração, agricultura, comércio, outros serviços, dirigente, ciência/tecnologia, técnico de nível médio, reparo/manutenção, forças armadas - d_ocup\*
+
+-   Regional
+
+    -   Grande região brasileiras - Nordeste (2), Sudeste (3), Sul (4), Centro Oeste (5) - d_reg_2 a d_reg_5
+
+    -   Área urbana - d_urbano
+
+### Sumário estatístico das variáveis
+
+```{r}
+summary(subset(db_min, select=c(anos_educ, exper_idade_trab, exper_idade_trab_sq, d_etnia_bca_ama, d_etnia_pre_par, d_hom, d_ativ_agro, d_ativ_indus, d_ativ_const, d_ativ_social, d_ativ_serv, d_ativ_apub, d_ocup_adm, d_ocup_agro, d_ocup_com, d_ocup_serv, d_ocup_dirigente, d_ocup_cie_art, d_ocup_tec_med, d_ocup_rep_manut, d_ocup_armada, d_reg_2, d_reg_3, d_reg_4, d_reg_5, d_urbano)))
+```
+
+### Modelos
+
+```{r}
+# install.packages("estimatr")
+library(estimatr)
+
+db_min_2004 <- db_min |> filter(ano == 2004)
+
+mqo_1 <- estimatr::lm_robust(sal_hor ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano,
+                             data = db_min_2004)
+
+summary(mqo_1)
+```
+
+-   `Multiple R-squared`: R^2^ para uma regressão de n variáveis
+
+-   `Adjusted R-squared`: R^2^ ajustado
+
+-   `F-statistic`: estatística de teste de significância global
+
+### Teste do multiplicador de Lagrange
+
+O teste será feito para as *dummies* de atividade e ocupação.
+
+```{r}
+# estimando o modelo restrito e obtendo os resíduos
+
+formula_R <- sal_hor ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano
+
+mqo_R <- lm(formula_R, data = db_min_2004)
+
+# regressão com resíduos
+
+db_min_2004$res_r <- mqo_R$residuals
+
+formula <- res_r ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano
+
+mqo_res <- lm(formula = formula, data = db_min_2004)
+
+# estatística de teste: N*R^2_res, sendo R^2_res o R^2 do modelo com resíduos como variáveis dependentes (R^2 não ajustado)
+
+summary(mqo_res)
+
+R2_res <- 0.1317
+
+lm <- nrow(db_min_2004)*0.1317
+
+lm
+
+# região crítica
+
+#' distribuição: chi^2
+#' graus de liberdade: número de variáveis-alvo do teste
+
+gl <- length(coef(mqo_1)) - length(coef(mqo_R))
+
+qchisq(0.05, gl, lower.tail = F)
+```
+
+RC = $[7{,}261;\infty)$
+
+```{r}
+# p-valor
+
+pchisq(lm, gl, lower.tail = F)
+```
+
+Ao se rejeitar H~0~, pode-se afirmar que as variáveis selecionadas no teste do multiplicador de Lagrange são relevantes para o modelo.
+
+### Comparação com o teste F
+
+Estatística de teste: $\hat F = \frac{(SQR_R-SQR_{IR})/s}{SQR_{IR}/(N-K-1)}$
+
+```{r}
+# regressão restrita
+
+mqo_R <- lm(formula_R, 
+            data = subset(db_min, 
+                          ano == 2004))
+
+SQR_R <- sum(mqo_R$residuals^2)
+
+SQR_IR <- sum(mqo_1$residuals^2)
+
+# diferença entre o número de parâmetros entre os dois modelos (número de explicativas alvo - s)
+
+s <- length(coef(mqo_1)) - length(coef(mqo_R))
+
+gl_den <- nrow(db_min_2004) - length(coef(mqo_1))
+
+f1 <- ((SQR_R - SQR_IR) / s) / (SQR_IR / gl_den)
+
+f1
+
+# p-valor
+
+pf(f1, s, gl_den, lower.tail = F)
+```
+
+Ambos os testes chegaram à mesma conclusão.
+
+### Versão matricial do teste F
+
+$H_0: R\beta = q\ vs\ H_1: R\beta \ne q$
+
+-   R = matriz $r \times (K+1)$ de restrições lineares
+-   r = número de restrições
+-   $\beta$ = vetor coluna $(K+1) \times 1$ de parâmetros da regressão múltipla, incluindo o intercepto na primeira posição
+-   q = vetor coluna $r \times 1$ de valores atribuídos às restrições lineares
+
+Por exemplo, um teste de restrições de exclusão das três primeiras explicativas compreende três restrições, \$\\beta\$~1~ = 0, \$\\beta\$~2~ = 0 e \$\\beta\$~2~ = 0. Ou seja, r = 3.
+
+A matriz R é:
+
+       |0|1|0|0|0|0|...|0|
+    R =|0|0|1|0|0|0|...|0|
+       |0|0|0|1|0|0|...|0|
+
+O vetor q é:
+
+        |0|
+    q = |0|
+        |0|
+        
+
+Criando a matriz no R:
+
+No caso geral do teste de restrições de exclusão, cada restrição requer uma linha na matriz R com a unidade exatamente na posição do coeficiente-alvo e zero nas demais posições.
+
+Fórmula: `c(rep(0,J-1),1,rep(0,length(coef(mqo_1))-J-1))`
+
+Exemplo:
+
+```{r}
+# a posição da primeira dummy pode ser vista abaixo
+
+cbind(1:26, coef(mqo_1)) # posição 7
+
+J <- 7
+
+t(c(rep(0, J - 1), 1, rep(0, length(coef(mqo_1)) - J)))
+
+# para todas as posições das dummies
+
+J <- 7:21
+
+mat_R <- t(sapply(7:21, function(x) c(rep(0, x - 1), 1, rep(0, length(coef(mqo_1)) - x))))
+
+mat_R <- as.matrix(mat_R)
+
+mat_R
+```
+
+Criando o vetor q:
+
+O vetor q é um vetor coluna nulo com tamanho equivalente ao número de coeficientes-alvo, o que é criado automaticamente pela função de geração de matrizes do R abaixo.
+
+A sintaxe é `matrix(elemento, número de colunas, número de linhas)`.
+
+```{r}
+vec_q <- matrix(0, ncol=1, nrow=15)
+```
+
+Utilizando o comando linearHypothesis desenvolvido por Fansworth[^2]:
+
+[^2]: Mais informações em <http://cran.r-project.org/doc/contrib/Farnsworth-EconometricsInR.pdf>
+
+```{r}
+# install.packages("AER")
+library("AER")
+
+car::linearHypothesis(mqo_1, 
+                      hypothesis.matrix = mat_R, 
+                      rhs = vec_q,
+                      test = "F")
+```
+
+-   Model 1: é o modelo restrito, sem as variáveis destacadas na subjanela "Hypothesis"
+-   Model 2: é o modelo irrestrito
+-   `Res.Df`: graus de liberdade da soma dos quadrados dos resíduos de cada modelo. São contados como N - K - 1, sendo, para o modelo restrito `r nrow(db_min_2004)-(26-15)`. Notar que das 26 explicativas do modelo irrestrito, 15 não estão presentes no modelo restrito. E, para o modelo irrestrito `r nrow(db_min_2004)-(26)`.
+-   `Df`: graus de liberdade do numerador da distribuição F
+-   `F`: valor observado da estatística do teste
+-   `Pr(>F)`: p-valor do teste
+
+Resultou F = 644,95 e p-valor = 2.2 x 10\^-16, praticamente 0. Fica portanto confirmado que o comando linearHypothesis e o procedimento "manual" são equivalentes.
+
+### Teste de combinações lineares dos parâmetros
+
+A depender do objetivo da análise, pode ser relevante realizar testes envolvendo funções lineares dos parâmetros. Tais funções são geralmente fornecidas pela teoria. Por exemplo, ao estimar a função de demanda de um produto, os coeficientes captando as elasticidades em relação ao preço do próprio produto, em relação ao preço do produto substituto e em relação à renda têm de somar zero. Essa é a propriedade de homogeneidade de uma função de demanda (ver Nicholson, Microeconomic Theory, ninth edition). Mas é também possível formular testes a partir de perguntas de pesquisa relevantes. Por exemplo, se observamos os resultados da regressão minceriana de 2015, temos que:
+
+-   Homens recebem salário horário R\$ 1,388 maior;
+-   Pretos e pardos recebem salário R\$ 0,735 menor e
+-   Residentes da região NE salário R\$ 0,906 menor.
+
+Será que as duas últimas características mais do que compensam a primeira em termos estatísticos? Essa pergunta não é trivial, mesmo sendo que a resposta, com base nas estimativas pontuais, é claramente afirmativa.
+
+O valor da diferença das estimativas é: 1,388-0,735-0,906. A razão para isso está em que as estimativas pontuais não são valores verdadeiros ou populacionais dos parâmetros. É possível, pois, que, mesmo com a soma das estimativas sendo negativa, a soma dos parâmetros seja não-negativa. Daí porque é equivocado concluir, a partir da soma das pontuais que, na população brasileira como um todo, etnia e região quando combinadas, produzem efeito que compensa o efeito de gênero. É necessário testar. Antes disso, é preciso ter clareza quanto à pergunta-base do teste e quanto à função de parâmetros-alvo do teste. A pergunta: será que homem, preto ou pardo da região NE recebe salário maior do que mulher branca ou amarela de outra região do Brasil? Responder a essa pergunta significa medir o efeito da seguinte diferença de expectativas condicionais:
+
+E(y\|X, d_hom = 1, d_etnia_pre_par = 1, d_reg_2 = 1) - E(y\|X, d_hom = 0, d_etnia_pre_par = 0, d_reg_2 = 0) = $\beta_{d\_hom}$+$\beta_{d\_etnia\_pre\_par}$+$\beta_{d\_reg2}$.
+
+Testar, pois, se a soma dos três coeficientes é nula consiste em testar se dois grupos sociais, que diferem apenas nas três características (são equivalentes nas demais características), também diferem em remuneração.
+
+#### Especificando o teste
+
+Seja considerado, como referência, um teste com para duas restrições de combinação linear.
+
+A primeira restrição é a de que os três primeiros parâmetros somam zero.
+
+A segunda restrição é a de que o quarto e o quinto parâmetros somam zero.
+
+A matriz R é $2 \times 26$, pois há duas restrições:
+
+       |1|1|1|0|0|0|...|0|
+    R =|0|0|0|1|1|0|...|0|
+
+O vetor q é $2 \times 1$ pois há duas restrições:
+
+        |0|
+    q = |0|
+
+Adaptando para o caso em questão, há apenas uma restrição linear, $\beta_{d\_hom}$+$\beta_{d\_etnia\_pre\_par}$+$\beta_{d\_reg2}$ = 0.
+
+Nesse caso, a matriz R é uma linha com valores unitários na posição dos coeficientes em questão e zero nas demais posições.
+
+```{r}
+# regressão
+
+db_min_2015 <- db_min |> filter(ano == 2015)
+
+mqo_2 <- estimatr::lm_robust(sal_hor ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano,
+                             data = db_min_2015)
+
+# identificando as posições dos parâmetros
+
+cbind(1:26, coef(mqo_2)) # as posições são: 5, 6, 22
+
+# gerando a matriz R
+
+mat_R <- t(c(rep(0, 4), 1, 1, rep(0, 21 - 7 + 1), 1, rep(0, 4)))
+
+# gerando o vetor q
+
+vec_q <- matrix(0, nrow = 1, ncol = 1)
+
+# aplicando o teste
+
+car::linearHypothesis(mqo_2, hypothesis.matrix = mat_R, rhs = vec_q)
+```
+
+Ao se rejeitar H~0~, pode-se afirmar que o grupo social homens, pretos ou pardos, da região NE recebe remuneração estatisticamente distinta do grupo mulheres, brancas ou amarelas, de outra região.
+
+Notar que o resultado do teste não é informativo, em caso de rejeição de H0, quanto ao sinal do parâmetro correspondente à soma dos três coeficientes. Uma maneira de obter tal informação é aplicando o procedimento sugerido por Wooldridge no exercício 4.8 da 2ª edição em inglês. Basta tomar $\beta_{d\_hom}$ + $\beta_{d\_etnia\_pre\_par}$ + $\beta_{d\_reg2}$ = d, de modo que $\beta_{d\_hom}$ = d - $\beta_{d\_etnia\_pre\_par}$ + $\beta_{d\_reg2}$.
+
+Introduzindo na FRP, tem-se:
+
+Y = $\beta_{d\_hom} \times$ d_hom + $\beta_{d\_etnia\_pre\_par} \times$ d_etnia_pre_par + $\beta_{d\_reg2} \times$ d_reg_2 + $\beta_X$ + u
+
+Y = \[d - $\beta_{d\_etnia\_pre\_par}$ + $\beta_{d\_reg2}$\] $\times$ d_hom + $\beta_{d\_etnia\_pre\_par} \times$ d_etnia_pre_par + $\beta_{d\_reg2} \times$ d_reg_2 + $\beta_X$ + u
+
+Y = d $\times$ d_hom + $\beta_{d\_etnia\_pre\_par} \times$ (d_etnia_pre_par - d_hom) + $\beta_{d\_reg2} \times$ (d_reg_2 - d_hom) + BX + u
+
+Ou seja, a regressão passa a incorporar duas subtrações de dummies. BX incorpora o intercepto e os demais coeficientes multiplicados por respectivas explicativas.
+
+Estimando essa regressão:
+
+```{r}
+formula <- sal_hor ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + I(d_etnia_pre_par-d_hom) + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + I(d_reg_2-d_hom) + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano
+
+mqo_2_rl <- lm(formula = formula, data = db_min_2015)
+
+summary(mqo_2_rl)
+```
+
+O que se pode concluir que homens pretos ou pardos, residentes da região NE recebem remuneração menor do que mulheres brancas ou amarelas residentes em outras regiões.
+
+### Interpretação: elasticidades e semi-elasticidades
+
+#### Caso 1: variáveis dependente e independentes em forma logaritmica
+
+Nesse caso, os coeficientes são elasticidades.
+
+Seja considerada a equação minceriana para 2015 com salário horário e educação em forma logarítmica
+
+Para introduzir o log, basta utilizar a função log(1+x) diretamente na definição da fórmula. Como é possível que as variáveis assumam valores nulos e não está definido o logaritmo de um valor nulo, é sempre uma boa ideia utilizar a transformação log(1+x)
+
+```{r}
+formula <- log(1 + sal_hor) ~ log(1 + anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano)
+
+coef(lm(formula = formula, data = db_min_2015))[2]
+```
+
+Tem-se que 1% de aumento no nível educacional implica em 5,51% de aumento na remuneração.
+
+A base de tal interpretação está em que, neste caso:
+
+$$
+\beta = \frac{dy}{dx}\cdot\frac{x}{y}
+$$
+
+E, pois,
+
+$$
+dy/y = \beta\cdot x/dx
+$$
+
+Tomando x/dx = 1/100, tem-se dy/y = $\beta\cdot1/100$.
+
+#### Caso 2: variável dependente em forma logarítmica e variável independente em forma original
+
+Nesse caso, os coeficientes são semi-elasticidades que expressam o aumento percentual da variável dependente.
+
+```{r}
+formula <- log(1 + sal_hor) ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano
+
+coef(lm(formula = formula, data = db_min_2015))[2]
+```
+
+Tem-se que uma unidade a mais de educação, ou seja, um ano de estudo a mais, implica em (0.032 x 100)% = 3.2% de aumento na remuneração. Notar que, nesse caso, a analogia direta com a leitura utilizada para a elasticidade não é válida.
+
+A base de tal interpretação está em que, neste caso:
+
+$$
+\beta = \frac{dy}{dx}\cdot\frac{1}{y}
+$$
+
+E, pois,
+
+$$
+dy/y = \beta\cdot dx
+$$ Tomando dx = 1, tem-se dy/y = $\beta$.
+
+#### Caso 3: variável dependente em forma original e variável independente em forma logarítmica
+
+Esse caso é menos comum em economia. Nesse caso, os coeficientes são semi-elasticidades que expressam o aumento unitário da variável dependente resultante de um aumento percentual da variável independente. Na fórmula abaixo, apenas a variável `anos_educ` contém log:
+
+```{r}
+formula <- sal_hor ~ log(1 + anos_educ) + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano
+
+coef(lm(formula = formula, data = db_min_2015))[2]
+```
+
+Tem-se que, pois, um aumento de 1% do nível educacional resulta em um aumento do salário horário de 1.689/100 = 0.0169 $\approx$ 2 centavos/hora. Ou, alternativamente, um aumento de 100% do nível educacional, uma duplicação de tal nível, resulta em um aumento da remuneração horária em R\$1.689.
+
+A base de tal interpretação está em que, neste caso:
+
+$$
+\beta = \frac{dy}{dx}\cdot x
+$$
+
+E, pois,
+
+$$
+dy = \beta \cdot \frac{dx}{x}
+$$
+
+Tomando $\frac{dx}{x}$ = 1/100, tem-se dy = $\beta \cdot 1/100$.
+
+As três interpretações têm a mesma origem, a qual consiste em derivar os dois lados da FRP abaixo em função de x.
+
+$$
+f(y) = \beta_0 + \beta_1 g(x) + \beta_X + u
+$$
+
+Sendo f(.) e g(.) funções logarítmicas ou identidade \[f(x) = x\], a depender de qual dos três casos acima é considerado. Para calcular tal derivada, recordar que y é função de x.
+
+### Álgebra Matricial
+
+#### Operações matriciais
+
+O modelo lm gera as estimativas pontuais a partir da operação matricial que resulta da solução do problema de mínimos quadrados ordinários.
+
+Tal operação matricial, conforme nota de aula 4, é a seguinte:
+
+$$
+\beta_{MQO} = [(X^\intercal X)^{-1}](X^\intercal Y)
+$$ Onde:
+
+-   $\beta_{MQO} =$ o vetor N $\times$ 1 de estimadores para todos os parâmetros da FRP (intercepto e coeficientes)
+-   X = matriz N $\times$ (K+1) de variáveis explicativas com uma primeira coluna contendo apenas números unitários, para com isso incorporar o intercepto à estimação
+-   Y = vetor N $\times$ 1 de valores da variável dependente.
+
+É possível obter diretamente o vetor de estimativas pontuais realizando a operação matricial anterior no R.
+
+```{r}
+# definindo a matriz X
+
+mat_x <- subset(db_min_2015, select=c(anos_educ, exper_idade_trab, exper_idade_trab_sq, d_etnia_pre_par, d_hom, d_ativ_agro, d_ativ_indus, d_ativ_const, d_ativ_social, d_ativ_serv, d_ativ_apub, d_ocup_adm, d_ocup_agro, d_ocup_com, d_ocup_serv, d_ocup_dirigente, d_ocup_cie_art, d_ocup_tec_med, d_ocup_rep_manut, d_ocup_armada, d_reg_2, d_reg_3, d_reg_4, d_reg_5, d_urbano))
+
+#' agora é preciso adicionar o vetor com valores unitários
+#' gerando um vetor 1xN de 1's
+
+vec_1 <- matrix(1, nrow = nrow(db_min_2015), ncol = 1)
+
+# acoplando horizontalmente mat_x e vec_1
+
+mat_x <- cbind(vec_1, mat_x)
+
+# verificando dimensão da matriz X
+
+dim(mat_x)
+
+# é necessário transformar mat_x em um objeto matricial para poder fazer as operações matriciais
+
+mat_x <- as.matrix(mat_x)
+
+# definindo o vetor Y
+
+vec_y <- as.matrix(db_min_2015$sal_hor, nrow = nrow(db_min_2015), ncol = 1)
+
+# verificando dimensão do vetor Y
+
+dim(vec_y)
+```
+
+Calculando $\beta_{MQO}$:
+
+Operação 1 - $X^\intercal X$
+
+```{r}
+#' %*% -> produto matricial
+#' t(.) transposição
+
+op_1 <- t(mat_x) %*% mat_x
+```
+
+Operação 2 ($X^\intercal X$)^-1^
+
+```{r}
+#' a função "solve" inverte matrizes no R. Essa é sem dúvida a operação que mais exige do computador.
+
+op_2 <- solve(op_1)
+
+op_2
+```
+
+Operação 3 - $X^\intercal Y$
+
+```{r}
+op_3 <- t(mat_x) %*% vec_y
+```
+
+Importante notar a transposição da matriz X, sem a qual a multiplicação seria impossível. Basta observar as dimensões de `mat_x` e `vec_y` abaixo:
+
+```{r}
+dim(mat_x)
+dim(vec_y)
+
+dim(t(mat_x))
+dim(vec_y)
+```
+
+O número de colunas de `mat_x` transposta é equivalente ao número de linhas de `vec_y`, como é necessário.
+
+Operação 4 - $[(X^\intercal X)^{-1}](X^\intercal Y)$
+
+```{r}
+op_4 <- op_2 %*% op_3
+
+op_4
+```
+
+-   `vec_1`: $\beta_0$
+-   Demais variáveis: $\beta_1,\dots,\beta_k$
+
+```{r}
+# comparando com os coeficientes da regressão
+
+cbind(op_4, coef(mqo_2))
+```
+
+```{r}
+# fazendo as quatro operações de uma só 
+
+solve(t(mat_x) %*% mat_x) %*% (t(mat_x) %*% vec_y)
+```
+
+Obtendo a matrix de variância-covariância e as estimativas pontuais para os erros-padrão dos estimadores:
+
+Sob as hipóteses do modelo clássico de regressão linear, a matriz de variância-covariância tem forma simples.
+
+Trata-se de: $VCOV = \sigma^2(X^\intercal X)^{-1}$
+
+Sendo $\sigma^2$ a estimativa pontual para a variância do termo de perturbação.
+
+Esta corresponde à soma dos quadrados dos resíduos dividida pelo respectivo número de graus de liberdade (N-K-1).
+
+Operação 1 - $\sigma^2 = SQR/(N-K-1)$
+
+```{r}
+var <- mqo_2$res_var
+```
+
+Operação 2 - $(X^\intercal X)^{-1}$
+
+```{r}
+op_2 <- solve(t(mat_x) %*% mat_x)
+```
+
+Operação 3 - $\sigma^2(X^\intercal X)^{-1}$
+
+```{r}
+# notar que, nesse caso, como sigma^2 é um escalar, deve-se utilizar o produto escalar "*"
+
+op_3 <- op_1 * op_2
+
+dim(op_3)
+```
+
+# Referências
