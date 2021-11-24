@@ -74,7 +74,6 @@ library(car)
 library(fastDummies)
 library(knitr)
 
-
 load("listas/lista_5/lista_5_dados.Rdata")
 ```
 
@@ -164,7 +163,7 @@ vcrit_3 <- round(qchisq(0.05, 5, lower.tail = F), 2) # valor crítico
 
 *Responda: os resultados ora obtidos contradizem os obtidos no laboratório 1 indicando insignificância estatística da explicativa poluição atmosférica?\
 \
-*R: Sim, contradiz, pois o coeficiente para poluição atmosférica no teste de significância individual é significativo, com p-valor menor que 5%. Quando tomada em conjunto com variáveis não significativas como `fem_head` e `fertility_`, a variável não contribui para a explicação da variância de `obitos_por_milhao`.
+*Sim, contradiz, pois o coeficiente para poluição atmosférica no teste de significância individual é significativo, com p-valor menor que 5%. Quando tomada em conjunto com variáveis não significativas como `fem_head` e `fertility_`, a variável não contribui para a explicação da variância de `obitos_por_milhao`.
 
 \footnotesize
 
@@ -225,9 +224,9 @@ geepc = $\beta_{0}$ + $\beta_{1}$ log(1 + pibpc) + $\beta_{2}$ log(1 + epc) + $\
 ```{r}
 # estimando regressão
 
-eq <- geepc ~ epc
+eq_a <- geepc ~ log(1 + epc)
 
-modelo <- estimatr::lm_robust(eq,
+modelo <- estimatr::lm_robust(eq_a,
                               data = db_gee) 
 
 # função para parâmetros
@@ -246,7 +245,7 @@ parametros <- function(var, col) {
 
 modelo <- tibble::as_tibble(estimatr::tidy(modelo))
 
-table_a <- tibble::tibble(var = c("(Intercept)", "epc")) |> 
+table_a <- tibble::tibble(var = c("(Intercept)", "log(1 + epc)")) |> 
   dplyr::group_by(var) |> 
   tidyr::nest() |>
   dplyr::mutate(
@@ -292,13 +291,13 @@ table_a |>
 ```{r}
 # estimando regressão
 
-eq <- geepc ~ 
-  epc + pibpc + apc +
+eq_b <- geepc ~ 
+  log(1 + epc) + log(1 + pibpc) +  log(1 + apc) +
   d_dev_ing + d_dev_tra + d_reg_afr +
   d_reg_asi + d_reg_cam + d_reg_nam + 
   d_reg_sam + d_reg_oce
 
-modelo <- estimatr::lm_robust(eq,
+modelo <- estimatr::lm_robust(eq_b,
                               data = db_gee) 
 
 # tabela
@@ -306,8 +305,8 @@ modelo <- estimatr::lm_robust(eq,
 modelo <- tibble::as_tibble(estimatr::tidy(modelo))
 
 table_b <- tibble::tibble(var = c("(Intercept)", 
-                                  "epc", "pibpc", 
-                                  "apc", "d_dev_ing", 
+                                  "log(1 + epc)", "log(1 + pibpc)", 
+                                  "log(1 + apc)", "d_dev_ing", 
                                   "d_dev_tra", "d_reg_afr", 
                                   "d_reg_asi", "d_reg_cam", 
                                   "d_reg_nam", "d_reg_sam", 
@@ -356,14 +355,18 @@ table_b |>
 
 1.  *Quais variáveis são estatisticamente não-significativas?*
 
+\footnotesize
+
 ```{r}
 table_b |> 
   dplyr::filter(`Significativo a 5%?` == "N") |> 
   knitr::kable()
 ```
 
-2.  *Há alguma variável cuja insignificância estatística é contra-intuitiva?* \
-    R: Sim, `epc`, que era significativa na regressão simples e na múltipla não é mais. Alem disso, `pibpc` não ser significativo nem influenciar o nível de emissões *per capita* é contra-intuitivo, pois espera-se que tal variável seja significativa e com o coeficiente positivo.
+\normalsize
+
+2.  *Há alguma variável cuja insignificância estatística é contra-intuitiva?*\
+    Sim, `d_reg_sam` não ser significante é contraintuitivo pelo fato do Brasil ser um grande emissor de gases do efeito estufa por conta do desmatamento.
 
 ### 2) d.
 
@@ -372,13 +375,13 @@ table_b |>
 ```{r}
 df1 <- table_a |> 
   dplyr::mutate(Variável = dplyr::case_when(
-    Variável == "epc" ~ "epc_a"
+    Variável == "log(1 + epc)" ~ "log(1 + epc_a)"
   )) |> 
   dplyr::slice(2)
 
 df2 <- table_b |> 
   dplyr::mutate(Variável = dplyr::case_when(
-    Variável == "epc" ~ "epc_b"
+    Variável == "log(1 + epc)" ~ "log(1 + epc_b)"
   )) |> 
   dplyr::slice(2)
 
@@ -386,17 +389,50 @@ dplyr::bind_rows(df1, df2) |>
   knitr::kable()
 ```
 
+A alteração na estimativa do coeficiente de uma variável se dá por conta do viés de variável omitida. Esse viés surge quando se omite uma variável explicativa x~k~ no modelo que é relevante na explicação da variação da variável dependente e é correlacionada com pelo menos uma das variáveis do modelo estimado, levando a conclusões equivocadas sobre a função de regressão populacional. Neste caso, a variável `epc` apresentou diminuição em seu coeficiente após a inclusão de variáveis de controle, possibilitando um melhor isolamento do efeito *ceteris paribus* e a mitigação do viés de variável omitida.
+
 ### 2) e.
 
 *Compare o R^2^ ordinário da regressão simples com o R^2^ ajustado da regressão múltipla e explique por que os dois diferem em magnitude.*
 
+```{r}
+modelo_a <- estimatr::lm_robust(eq_a,
+                              data = db_gee)
+
+modelo_b <- estimatr::lm_robust(eq_b,
+                              data = db_gee)
+
+r2_a <- round(modelo_a$r.squared, 2)
+
+r2_b <- round(modelo_b$r.squared, 2)
+```
+
+-   R^2^ do modelo simples = `r r2_a`
+-   R^2^ do modelo de múltiplas variáveis = `r r2_b`
+
+O R^2^ da regressão de múltiplas variáveis é maior por seu melhor ajuste e maior capacidade explicativa da variação das emissões de gases do efeito estufa *per capita*.
+
 ### 2) f.
 
-*Teste a hipótese de que nível de desenvolvimento explica fração irrelevante da emissão de gases de efeito estufa. Para isso aplique um teste de significância conjunta às explicativas d_dev_ing e d_dev_tra, utilizando o procedimento do teste de multiplicador de Lagrange da nota de aula 7. Em sua resposta informe:*
+*Teste a hipótese de que nível de desenvolvimento explica fração irrelevante da emissão de gases de efeito estufa. Para isso aplique um teste de significância conjunta às explicativas `d_dev_ing` e `d_dev_tra`, utilizando o procedimento do teste de multiplicador de Lagrange da nota de aula 7. Em sua resposta informe:*
 
-1.  *Valor observado da estatística do teste*
-2.  *Valor crítico ao nível de significância de 5%*
-3.  *P-valor*
+```{r}
+modelo <- estimatr::lm_robust(eq_b,
+                              data = db_gee)
+
+h0 <- c("d_dev_ing = 0", 
+        "d_dev_tra = 0")
+
+lm_test <- car::linearHypothesis(modelo, 
+                      h0, 
+                      test ="Chisq")
+
+vcrit <- round(qchisq(0.05, 2, lower.tail = F), 2) # valor 
+```
+
+1.  *Valor observado da estatística do teste:* `r round(lm_test$Chisq[2], 2)`
+2.  *Valor crítico ao nível de significância de 5%:* `r vcrit`
+3.  *P-valor:* `` r round(lm_test$`Pr(>Chisq)`[2], 2) ``
 4.  *Decisão apropriada entre rejeitar ou não a hipótese nula*
 5.  *Qual conclusão pode ser retirada do resultado do teste? Justifique.*
 
