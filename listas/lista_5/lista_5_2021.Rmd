@@ -470,9 +470,6 @@ pvalor <- round(lm_test$`Pr(>Chisq)`[2], 2)
 
 *Ao estimar a equação de Mincer para o logaritmo natural da remuneração, foram obtidas estimativas pontuais de 0,071 e 0,026, respectivamente, para os coeficientes das explicativas captando nível educacional e experiência. Diversas outras explicativas foram incorporadas. As duas explicativas são medidas em anos e, portanto, trata-se de variáveis quantitativas discretas. Nenhuma delas foi incorporada ao modelo em forma logarítmica, mas sim em nível, i.e., sem qualquer transformação matemática de seus valores originais. Tendo em mente estes detalhes e também a definição do conceito do coeficiente de uma explicativa discreta, interprete economicamente, com a máxima clareza e precisão possíveis, os valores das estimativas pontuais, i.e., explique o significado econômico das estimativas pontuais considerando não apenas os sinais delas, mas também as magnitudes. Para isso, utilize a aproximação* $\log (1+w) \approx w$.
 
--   $\beta$~nivel_educacional~ = 0,071
--   $\beta$~experiência~ = 0,026
-
 A interpretação dos parâmetros para nível educacional e experiência equivale a uma semielasticidade, ou seja:
 
 -   O aumento de um ano no nível educacional equivale a um aumento de 7,1% na remuneração.
@@ -482,7 +479,36 @@ A interpretação dos parâmetros para nível educacional e experiência equival
 
 *Seja reconsiderado o problema de estimar o efeito da qualidade do ensino fundamental no desempenho no ensino médio, estudado na lista 3. Há duas especificações possíveis, sendo apenas a segunda a FRP verdadeira.*
 
--   FRP 1: Taxa_aprov~i~ = $\alpha_{0}$ + $\alpha_{1}$ quali_pub~i~ + e~i~
--   FRP 2: Taxa_aprov~i~ = $\beta_{0}$ + $\beta_{1}$ quali_pub~i~ + $\beta_{2}$ educ_pais~i~ + u~i~
+-   FRP~1~: taxa_aprov~i~ = $\alpha_{0}$ + $\alpha_{1}$ quali_pub~i~ + e~i~
+-   FRP~2~: taxa_aprov~i~ = $\beta_{0}$ + $\beta_{1}$ quali_pub~i~ + $\beta_{2}$ educ_pais~i~ + u~i~
 
-*Demonstre que a estimação da FRP 1 é sujeita à inconsistência, assumindo, em conformidade com a lista 3, que a covariância populacional entre quali_pub e educ_pais é não-nula. A solução pode ser apresentada tanto com notação não matricial como com notação matricial. Sendo a última utilizada, haverá acréscimo de meio ponto à nota final dessa questão.*
+*Demonstre que a estimação da FRP 1 é sujeita à inconsistência, assumindo, em conformidade com a lista 3, que a covariância populacional entre `quali_pub` e `educ_pais` é não-nula. A solução pode ser apresentada tanto com notação não matricial como com notação matricial. Sendo a última utilizada, haverá acréscimo de meio ponto à nota final dessa questão.*
+
+\centering
+
+![](images/1.png){width="150"}
+
+![](images/2.png){width="400"}
+
+![](images/3.png){width="400"}
+
+![](images/4.png){width="400"}
+
+![](images/5.png){width="400"}
+
+![](images/6.png){width="400"}
+
+![](images/7.png){width="350"}
+
+```{=tex}
+\justify
+\setlength{\parindent}{0cm}
+```
+
+MCRL4 não pode ser utilizada neste caso, pois:
+
+-   $cov(A, B) \ne 0$
+
+-   A variável omitida na FRP~1~ compõe o termo de erro u~i~
+
+Logo, $E[E(u_i|X) x_i] \ne 0$, o que implica que $plim(\hat \alpha) \ne \alpha$, sendo $\alpha_1$
