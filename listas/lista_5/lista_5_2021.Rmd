@@ -511,4 +511,4 @@ MCRL4 não pode ser utilizada neste caso, pois:
 
 -   A variável omitida na FRP~1~ compõe o termo de erro u~i~
 
-Logo, $E[E(u_i|X) x_i] \ne 0$, o que implica que $plim(\hat \alpha) \ne \alpha$, sendo $\alpha_1$
+Logo, $E[E(u_i|X) x_i] \ne 0$, o que implica que $plim(\hat \alpha) \ne \alpha$, sendo $\hat\alpha_1$ um estimador inconsistente.
