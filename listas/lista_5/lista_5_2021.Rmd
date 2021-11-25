@@ -170,7 +170,7 @@ vcrit_3 <- round(qchisq(0.05, 5, lower.tail = F), 2) # valor crítico
 
 *Responda: os resultados ora obtidos contradizem os obtidos no laboratório 1 indicando insignificância estatística da explicativa poluição atmosférica?\
 \
-*Sim, contradiz, pois o coeficiente para poluição atmosférica no teste de significância individual é significativo, com p-valor menor que 5%. Quando tomada em conjunto com variáveis não significativas como `fem_head` e `fertility_`, a variável não contribui para a explicação da variância de `obitos_por_milhao`.
+*Não contradiz, pois o coeficiente para poluição atmosférica no teste de significância individual não é significativo, com p-valor maior que 5%. Tomada em conjunto com variáveis não significativas como `fem_head` e `fertility_`, a variável não contribui para a explicação da variância de `obitos_por_milhao`.
 
 \footnotesize
 
@@ -305,13 +305,12 @@ eq_b <- geepc ~
   d_reg_asi + d_reg_cam + d_reg_nam + 
   d_reg_sam + d_reg_oce
 
+lm(eq_b,
+   data = db_gee)
+
 modelo <- estimatr::lm_robust(eq_b,
                               data = db_gee,
                               se_type = "classical") 
-
-f_longa_tabela <- geepc~log1p(pibpc)+log1p(epc)+log1p(apc)+d_dev_ing+d_dev_tra+d_reg_afr+d_reg_asi+d_reg_cam+d_reg_nam+d_reg_sam+d_reg_oce
-  
-lm(f_longa_tabela,data=db_gee)
 
 # tabela
 
@@ -416,10 +415,12 @@ A alteração na estimativa do coeficiente de uma variável se dá por conta do 
 
 ```{r}
 modelo_a <- estimatr::lm_robust(eq_a,
-                              data = db_gee)
+                                data = db_gee,
+                                se_type = "classical")
 
 modelo_b <- estimatr::lm_robust(eq_b,
-                              data = db_gee)
+                                data = db_gee,
+                                se_type = "classical")
 
 r2_a <- round(modelo_a$r.squared, 2)
 
@@ -441,7 +442,8 @@ O R^2^ da regressão de múltiplas variáveis é maior por seu melhor ajuste e m
 
 ```{r}
 modelo <- estimatr::lm_robust(eq_b,
-                              data = db_gee)
+                              data = db_gee,
+                              se_type = "classical")
 
 h0 <- c("d_dev_ing = 0", 
         "d_dev_tra = 0")
