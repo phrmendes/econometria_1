@@ -310,7 +310,8 @@ summary(db_covs)
 library("estimatr")
 
 mqo_1 <- estimatr::lm_robust(casos_por_milhao ~ fem_head + fertility_ + airpoll_exposure_ + d_lockdown + Continent_Asia + Continent_Europe + Continent_NorthAmer + Continent_Oceania + Continent_SouthAmer,
-                    data = db_covs)
+                    data = db_covs,
+                    se_type = "classical")
 
 summary(mqo_1)
 ```
@@ -333,7 +334,8 @@ Qual é a proporção da variação da variável dependente explicada? *R: 18,64
 
 ```{r}
 mqo_2 <- estimatr::lm_robust(obitos_por_milhao ~ fem_head + fertility_ + airpoll_exposure_ + d_lockdown + Continent_Asia + Continent_Europe + Continent_NorthAmer + Continent_Oceania + Continent_SouthAmer + casos_por_milhao,
-                             data = db_covs)
+                             data = db_covs,
+                             se_type = "classical")
 
 summary(mqo_2)
 ```
@@ -400,7 +402,8 @@ summary(subset(db_min,select=c(anos_educ,exper_idade_trab,exper_idade_trab_sq,d_
 db_min_2004 <- db_min |> filter(ano == 2004)
 
 mqo_3 <- estimatr::lm_robust(sal_hor ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano,
-                             data = db_min_2004)
+                             data = db_min_2004,
+                             se_type = "classical")
 
 summary(mqo_3)
 ```
@@ -411,7 +414,8 @@ summary(mqo_3)
 db_min_2015 <- db_min |> filter(ano == 2015)
 
 mqo_4 <- estimatr::lm_robust(sal_hor ~ anos_educ + exper_idade_trab + exper_idade_trab_sq + d_etnia_pre_par + d_hom + d_ativ_agro + d_ativ_indus + d_ativ_const + d_ativ_social + d_ativ_serv + d_ativ_apub + d_ocup_adm + d_ocup_agro + d_ocup_com + d_ocup_serv + d_ocup_dirigente + d_ocup_cie_art + d_ocup_tec_med + d_ocup_rep_manut + d_ocup_armada + d_reg_2 + d_reg_3 + d_reg_4 + d_reg_5 + d_urbano,
-                             data = db_min_2015)
+                             data = db_min_2015,
+                             se_type = "classical")
 
 summary(mqo_4)
 ```

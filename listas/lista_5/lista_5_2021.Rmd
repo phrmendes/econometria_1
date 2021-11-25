@@ -111,7 +111,8 @@ eq <- obitos_por_milhao ~
   d_s_america
 
 modelo <- estimatr::lm_robust(eq,
-                              data = db_covs)
+                              data = db_covs,
+                              se_type = "classical")
 
 # testando significância conjunta - características nacionais
 
@@ -230,10 +231,11 @@ geepc = $\beta_{0}$ + $\beta_{1}$ log(1 + pibpc) + $\beta_{2}$ log(1 + epc) + $\
 ```{r}
 # estimando regressão
 
-eq_a <- geepc ~ log(1 + epc)
+eq_a <- geepc ~ log1p(epc)
 
 modelo <- estimatr::lm_robust(eq_a,
-                              data = db_gee) 
+                              data = db_gee,
+                              se_type = "classical") 
 
 # função para parâmetros
 
@@ -251,7 +253,7 @@ parametros <- function(var, col) {
 
 modelo <- tibble::as_tibble(estimatr::tidy(modelo))
 
-table_a <- tibble::tibble(var = c("(Intercept)", "log(1 + epc)")) |> 
+table_a <- tibble::tibble(var = c("(Intercept)", "log1p(epc)")) |> 
   dplyr::group_by(var) |> 
   tidyr::nest() |>
   dplyr::mutate(
@@ -298,21 +300,26 @@ table_a |>
 # estimando regressão
 
 eq_b <- geepc ~ 
-  log(1 + epc) + log(1 + pibpc) +  log(1 + apc) +
+  log1p(epc) + log1p(pibpc) +  log1p(apc) +
   d_dev_ing + d_dev_tra + d_reg_afr +
   d_reg_asi + d_reg_cam + d_reg_nam + 
   d_reg_sam + d_reg_oce
 
 modelo <- estimatr::lm_robust(eq_b,
-                              data = db_gee) 
+                              data = db_gee,
+                              se_type = "classical") 
+
+f_longa_tabela <- geepc~log1p(pibpc)+log1p(epc)+log1p(apc)+d_dev_ing+d_dev_tra+d_reg_afr+d_reg_asi+d_reg_cam+d_reg_nam+d_reg_sam+d_reg_oce
+  
+lm(f_longa_tabela,data=db_gee)
 
 # tabela
 
 modelo <- tibble::as_tibble(estimatr::tidy(modelo))
 
 table_b <- tibble::tibble(var = c("(Intercept)", 
-                                  "log(1 + epc)", "log(1 + pibpc)", 
-                                  "log(1 + apc)", "d_dev_ing", 
+                                  "log1p(epc)", "log1p(pibpc)", 
+                                  "log1p(apc)", "d_dev_ing", 
                                   "d_dev_tra", "d_reg_afr", 
                                   "d_reg_asi", "d_reg_cam", 
                                   "d_reg_nam", "d_reg_sam", 
@@ -372,7 +379,7 @@ table_b |>
 \normalsize
 
 2.  *Há alguma variável cuja insignificância estatística é contra-intuitiva?*\
-    Sim, `d_reg_sam` não ser significante é contraintuitivo pelo fato do Brasil ser um grande emissor de gases do efeito estufa por conta do desmatamento.
+    Sim, `d_reg_sam` não ser significante é contra-intuitivo pelo fato do Brasil ser um grande emissor de gases do efeito estufa por conta do desmatamento.
 
 ### 2) d.
 
@@ -383,13 +390,13 @@ table_b |>
 ```{r}
 df1 <- table_a |> 
   dplyr::mutate(Variável = dplyr::case_when(
-    Variável == "log(1 + epc)" ~ "log(1 + epc_a)"
+    Variável == "log1p(epc)" ~ "log1p(epc_a)"
   )) |> 
   dplyr::slice(2)
 
 df2 <- table_b |> 
   dplyr::mutate(Variável = dplyr::case_when(
-    Variável == "log(1 + epc)" ~ "log(1 + epc_b)"
+    Variável == "log1p(epc)" ~ "log1p(epc_b)"
   )) |> 
   dplyr::slice(2)
 
