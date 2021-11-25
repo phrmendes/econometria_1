@@ -504,7 +504,6 @@ A interpretação dos parâmetros para nível educacional e experiência equival
 \justify
 \setlength{\parindent}{0cm}
 ```
-
 MCRL4 não pode ser utilizada neste caso, pois:
 
 -   $cov(A, B) \ne 0$
