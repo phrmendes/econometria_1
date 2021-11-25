@@ -1,6 +1,8 @@
 ---
 title: "lab_1"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 bibliography: references.bib
 csl: abnt.csl
 df_print: paged
@@ -340,16 +342,16 @@ mqo_2 <- estimatr::lm_robust(obitos_por_milhao ~ fem_head + fertility_ + airpoll
 summary(mqo_2)
 ```
 
-O que se pode concluir? *R: Para óbitos por milhão, as variáveis significantes são a exposição a poluição, os continentes europeu, norte-americano, sul-americano e os casos por milhão.*
+O que se pode concluir? *R: Para óbitos por milhão, as variáveis significantes são os continentes europeu, norte-americano, sul-americano e os casos por milhão.*
 
 Quais variáveis possuem relação positiva com o número de óbitos? *R: Taxa de fertilidade, os continentes asiático, europeu, norte-americano, sulamericano e os casos por milhão.*
 
 Quais variáveis possuem relação negativa com o número de óbitos? *R: A liderança feminina, a exposição a poluição, o lockdown e o continente da Oceania.*
 
-Qual é a proporção da variação da variável dependente explicada? *R: 18,64%*
+Qual é a proporção da variação da variável dependente explicada? *R: 37,08%*
 
 ```{r}
-cbind(óbitos=coef(mqo_2),infecções=c(coef(mqo_1),NA))
+cbind(óbitos = coef(mqo_2), infecções = c(coef(mqo_1), NA))
 ```
 
 ### Regressão 3

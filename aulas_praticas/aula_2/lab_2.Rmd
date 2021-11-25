@@ -1,6 +1,6 @@
 ---
 title: "lab_2"
-output: html_notebook
+output: html_document
 bibliography: references.bib
 csl: abnt.csl
 df_print: paged
@@ -175,7 +175,7 @@ RC: $(-\infty;-1{,}96]\cup[1{,}96; -\infty)$
 ```{r}
 # p-valor
 
-2*pt(-abs(t_obs),gl)
+2*pt(-abs(t),gl)
 ```
 
 Ao se rejeitar H~0~, pode-se afirmar que `anos_educ` é uma variável diferente de 0 a uma significância de 5%.

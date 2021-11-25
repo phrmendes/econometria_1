@@ -378,7 +378,7 @@ table_b |>
 \normalsize
 
 2.  *Há alguma variável cuja insignificância estatística é contra-intuitiva?*\
-    Sim, `d_reg_sam` não ser significante é contra-intuitivo pelo fato do Brasil ser um grande emissor de gases do efeito estufa por conta do desmatamento.
+    Sim, `d_reg_sam` não ser significante é contra-qintuitivo pelo fato do Brasil ser um grande emissor de gases do efeito estufa por conta do desmatamento.
 
 ### 2) d.
 
