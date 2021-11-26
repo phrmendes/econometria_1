@@ -124,9 +124,9 @@ lm_test <- car::linearHypothesis(modelo,
                       h0, 
                       test ="Chisq")
 
-stat_test_1 <- round(lm_test$Chisq[2], 2) # estatística de teste
-pvalor_1 <- round(lm_test$`Pr(>Chisq)`[2], 2) # p-valor
-vcrit_1 <- round(qchisq(0.05, 3, lower.tail = F), 2) # valor crítico
+stat_test_1 <- round(lm_test$Chisq[2], 3) # estatística de teste
+pvalor_1 <- round(lm_test$`Pr(>Chisq)`[2], 3) # p-valor
+vcrit_1 <- round(qchisq(0.05, 3, lower.tail = F), 3) # valor crítico
 
 # testando significância conjunta - exposição à causas da doença
 
@@ -137,9 +137,9 @@ lm_test <- car::linearHypothesis(modelo,
                       h0, 
                       test ="Chisq")
 
-stat_test_2 <- round(lm_test$Chisq[2], 2) # estatística de teste
-pvalor_2 <- round(lm_test$`Pr(>Chisq)`[2], 2) # p-valor
-vcrit_2 <- round(qchisq(0.05, 2, lower.tail = F), 2) # valor crítico
+stat_test_2 <- round(lm_test$Chisq[2], 3) # estatística de teste
+pvalor_2 <- round(lm_test$`Pr(>Chisq)`[2], 3) # p-valor
+vcrit_2 <- round(qchisq(0.05, 2, lower.tail = F), 3) # valor crítico
 
 # testando significância conjunta - continente
 
@@ -153,9 +153,9 @@ lm_test <- car::linearHypothesis(modelo,
                       h0, 
                       test ="Chisq")
 
-stat_test_3 <- round(lm_test$Chisq[2], 2) # estatística de teste
-pvalor_3 <- round(lm_test$`Pr(>Chisq)`[2], 2) # p-valor
-vcrit_3 <- round(qchisq(0.05, 5, lower.tail = F), 2) # valor crítico
+stat_test_3 <- round(lm_test$Chisq[2], 3) # estatística de teste
+pvalor_3 <- round(lm_test$`Pr(>Chisq)`[2], 3) # p-valor
+vcrit_3 <- round(qchisq(0.05, 5, lower.tail = F), 3) # valor crítico
 ```
 
 |          Categoria           |                                 Variáveis                                  | Valor da estatística do teste | Graus de liberdade | Valor crítico |   p-valor    | Rejeitar H~0~ (S/N)? |
@@ -170,7 +170,7 @@ vcrit_3 <- round(qchisq(0.05, 5, lower.tail = F), 2) # valor crítico
 
 *Responda: os resultados ora obtidos contradizem os obtidos no laboratório 1 indicando insignificância estatística da explicativa poluição atmosférica?\
 \
-*Não contradiz, pois o coeficiente para poluição atmosférica no teste de significância individual não é significativo, com p-valor maior que 5%. Tomada em conjunto com variáveis não significativas como `fem_head` e `fertility_`, a variável não contribui para a explicação da variância de `obitos_por_milhao`.
+*De certa forma contradiz, pois o coeficiente para poluição atmosférica no teste de significância individual não é significativo, com p-valor maior que 5%. Tomada em conjunto com variáveis significativas como `casos_por_milhao`, a variável passa a contribuir para a explicação da variância de `obitos_por_milhao`. É necessário que a análise do teste de restrição de variáveis seja analisado em conjunto com os testes de significância individual para melhores conclusões.
 
 \footnotesize
 
@@ -186,7 +186,8 @@ estimatr::tidy(modelo) |>
   )) |> 
   knitr::kable(col.names = c("Variável", 
                              "P-valor",
-                             "Significativo a 5%?"))
+                             "Significativo a 5%?"),
+               digits = 3)
 ```
 
 \normalsize
@@ -244,7 +245,7 @@ parametros <- function(var, col) {
     dplyr::filter(term == var) |> 
     dplyr::select(col) |>
     dplyr::pull() |> 
-    round(2)
+    round(4)
   
   return(x)
 }
@@ -285,7 +286,7 @@ table_a <- tibble::tibble(var = c("(Intercept)", "log1p(epc)")) |>
   ))
 
 table_a |> 
-  knitr::kable()
+  knitr::kable(digits = 3)
 ```
 
 \normalsize
@@ -356,7 +357,7 @@ table_b <- tibble::tibble(var = c("(Intercept)",
   ))
 
 table_b |> 
-  knitr::kable()
+  knitr::kable(digits = 3)
 ```
 
 \normalsize
@@ -372,7 +373,7 @@ table_b |>
 ```{r}
 table_b |> 
   dplyr::filter(`Significativo a 5%?` == "N") |> 
-  knitr::kable()
+  knitr::kable(digits = 3)
 ```
 
 \normalsize
@@ -400,7 +401,7 @@ df2 <- table_b |>
   dplyr::slice(2)
 
 dplyr::bind_rows(df1, df2) |> 
-  knitr::kable()
+  knitr::kable(digits = 3)
 ```
 
 \normalsize
@@ -422,9 +423,9 @@ modelo_b <- estimatr::lm_robust(eq_b,
                                 data = db_gee,
                                 se_type = "classical")
 
-r2_a <- round(modelo_a$r.squared, 2)
+r2_a <- round(modelo_a$r.squared, 3)
 
-r2_b <- round(modelo_b$r.squared, 2)
+r2_b <- round(modelo_b$r.squared, 3)
 ```
 
 \normalsize
@@ -452,9 +453,9 @@ lm_test <- car::linearHypothesis(modelo,
                       h0, 
                       test ="Chisq")
 
-stat_test <- round(lm_test$Chisq[2], 2) 
-vcrit <- round(qchisq(0.05, 2, lower.tail = F), 2)
-pvalor <- round(lm_test$`Pr(>Chisq)`[2], 2)
+stat_test <- round(lm_test$Chisq[2], 3) 
+vcrit <- round(qchisq(0.05, 2, lower.tail = F), 3)
+pvalor <- round(lm_test$`Pr(>Chisq)`[2], 3)
 ```
 
 \normalsize
