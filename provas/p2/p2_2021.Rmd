@@ -1,0 +1,240 @@
+---
+output:   
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+title: |
+  \Large
+  
+  Econometria 1
+author: "Pedro Henrique Rocha Mendes ^[RA: 11201811516, Turno: Noite]"
+documentclass: scrartcl
+fontfamily: times
+fontsize: 12pt
+geometry:
+- top=2.5cm
+- bottom=2.5cm
+- left=2.5cm
+- right=2.5cm
+bibliography: null
+reference-section-title: Referências
+csl: null
+nocite: null
+lang: pt-BR
+header-includes:
+- \usepackage{setspace}
+- \usepackage{ragged2e}
+- \usepackage{indentfirst}
+- \usepackage{microtype}
+- \usepackage{chngcntr}
+- \usepackage[justification=centering]{caption}
+- \usepackage{float}
+- \usepackage{booktabs}
+- \usepackage{multirow}
+- \usepackage{placeins}
+- \usepackage[makeroom]{cancel}
+- \usepackage{amsmath}
+- \setkomafont{disposition}{\bfseries}
+---
+
+# 1)
+
+*Um pesquisador estimou a FRP que se encontra na tabela 1 abaixo. Trata-se de uma equação minceriana em que o salário horário é a variável dependente e as variáveis independentes correspondem a características dos(as) trabalhadores(as). Foi utilizada uma subamostra aleatória da PNAD anual de 2015.*
+
+## 1) a. 
+
+*Os resultados podem ser visualizados na tabela 1 a seguir. Preencha as três últimas colunas, inserindo, para cada variável independente, (i) o valor observado da estatística t de Student, (ii) o p-valor correspondente para o teste bilateral de significância individual e (iii) o símbolo de significância adequado. A última informação deve ser incorporada de acordo com a seguinte simbologia: (a) "+”, para significativo a um nível de significância de 10% mas não para níveis de significância de 5% ou 1%, (b) `\*`, para significativo a 5% mas não para nível de significância de 1%, e (c) `\*\*`, para significativo a nível de significância igual ou menor do que 1% (OBS: o erro padrão é a raiz do estimador não-viesado para a variância do estimador de mínimos quadrados ordinários para o coeficiente). Em caso de significância a nível superior a 10%, deixar a célula em branco.*
+
+Tabela 1 Resultados da estimação da FRP
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline Variável & Estimativa pontual & Erro padrão & Estat. t & Pvalor & Signific. \\
+\hline Intercepto & 0.570478 & 1.419173 & & & \\
+\hline Etnia preta ou parda & -0.769605 & 0.40364 & & & \\
+\hline Educação (anos de estudo) & 0.673285 & 0.058166 & & & \\
+\hline Experiencia no mercado de trabalho & 0.265955 & 0.054531 & & & \\
+\hline Experiência no mercado de trabalho ao quadrado & -0.004548 & 0.001136 & & & \\
+\hline Experiência no emprego atual & 0.170519 & 0.030929 & & & \\
+\hline Atividade agropecuária (binária) & 0.148914 & 1.22827 & & & \\
+\hline Atividade industrial (binária) & 0.349603 & 0.739761 & & & \\
+\hline Atividade construção civil (binária) & 0.966674 & 0.952897 & & & \\
+\hline Atividade serviços sociais (binária) & 0.855411 & 0.720338 & & & \\
+\hline Atividade outros serviços (binária) & -0.883799 & 0.630045 & & & \\
+\hline Atividade administração pública (binária) & 3.607514 & 0.905279 & & & \\
+\hline Pessoa de referência na família (binária) & 0.81018 & 0.396139 & & & \\
+\hline Realiza afazeres domésticos (binária) & -0.877112 & 0.406449 & & & \\
+\hline Região Norte (binária) & -2.388502 & 0.754308 & & & \\
+\hline Região Nordeste (binária) & -2.313482 & 0.670793 & & & \\
+\hline Região Sudeste (binária) & -0.723765 & 0.642039 & & & \\
+\hline Região Sul (binária) & -0.751399 & 0.711563 & & & \\
+\hline Área urbana (binária) & 1.533147 & 0.783264 & & & \\
+\hline
+\end{tabular}
+
+## 1) b. 
+
+*O R^2^ ordinário foi de 0,2951, com tamanho (sub)amostral equivalente a 1.000. Com base nisso e na tabela acima, aplique o teste de significância global a 5%, informando (e justificando):*
+
+- *O valor observado da estatística;*
+
+- *O p-valor;*
+
+- *Se é correto ou não rejeitar a hipótese nula.*
+
+# 2)
+
+*A tabela 2 apresenta parte dos resultados da estimação de duas equações que explicam a extensão de terra ocupada com culturas agrícolas exceto por soja, milho ou cana-de-açúcar ("outras culturas"), em microrregiões brasileiras.*
+
+## 2) a.  
+
+*Informe, para o teste de significância individual bicaudal, a região crítica para os seguintes níveis de significância, arredondando após a segunda casa decimal:*
+
+- *$\alpha$ = 10%;*
+
+- *$\alpha$ = 5%;*
+
+- *$\alpha$ = 1%.*
+
+## 2) b.  
+
+Informe, para o teste de significância global bicaudal, a região crítica para os seguintes níveis de significância, arredondando após a segunda casa decimal:
+
+- *$\alpha$ = 10%;*
+
+- *$\alpha$ = 5%;*
+
+- *$\alpha$ = 1%.*
+
+## 2) c. 
+
+Considerando (i) testes de significância individual bicaudais e (ii) o teste de significância global com base na estatística F bicaudal, preencha a quarta coluna ("Simbologia”) com a seguinte simbologia:
+
+- Explicativa significativa a 1% ou menos: escrever o número "1";
+
+- Explicativa significativa a 5% mas não significativa a 1%: escrever o número "5";
+
+- Explicativa significativa a 10% mas não significativa a 5% e nem a 1%: escrever o número "10";
+
+- Explicativa não significativa a 10% ou a 5% ou a 1%: escrever a letra "N";
+
+Tabela 1 Regressão explicando a área de outras culturas, microrregiões brasileiras.
+
+\begin{tabular}{|c|c|c|c|}
+\hline & \multicolumn{3}{|c|}{ Área de outras culturas } \\
+\hline Preço de soja & Pontual & Estatística t & Simbologia \\
+\hline Preço de Milho & 9894.47 & 0.68 & \\
+\hline Preço de Cana-de-açúcar & -16909.8 & -0.85 & \\
+\hline Preço de outras culturas & -0.19 & -0.51 & \\
+\hline Preço de produtos florestais & -33198 & -2.09 & \\
+\hline Preço da terra & -268.26 & -0.24 & \\
+\hline Preço do trabalho & -1020.26 & -3.31 & \\
+\hline Temperatura Dez-Jan-Fev & -31752.74 & -3.8 & \\
+\hline Temperatura Mar-Abr-Mai & 35987.36 & 3.59 & \\
+\hline Temperatura Jun-Jul-Ago & -14920.47 & -1.99 & \\
+\hline Temperatura Set-Out-Nov & 4685.87 & 0.69 & \\
+\hline Precipitação Dez-Jan-Fev & -133.71 & -1.12 & \\
+\hline Precipitação Mar-Abr-Mai & 176.81 & 1.44 & -0.69 & \\
+\hline Precipitação Jun-Jul-Ago & -81.37 & & \\
+\hline Precipitação Set-Out-Nov & 64.61 & 0.51 & \\
+\hline Área total & 0 & 1.53 & \\
+\hline Valor médio da variável dependente na & 0.05 & 1.7 & \\
+\hline vizinhança & 171399 & 2.34 & \\
+\hline Constante & \multicolumn{2}{|c|}{31.85} & \\
+\hline Estatística F (significância global) & & 17 \\
+\hline Número total de explicativas (K) & \multicolumn{3}{|c|}{558} \\
+\hline Número de observaçőes (N) & \multicolumn{3}{|c|}{} \\
+\hline
+\end{tabular}
+
+# 3) 
+
+*Com dados da PNAD 2015 foram rodadas regressões de Mincer separadamente para as cinco regiões brasileiras. A hipótese de que a etnia tem influência sobre a remuneração foi submetida à refutação a partir de um teste de significância conjunta para variáveis binárias indicando autodeclarados brancos (`d_bca`), negros (`d_negro`) e pardos (`d_pardo`). Formalmente, trata-se do teste abaixo:*
+
+$$
+\mathrm{H}_{0}: \beta_{\mathrm{d}_{\text {_bca }}}=0 \text { e } \beta_{\mathrm{d}_{\text {_negro }}}=0 \text { e } \beta_{\mathrm{d}_{\text {_pardo }}}=0 \text { vs. } \mathrm{H}_{1}: \beta_{\mathrm{d}_{\text {_bca }}} \neq 0 \text { ou } \beta_{\text {d_negro }} \neq 0 \text { ou } \beta_{\mathrm{d}_{\text {_pardo }}} \neq 0
+$$
+
+Os valores da estatística F para o teste unicaudal e respectivos graus de liberdade constam na tabela abaixo.
+
+Tabela 3 Resultados dos testes de significância conjunta para as três medidas de etnia, cinco reqiões brasileiras
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline Resultado do teste / UF & Norte & Nordeste & Sudeste & Sul & CentroOeste \\
+\hline Estatística F & 17.5949 & 23.7029 & 104.4111 & 20.9448 & 17.5349 \\
+\hline Graus de liberdade do denominador de F & 12.294 & 21.734 & 30.219 & 16.125 & 10.886 \\
+\hline Valor crítico (preencher com número contendo até a quarta casa decimal) & & & & & \\
+\hline Significativo (S/N) (preencher) & & & & \\
+\hline
+\end{tabular}
+
+*Preencha as duas últimas linhas da tabela 3 conforme indicado. Considere para isso um nível de significância de 5%. Arredonde os valores críticos a partir da quinta casa decimal. Na última linha da tabela 3, marque "S" caso o valor da estatística F seja desfavorável, a um nível de significância de 5%, à hipótese nula, e marque " "N" se o valor da estatística F for favorável à hipótese nula.*
+
+# 4) 
+
+*Em cada um dos cinco itens a seguir há afirmações sobre propriedades assintóticas do estimador de MQO para o vetor de parâmetros da FRP, $\hat{\beta}_\text{MQO}$, e também para procedimentos de inferência relacionados. Em cada item, selecione a única afirmação correta e justifique sua escolha*.
+
+# 4) a. 
+
+*Quanto às diferenças entre as propriedades de ausência de viés e consistência, referentes à $\hat{\beta}_\text{MQO}$, é correto afirmar que:*
+
+- [ ] Apesar das duas propriedades serem assintóticas, ou seja, válidas apenas para amostra de tamanho infinito, elas diferem por dizerem respeito à estatísticas distintas. Ausência de viés diz respeito à expectativa do estimador, enquanto consistência diz respeito ao limite em probabilidade ("plim") do estimador;
+
+- [ ] Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito, e não há diferença entre as duas propriedades em termos das estatísticas a que se referem, pois ambas dizem respeito, exclusivamente, à expectativa do estimador;
+
+- [ ] Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito e, além disso, as duas propriedades diferem por dizerem respeito à estatísticas distintas. A usência de viés diz respeito à expectativa do estimador, enquanto consistência diz respeito ao limite em probabilidade ("plim”) estimador.
+
+# 4) b.
+
+*Examine em detalhe a demonstração para a consistência do estimador de MQO exibida a seguir e responda, posteriormente, as perguntas quanto às passagens lógicas numeradas.*
+
+$$
+\begin{gathered}
+\operatorname{plim}\left(\hat{\beta}_{\text {MQO }}\right)=\beta+\operatorname{plim}\left[\left(\sum_{i=1}^{N} x_{i} x_{i}^{\prime}\right)^{-1} \sum_{i=1}^{N} x_{i} u_{i}\right]=\beta+\operatorname{plim}\left[\left(\sum_{i=1}^{N} x_{i} x_{i}^{\prime}\right)^{-1}\right] \operatorname{plim}\left(\sum_{i=1}^{N} x_{i} u_{i}\right)=\{1\} \\
+=\beta+E\left[x_{i} x_{i}^{\prime}\right]^{-1} E\left[x_{i} u_{i}\right] \rightarrow \operatorname{plim}\left(\hat{\beta}_{M Q O}\right)=\beta+E\left[x_{i} x_{i}^{\prime}\right]^{-1} E\left[x_{i} u_{i}\right](A) \\
+E\left[x_{i} u_{i}\right]=\{2\}=E\left[E\left[x_{i} u_{i} \mid x_{i}\right]\right]=\{3\}=E\left[x_{i} E\left[u_{i} \mid x_{i}\right]\right]=\{4\}=E\left[x_{i} 0\right]=0 \rightarrow E\left[x_{i} u_{i}\right]=0(B)
+\end{gathered}
+$$
+
+Combinando (A) e (B), tem-se: $\operatorname{plim}\left(\hat{\beta}_{M Q O}\right)=\beta$.
+
+Q.4.b.1) A passagem $\{1\}$ faz uso do seguinte fato (assinalar apenas uma alternativa):
+
+A) $\square \mathrm{O}$ "plim" da média amostral é equivalente à expectativa;
+
+B) $\square$ A fórmula do estimador de mínimos quadrados ordinários é $\hat{\beta}_{M Q O}=\beta+\left(\sum_{i=1}^{N} x_{i} x_{i}^{\prime}\right)^{-1} \sum_{i=1}^{N} x_{i} u_{i}$.
+
+Q.4.b.2) As passagens $\{2\}$ e $\{3\}$ consistem em:
+
+A) $\square$ A plicação da lei das expectativas iteradas e consideração de que as variáveis explicativas, e, portanto, 0 vetor $\mathrm{x}_{\mathrm{i}}$ são não-aleatórios, sendo, pois, constantes para a expectativa;
+
+B) $\square$ A plicação da expectativa a uma constante nula e consideração de que as variáveis explicativas e, portanto, 0 vetor $\mathrm{x}_{\mathrm{i}}$, deixam de ser aleatórios ao condicionar-se a expectativa em um valor específico (e, pois, constante) para tal vetor (e, consequentemente, em valores constantes para todas as explicativas);
+
+C) $\square$ A plicação da lei das expectativas iteradas e consideração de que as variáveis explicativas e, portanto, 0 vetor $\mathrm{x}_{\mathrm{i}}$, deixam de ser aleatórios ao condicionar-se a expectativa em um valor específico (e, pois, constante) para tal vetor (e, consequentemente, em valores constantes para todas as explicativas);
+
+Q.4.b.3) A passagem $\{4\}$ consiste em:
+
+A) $\square$ Hipótese de exogeneidade do modelo clássico de regressão linear;
+
+B) $\square$ Hipótese de homocedasticidade do modelo clássico de regressão linear;
+
+C) $\quad$ Fato de que a expectativa do termo de perturbação é sempre nula, ou seja, $\mathrm{E}\left[\mathrm{u}_{\mathrm{i}}\right]=0, \mathrm{i}=1, \ldots, \mathrm{N}$; (Q.4.c) Conhecer a função de distribuição de probabilidade do estimador de MQ̨ referente à situação em que o tamanho amostral é infinito é necessário pois:
+
+A) $\square$ Mesmo sendo plenamente conhecida a função de distribuição de probabilidade do estimador de MQO para um tamanho amostral finito, é necessário, de maneira a ter conhecimento completo de tal função, também estudar a situação de tamanho amostral infinito;
+
+B) $\square$ A função de distribuição de probabilidade do estimador de MQO para um tamanho amostral finito é desconhecida, a menos que seja assumida a hipótese de Gauss-Markov segundo a qual o termo de perturbação tem distribuição normal. É exatamente por conta da necessidade de conhecer a função em questão, no caso geral em que a hipótese de Gauss-Markov não necessariamente se aplica, que o estudo da situação com amostra infinita é necessário;
+
+(Q.4.d) Tenha-se em vista o teste em que se procura determinar se algumas das variáveis independentes, referidas doravante como "variáveis-alvo" são conjuntamente significativas. Seja denominada por regressão irrestrita aquela com o conjunto completo de variáveis explicativas e por regressão restrita aquela em que são excluídas as variáveis-alvo. Nesse sentido:
+
+A) $\square$ o teste com base na estatística F compara as somas dos quadrados dos resíduos das regressões restrita e irrestrita. Neste caso, para calcular o valor crítico, é necessário saber apenas o número de variáveis-alvo. Já 0 teste do multiplicador de Lagrange consiste em calcular o R^2^ dos resíduos da regressão restrita contra o conjunto completo de explicativas. Este último teste também toma por base a função de distribuição de probabilidades F de Snecedor e, para calcular o valor crítico, é preciso saber apenas o número de variáveisalvo.
+
+B) $\square$ o teste com base na estatística $F$ compara as somas dos quadrados dos resíduos das regressões restrita e irrestrita. Neste caso, para calcular o valor crítico, é necessário saber tanto o número de variáveis-alvo como o número de graus de liberdade calculado como subtração do tamanho amostral pelo número de parâmetros do modelo irrestrito. Já o teste do multiplicador de Lagrange consiste em calcular o R^2^ dos resíduos da regressão restrita contra o conjunto completo de explicativas. Este último teste toma por base a função de distribuição de probabilidades qui-quadrado e, para calcular o valor crítico, é preciso saber apenas o número de variáveis-alvo.
+
+C) $\square$ o teste com base na estatística F consiste em calcular o R^2^ dos resíduos da regressão restrita contra o conjunto completo de explicativas. Neste caso, para calcular o valor crítico, é necessário saber tanto o número de variáveis-alvo como o número de graus de liberdade calculado como subtração do tamanho amostral pelo número de parâmetros do modelo irrestrito. Já o teste do multiplicador de Lagrange compara as somas dos quadrados dos resíduos das regressões restrita e irrestrita. Este último teste toma por base a função de distribuição de probabilidades qui-quadrado e, para calcular o valor crítico, é preciso saber apenas o número de variáveis-alvo.
+
+(Q.5) Utilize o teorema de Frisch-W augh para demostrar que, para um modelo de regressão múltipla com K variáveis explicativas, a fórmula do estimador do coeficiente da k-ésima explicativa é:
+
+$$
+\hat{\beta}_{M Q O_{k}}=\frac{\sum_{i=1}^{N} \tilde{\mathrm{x}}_{i k} \mathrm{y}_{i}}{\left(1-R_{k}^{2}\right) \sum_{i=1}^{N}\left(\mathrm{x}_{i k}-\overline{\mathrm{x}_{k}}\right)^{2}}
+$$
+
+Sendo $\tilde{\mathrm{x}}_{i k}$ o i-ésimo resíduo da regressão em que a k-ésima explicativa é a variável dependente e as variáveis independentes são as demais explicativas e $R_{k}^{2}$ é o coeficiente de determinação (não-ajustado) dessa regressão. Desconsidere, ao aplicar o teorema, o estágio em que y é regredida contra todas as explicativas exceto pela k-ésima.

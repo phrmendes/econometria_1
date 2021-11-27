@@ -7,7 +7,7 @@ title: |
   \Large
   
   Econometria 1
-author: "Pedro Henrique Rocha Mendes ^[RA: 11201811516, Turno: Manhã]"
+author: "Pedro Henrique Rocha Mendes ^[RA: 11201811516, Turno: Noite]"
 documentclass: scrartcl
 fontfamily: times
 fontsize: 12pt
