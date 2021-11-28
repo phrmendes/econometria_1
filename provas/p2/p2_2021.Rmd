@@ -16,9 +16,9 @@ geometry:
 - bottom=2.5cm
 - left=2.5cm
 - right=2.5cm
-bibliography: null
+bibliography: references.bib
 reference-section-title: Referências
-csl: null
+csl: abnt.csl
 nocite: null
 lang: pt-BR
 header-includes:
@@ -65,7 +65,7 @@ options(scipen = 999)
 -   [x] 1
 -   [x] 2
 -   [x] 3
--   [x] 4
+-   [ ] 4
 -   [ ] 5
 
 ## 1)
@@ -84,7 +84,7 @@ tabela1 <- readr::read_delim("provas/p2/tabelas/tabela1.csv",
                              delim = ";") |>
   janitor::clean_names()
 
-k <- nrow(tabela1)
+k <- nrow(tabela1) - 1
 
 n <- 1000
   
@@ -92,14 +92,14 @@ tabela1 |>
   dplyr::mutate(estat_t = estimativa_pontual/erro_padrao) |> 
   dplyr::mutate(p_valor = purrr::map_dbl(
     estat_t,
-    ~ round(2 * pt(.x, df = n-k-1, lower.tail = F), 4)
+    ~ round(2 * pt(abs(.x), df = n-k-1, lower.tail = F), 4)
   )) |> 
-  dplyr::mutate(signific = dplyr::case_when(
+    dplyr::mutate(signific = dplyr::case_when(
     p_valor < 0.01 ~ "**",
     p_valor < 0.05 & p_valor != "**" ~ "*",
     p_valor < 0.1 & (p_valor != "**" | p_valor != "*") ~ "+",
     p_valor > 0.1 ~ " "
-  )) |>
+  )) |> 
   dplyr::mutate(
     dplyr::across(
       2:5,
@@ -138,7 +138,7 @@ tabela1 |>
 ```{r}
 r2 <- 0.2951
 
-f <- round((r2/k)/((1-r2)/(n-k-1)), 4)
+f <- round((r2/k)/((1-r2)/(n-k)), 4)
 
 pvalor <- round(pf(f, df1 = k, df2 = n-k-1, lower.tail = F), 4)
 
@@ -173,7 +173,9 @@ tibble::tibble(parametro = c("$R^2$", "F", "p-valor"),
 tabela2 <- readr::read_csv("provas/p2/tabelas/tabela2.csv") |> 
   janitor::clean_names()
 
-k <- 17
+# k = k + 1, já que o número de linhas na tabela incorpora o intercepto
+
+k <- nrow(tabela2)-1
 
 n <- 558
 
@@ -254,7 +256,16 @@ f |>
     b = ";\\infty)$") |>
   tidyr::unite(a, f, b,
                col = "rc",
-               sep = "") |> 
+               sep = "") |>
+  dplyr::mutate(
+    rc = purrr::map_chr(
+      rc,
+      ~ stringr::str_replace_all(
+        string = .x,
+        pattern = "\\.",
+        replacement = "{,}")
+    )
+  ) |> 
   knitr::kable(
     format.args = list(big.mark = ".", decimal.mark = ','),
     col.names = c("$\\alpha$", "Região crítica"),
@@ -282,19 +293,17 @@ Considerando (i) testes de significância individual bicaudais e (ii) o teste de
 \scriptsize
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
-
 tabela2 |>
-  dplyr::mutate(simbologia = dplyr::case_when(
-  !dplyr::between(estatistica_t, 
-                  t$limite_inferior[3], 
-                  t$limite_superior[3]) ~ "1",
-  !dplyr::between(estatistica_t, 
-                  t$limite_inferior[2], 
-                  t$limite_superior[2]) & estatistica_t != "10" ~ "5",
-  !dplyr::between(estatistica_t, 
-                  t$limite_inferior[1], 
-                  t$limite_superior[1]) & (estatistica_t != "10" & estatistica_t != "5") ~ "10",
-  (estatistica_t != "1" | estatistica_t != "5" & estatistica_t != "10") ~ "N")) |> 
+  dplyr::mutate(simbologia = case_when(
+    abs(estatistica_t) > t$limite_superior[3] ~ "1",
+    dplyr::between(abs(estatistica_t), 
+                    t$limite_superior[2],
+                    t$limite_superior[3]) ~ "5",
+    dplyr::between(abs(estatistica_t), 
+                    t$limite_superior[1],
+                    t$limite_superior[2]) ~ "10",
+    abs(estatistica_t) < t$limite_superior[1] ~ "N"
+  )) |> 
   knitr::kable(
     caption = "Regressão explicando a área de outras culturas,
     microrregiões brasileiras",
@@ -313,9 +322,8 @@ tabela2 |>
 
 *Com dados da PNAD 2015 foram rodadas regressões de Mincer separadamente para as cinco regiões brasileiras. A hipótese de que a etnia tem influência sobre a remuneração foi submetida à refutação a partir de um teste de significância conjunta para variáveis binárias indicando autodeclarados brancos (`d_bca`), negros (`d_negro`) e pardos (`d_pardo`). Formalmente, trata-se do teste abaixo:*
 
-$$
-H_{0}: \beta_\text{d\_bca}=\beta_\text{d\_negro}=\beta_\text{d\_pardo}=0 \text { vs. } H_{1}: \beta_\text{d\_bca} \neq 0 \text { ou } \beta_\text{d\_negro} \neq 0 \text { ou } \beta_\text{d\_pardo} \neq 0
-$$
+-   H~0~: $\beta_\text{d\_bca}=\beta_\text{d\_negro}=\beta_\text{d\_pardo}=0$
+-   H~1~: $\beta_\text{d\_bca} \neq 0$ ou $\beta_\text{d\_negro} \neq 0$ ou $\beta_\text{d\_pardo} \neq 0$
 
 *Os valores da estatística F para o teste unicaudal e respectivos graus de liberdade constam na tabela 3. Preencha as duas últimas linhas da tabela 3 conforme indicado. Considere para isso um nível de significância de 5%. Arredonde os valores críticos a partir da quinta casa decimal. Na última linha da tabela 3, marque "S" caso o valor da estatística F seja desfavorável, a um nível de significância de 5%, à hipótese nula, e marque "N" se o valor da estatística F for favorável à hipótese nula.*
 
@@ -373,11 +381,11 @@ tabela3 |>
 
 -   [ ] *Apesar das duas propriedades serem assintóticas, ou seja, válidas apenas para amostra de tamanho infinito, elas diferem por dizerem respeito à estatísticas distintas. Ausência de viés diz respeito à expectativa do estimador, enquanto consistência diz respeito ao limite em probabilidade ("plim") do estimador;*
 
--   [ ] *Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito, e não há diferença entre as duas propriedades em termos das estatísticas a que se referem, pois ambas dizem respeito, exclusivamente, à expectativa do estimador;*
+-   [x] *Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito, e não há diferença entre as duas propriedades em termos das estatísticas a que se referem, pois ambas dizem respeito, exclusivamente, à expectativa do estimador;*
 
--   [x] *Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito e, além disso, as duas propriedades diferem por dizerem respeito à estatísticas distintas. Ausência de viés diz respeito à expectativa do estimador, enquanto consistência diz respeito ao limite em probabilidade ("plim") estimador.*
+-   [ ] *Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito e, além disso, as duas propriedades diferem por dizerem respeito à estatísticas distintas. Ausência de viés diz respeito à expectativa do estimador, enquanto consistência diz respeito ao limite em probabilidade ("plim") estimador.*
 
-As hipóteses de Gauss-Markov
+A inexistência de viés de MQO é uma propriedade de amostra finita, pois é válida para qualquer amostra de tamanho n. Porém, segundo Wooldridge [@wooldridge2015], a inexistência de viés dos estimadores não pode ser conseguida sempre. Assim, caso um estimador de MQO não seja viesado, as hipóteses MCRL1-MCRL4 garantem que o valor médio do parâmetro populacional. A consistência do parâmetro de dá quando a distribuição do estimador se torna mais estreitamente distribuída ao redor do parâmetro, e quando n tende ao infinito, tal distribuição se torna um único ponto no parâmetro populacional. Porém, caso um estimador, mesmo que não viesado, não leve, em geral, para um valor mais próximo do parâmetro de interesse, tal estimador não é consistente. Assim, conclui-se que só a consistência é assintótica.
 
 ### 4) b.
 
@@ -406,13 +414,23 @@ $$
 
 *Combinando (A) e (B), tem-se:* $\operatorname{plim}\left(\hat{\beta}_{M Q O}\right)=\beta$.
 
-*A passagem {1} faz uso do seguinte fato (assinalar apenas uma alternativa):*
+***(1)** A passagem {1} faz uso do seguinte fato (assinalar apenas uma alternativa):*
 
 -   [x] *O "plim" da média amostral é equivalente à expectativa;*
 
 -   [ ] *A fórmula do estimador de mínimos quadrados ordinários é* $\hat{\beta}_{MQO}=\beta+\left(\sum_{i=1}^{N} x_{i} x_{i}^\top\right)^{-1} \sum_{i=1}^{N} x_{i} u_{i}$.
 
-*As passagens {2} e {3} consistem em:*
+\centering
+
+![](images/paste-906EEA7E.png){width="350"}
+
+![](images/paste-971F1C51.png){width="230"}
+
+\justify
+
+\setlength{\parindent}{0cm}
+
+***(2)** As passagens {2} e {3} consistem em:*
 
 -   [ ] *Aplicação da lei das expectativas iteradas e consideração de que as variáveis explicativas, e, portanto, o vetor x~i~ são não-aleatórios, sendo, pois, constantes para a expectativa;*
 
@@ -420,7 +438,20 @@ $$
 
 -   [x] *Aplicação da lei das expectativas iteradas e consideração de que as variáveis explicativas e, portanto, o vetor x~i~, deixam de ser aleatórios ao condicionar-se a expectativa em um valor específico (e, pois, constante) para tal vetor (e, consequentemente, em valores constantes para todas as explicativas);*
 
-*A passagem {4} consiste em:*
+(1) Lei das expectativas iteradas: $E[E(Y|X)] = E(Y)$
+(2) Propriedade do valor esperado condicional: $E[c(X)|X]=c(X)$, para qualquer função $c(X)$.
+
+Assim:
+
+$$
+E(x_iu_i)=E[E(x_iu_i|x_i)] \tag{1} \\
+$$
+
+$$
+E[E(x_iu_i)|x_i] = E[x_iE(u_i|x_i)]\tag{2}
+$$
+
+***(3)** A passagem {4} consiste em:*
 
 -   [x] *Hipótese de exogeneidade do modelo clássico de regressão linear;*
 
@@ -428,13 +459,19 @@ $$
 
 -   [ ] *Fato de que a expectativa do termo de perturbação é sempre nula, ou seja,* $E\left(u_i\right)=0, i = 1, \ldots, N$;
 
+(MCRL 4) Exogeneidade
+
+> A expectativa condicional do termo de perturbação é nula, isto é, $E[u_{i}|x_{i}]=0$, $i=1, \ldots, N$
+
 ### 4) c.
 
 *Conhecer a função de distribuição de probabilidade do estimador de MQO referente à situação em que o tamanho amostral é infinito é necessário pois:*
 
--   [ ] *Mesmo sendo plenamente conhecida a função de distribuição de probabilidade do estimador de MQO para um tamanho amostral finito, é necessário, de maneira a ter conhecimento completo de tal função, também estudar a situação de tamanho amostral infinito;*
+-   [x] *Mesmo sendo plenamente conhecida a função de distribuição de probabilidade do estimador de MQO para um tamanho amostral finito, é necessário, de maneira a ter conhecimento completo de tal função, também estudar a situação de tamanho amostral infinito;*
 
--   [x] *A função de distribuição de probabilidade do estimador de MQO para um tamanho amostral finito é desconhecida, a menos que seja assumida a hipótese de Gauss-Markov segundo a qual o termo de perturbação tem distribuição normal. É exatamente por conta da necessidade de conhecer a função em questão, no caso geral em que a hipótese de Gauss-Markov não necessariamente se aplica, que o estudo da situação com amostra infinita é necessário;*
+-   [ ] *A função de distribuição de probabilidade do estimador de MQO para um tamanho amostral finito é desconhecida, a menos que seja assumida a hipótese de Gauss-Markov segundo a qual o termo de perturbação tem distribuição normal. É exatamente por conta da necessidade de conhecer a função em questão, no caso geral em que a hipótese de Gauss-Markov não necessariamente se aplica, que o estudo da situação com amostra infinita é necessário;*
+
+Os estimadores de MQO, quando padronizados adequadamente, têm distribuições normais padrão aproximadas para grandes amostras. Isso se dá porque os operadores de MQO usam médias amostrais, e o teorema do limite central garante essa aproximação. Porém, se o tamanho da amostra não é muito grande, os testes de hipóteses para estimadores de MQO que se baseiam na normalidade assintótica pode ficar comprometida [@wooldridge2015]. Assim, é necessário ter conhecimento das propriedades assintóticas para casos onde as hipóteses de amostra finita não se sustentam.
 
 ### 4) d.
 
@@ -445,6 +482,16 @@ $$
 -   [x] *O teste com base na estatística F compara as somas dos quadrados dos resíduos das regressões restrita e irrestrita. Neste caso, para calcular o valor crítico, é necessário saber tanto o número de variáveis-alvo como o número de graus de liberdade calculado como subtração do tamanho amostral pelo número de parâmetros do modelo irrestrito. Já o teste do multiplicador de Lagrange consiste em calcular o R^2^ dos resíduos da regressão restrita contra o conjunto completo de explicativas. Este último teste toma por base a função de distribuição de probabilidades qui-quadrado e, para calcular o valor crítico, é preciso saber apenas o número de variáveis-alvo.*
 
 -   [ ] *O teste com base na estatística F consiste em calcular o R^2^ dos resíduos da regressão restrita contra o conjunto completo de explicativas. Neste caso, para calcular o valor crítico, é necessário saber tanto o número de variáveis-alvo como o número de graus de liberdade calculado como subtração do tamanho amostral pelo número de parâmetros do modelo irrestrito. Já o teste do multiplicador de Lagrange compara as somas dos quadrados dos resíduos das regressões restrita e irrestrita. Este último teste toma por base a função de distribuição de probabilidades qui-quadrado e, para calcular o valor crítico, é preciso saber apenas o número de variáveis-alvo.*
+
+Estatística de teste $\hat{F}\left(H_{0}\right)=\frac{\left(S Q R_{R}-S Q R_{I R}\right) / s}{S Q R_{I R} /[N-(K+1)]} \sim F_{s,\ N-(K+1)}$, onde:
+
+-   s = número de restrições (de exclusão) impostas ao modelo, ou seja, é preciso saber o número de variáveis alvo;
+-   N - (K + 1) = tamanho amostral pelo número de parâmetros do modelo irrestrito.
+
+Estatística de teste $LM=N R_{u}^{2} \sim \chi^2_s$, onde:
+
+-   N = tamanho amostral;
+-   R^2^~u~ = R^2^ da regressão em que a variável dependente é o resíduo da regressão irrestrita e todas as outras variáveis independentes são utilizadas.
 
 ## 5)
 
