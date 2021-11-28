@@ -92,7 +92,7 @@ tabela1 |>
   dplyr::mutate(estat_t = estimativa_pontual/erro_padrao) |> 
   dplyr::mutate(p_valor = purrr::map_dbl(
     estat_t,
-    ~ round(2 * pt(.x/2, df = n-k-1, lower.tail = F), 4)
+    ~ round(2 * pt(.x, df = n-k-1, lower.tail = F), 4)
   )) |> 
   dplyr::mutate(signific = dplyr::case_when(
     p_valor < 0.01 ~ "**",
@@ -373,9 +373,11 @@ tabela3 |>
 
 -   [ ] *Apesar das duas propriedades serem assintóticas, ou seja, válidas apenas para amostra de tamanho infinito, elas diferem por dizerem respeito à estatísticas distintas. Ausência de viés diz respeito à expectativa do estimador, enquanto consistência diz respeito ao limite em probabilidade ("plim") do estimador;*
 
--   [x] *Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito, e não há diferença entre as duas propriedades em termos das estatísticas a que se referem, pois ambas dizem respeito, exclusivamente, à expectativa do estimador;*
+-   [ ] *Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito, e não há diferença entre as duas propriedades em termos das estatísticas a que se referem, pois ambas dizem respeito, exclusivamente, à expectativa do estimador;*
 
--   [ ] *Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito e, além disso, as duas propriedades diferem por dizerem respeito à estatísticas distintas. Ausência de viés diz respeito à expectativa do estimador, enquanto consistência diz respeito ao limite em probabilidade ("plim") estimador.*
+-   [x] *Apenas a propriedade de consistência é assintótica, ou seja, válida apenas para amostra de tamanho infinito e, além disso, as duas propriedades diferem por dizerem respeito à estatísticas distintas. Ausência de viés diz respeito à expectativa do estimador, enquanto consistência diz respeito ao limite em probabilidade ("plim") estimador.*
+
+As hipóteses de Gauss-Markov
 
 ### 4) b.
 
@@ -387,7 +389,7 @@ $$
 &=\beta+\operatorname{plim}\left[\left(\sum_{i=1}^{N} x_{i} x_{i}^\top\right)^{-1}\right] \operatorname{plim}\left(\sum_{i=1}^{N} x_{i} u_{i}\right)=\{1\} \\
 &=\beta+E\left(x_{i} x_{i}^\top\right)^{-1} E\left(x_{i} u_{i}\right)
 \end{aligned}
-$$ 
+$$
 
 $$
 \begin{gathered}
