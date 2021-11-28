@@ -326,23 +326,22 @@ $$
 tabela3 <- readr::read_csv("provas/p2/tabelas/tabela3.csv") |> 
   janitor::clean_names()
 
-n_etnia <- 3
+#' s = número de restrições impostas ao modelo restrito, e
+#' como são cinco regressões, cada uma com três variáveis
+#' e não tem informações sobre o número total de coeficientes
+#' no enunciado, s é igual ao número de coeficientes listados
+#' na hipótese nula e o modelo se torna de significância global
 
-n_uf <- 5
-
-# s = número de restrições impostas ao modelo restrito
-
-s <- (n_etnia + n_uf) - n_etnia
+s <- 3
 
 tabela3 |>
   dplyr::mutate(
-    valor_critico = purrr::map2_dbl(
-      estatistica_f,
+    valor_critico = purrr::map_dbl(
       gl_do_denominador_de_f,
-      ~ round(pf(.x, df1 = s, df2 = .y, lower.tail = F), 5)
+      ~ round(qf(0.05, df1 = s, df2 = .x, lower.tail = F), 4)
     ),
     signific = dplyr::case_when(
-      valor_critico < 0.05 ~ "S",
+      estatistica_f > valor_critico ~ "S",
       TRUE ~ "N"
     )
   ) |> 
