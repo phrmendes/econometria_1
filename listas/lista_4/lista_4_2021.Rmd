@@ -146,7 +146,7 @@ df |>
 
 $$
     \hat F(H_0) = \frac{0{,}233/8}{(1-0{,}233)/[857-(8+1)]} \approx 32{,}201
-  $$
+$$
 
 -   *Reporte o valor crítico.*
 
@@ -265,7 +265,7 @@ N & \multicolumn{3}{c}{558} & \multicolumn{3}{c}{558}
 ```
 ## 6)
 
-Visando aplicar a decomposição de Oaxaca ao mercado de trabalho do Estado de São Paulo, um pesquisador estimou quatro regressões. Cada uma delas se refere a um subgrupo amostral definido em função de gênero e etnia, conforme a tabela abaixo detalha. Antes de proceder ao cálculo dos componentes discriminatórios dos diferenciais salariais, o pesquisador decidiu realizar uma série de testes de hipóteses. Entre eles, o de a significância conjunta (restrições de exclusão) das três medidas de setor de atividade, `d_indu`, `d_serv` e `d_apub`. Trata-se, portanto, do teste definido pelas seguintes hipóteses:
+*Visando aplicar a decomposição de Oaxaca ao mercado de trabalho do Estado de São Paulo, um pesquisador estimou quatro regressões. Cada uma delas se refere a um subgrupo amostral definido em função de gênero e etnia, conforme a tabela abaixo detalha. Antes de proceder ao cálculo dos componentes discriminatórios dos diferenciais salariais, o pesquisador decidiu realizar uma série de testes de hipóteses. Entre eles, o de a significância conjunta (restrições de exclusão) das três medidas de setor de atividade, `d_indu`, `d_serv` e `d_apub`. Trata-se, portanto, do teste definido pelas seguintes hipóteses:*
 
 $$
 \begin{aligned}

@@ -1,0 +1,20 @@
+Variável;Estimativa pontual;Erro padrão;Estat. t;P-valor;Signific.
+Intercepto;0.570478;1.419173;;;
+Etnia preta ou parda;-0.769605;0.40364;;;
+Educação (anos de estudo);0.673285;0.058166;;;
+Experiencia no mercado de trabalho;0.265955;0.054531;;;
+Experiência no mercado de trabalho ao quadrado;-0.004548;0.001136;;;
+Experiência no emprego atual;0.170519;0.030929;;;
+Atividade agropecuária (binária);0.148914;1.22827;;;
+Atividade industrial (binária);0.349603;0.739761;;;
+Atividade construção civil (binária);0.966674;0.952897;;;
+Atividade serviços sociais (binária);0.855411;0.720338;;;
+Atividade outros serviços (binária);-0.883799;0.630045;;;
+Atividade administração pública (binária);3.607514;0.905279;;;
+Pessoa de referência na família (binária);0.81018;0.396139;;;
+Realiza afazeres domésticos (binária);-0.877112;0.406449;;;
+Região Norte (binária);-2.388502;0.754308;;;
+Região Nordeste (binária);-2.313482;0.670793;;;
+Região Sudeste (binária);-0.723765;0.642039;;;
+Região Sul (binária);-0.751399;0.711563;;;
+Área urbana (binária);1.533147;0.783264;;;
