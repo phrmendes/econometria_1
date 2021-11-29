@@ -179,8 +179,6 @@ k <- nrow(tabela2)-1
 
 n <- 558
 
-f <- 31.85
-
 t <- tibble::tibble(alfa = c(0.1, 0.05, 0.01)) |> 
   dplyr::mutate(limite_inferior = purrr::map_dbl(
     alfa,
@@ -315,6 +313,34 @@ tabela2 |>
   kableExtra::kable_styling(font_size = 9,
                             latex_options = "HOLD_position")
 ```
+
+```{r}
+f_stat <- 31.85
+
+tibble::tibble(
+  a = "F",
+  b = f_stat,
+  c = dplyr::case_when(
+    f_stat > f$f[3] ~ "1",
+    dplyr::between(f_stat,
+                   f$f[2],
+                   f$f[3]) ~ "5",
+    dplyr::between(f_stat,
+                   f$f[1],
+                   f$f[2]) ~ "10",
+    f_stat < f$f[1] ~ "N"
+  )
+) |> 
+  knitr::kable(
+    format.args = list(big.mark = ".", decimal.mark = ','),
+    booktabs = T,
+    linesep = "",
+    col.names = c(" ", "Estatística", "Simbologia"),
+    escape = F) |> 
+  kableExtra::kable_styling(font_size = 9,
+                            latex_options = "HOLD_position")
+```
+
 
 \normalsize
 
