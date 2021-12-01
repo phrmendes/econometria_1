@@ -341,7 +341,6 @@ tibble::tibble(
                             latex_options = "HOLD_position")
 ```
 
-
 \normalsize
 
 ## 3)
@@ -528,3 +527,20 @@ $$
 $$
 
 *Sendo* $\tilde{x}_{ik}$ *o i-ésimo resíduo da regressão em que a k-ésima explicativa é a variável dependente e as variáveis independentes são as demais explicativas e R^2^~k~ é o coeficiente de determinação (não-ajustado) dessa regressão. Desconsidere, ao aplicar o teorema, o estágio em que y é regredida contra todas as explicativas exceto pela k-ésima.*
+
+\centering
+
+![](images/paste-290EDD53.png){width="220"}
+
+![](images/paste-D2F22A8F.png){width="280"}
+![](images/paste-17232166.png){width="220"}
+
+![](images/paste-4C93717E.png){width="230"}
+
+![](images/paste-99008560.png){width="290"}
+
+![](images/paste-AE6D03A7.png){width="280"}
+
+![](images/paste-93876906.png){width="220"}
+
+\justify
