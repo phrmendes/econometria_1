@@ -62,12 +62,6 @@ options(scipen = 999)
 
 \normalsize
 
--   [x] 1
--   [x] 2
--   [x] 3
--   [ ] 4
--   [ ] 5
-
 ## 1)
 
 *Um pesquisador estimou a FRP que se encontra na tabela 1. Trata-se de uma equação minceriana em que o salário horário é a variável dependente e as variáveis independentes correspondem a características dos(as) trabalhadores(as). Foi utilizada uma subamostra aleatória da PNAD anual de 2015.*
@@ -361,7 +355,7 @@ tabela3 <- readr::read_csv("provas/p2/tabelas/tabela3.csv") |>
 
 #' s = número de restrições impostas ao modelo restrito, e
 #' como são cinco regressões, cada uma com três variáveis
-#' e não tem informações sobre o número total de coeficientes
+#' e não temos informações sobre o número total de coeficientes
 #' no enunciado, s é igual ao número de coeficientes listados
 #' na hipótese nula e o modelo se torna de significância global
 
